@@ -10,35 +10,35 @@ import android.widget.EditText;
 
 public class WifiLoginActivity extends AppCompatActivity {
 
-    private EditText etWifiLogin, etWifiPassword;
-    private Button btnWifiVerify;
+  private EditText etWifiLogin, etWifiPassword;
+  private Button btnWifiVerify;
 
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_wifi_login);
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wifi_login);
+    initViews();
+    btnWifiVerify.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            String WifiLogin = etWifiLogin.getText().toString();
+            String WifiPassword = etWifiPassword.getText().toString();
 
-        initViews();
-        btnWifiVerify.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String WifiLogin = etWifiLogin.getText().toString();
-                String WifiPassword = etWifiPassword.getText().toString();
-
-                Bundle bundle = new Bundle();
-                bundle.putString("WifiLogin", WifiLogin);
-                bundle.putString("WifiPassword", WifiPassword);
-                Intent intent = new Intent(WifiLoginActivity.this, HomeActivity.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
+            Bundle bundle = new Bundle();
+            bundle.putString("WifiLogin", WifiLogin);
+            bundle.putString("WifiPassword", WifiPassword);
+            Intent intent = new Intent(WifiLoginActivity.this, HomeActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+          }
         });
-    }
+  }
 
-    private void initViews() {
-        etWifiLogin = findViewById(R.id.etWifiLogin);
-        etWifiPassword = findViewById(R.id.etWifiPassword);
-        btnWifiVerify = findViewById(R.id.btnWifiVerify);
-    }
+  private void initViews() {
+    etWifiLogin = findViewById(R.id.etWifiLogin);
+    etWifiPassword = findViewById(R.id.etWifiPassword);
+    btnWifiVerify = findViewById(R.id.btnWifiVerify);
+  }
 }
