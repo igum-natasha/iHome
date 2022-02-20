@@ -3,10 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android_app/iHome/app/src/main/res/layout/activity_registration.xml" value="0.17603850050658562" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_device_control.xml" value="0.425" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_home.xml" value="0.2066869300911854" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_main.xml" value="0.19984802431610943" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_registration.xml" value="0.425" />
+        <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_wifi_login.xml" value="0.18958333333333333" />
       </map>
     </option>
   </component>

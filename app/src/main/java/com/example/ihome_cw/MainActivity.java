@@ -34,8 +34,6 @@ public class MainActivity extends AppCompatActivity {
                 String email = etEmail.getText().toString();
                 String password = etPassword.getText().toString();
                 String countryCode = etCountryCode.getText().toString();
-                Toast.makeText(MainActivity.this, "hi", Toast.LENGTH_LONG).show();
-//                TuyaHomeSdk.getUserInstance().loginWithEmail(countryCode, email, password, loginCallback);
                 TuyaHomeSdk.getUserInstance().loginWithEmail(countryCode, email, password, loginCallback);
 
             }
@@ -53,7 +51,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onSuccess(User user) {
             Toast.makeText(MainActivity.this, "login Successful", Toast.LENGTH_LONG).show();
-            startActivity(new Intent(MainActivity.this, HomeActivity.class));
+            startActivity(new Intent(MainActivity.this, WifiLoginActivity.class));
+//            startActivity(new Intent(MainActivity.this, HomeActivity.class));
         }
 
         @Override

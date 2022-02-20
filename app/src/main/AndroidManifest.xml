@@ -23,6 +23,9 @@
             android:name="TUYA_SMART_SECRET"
             android:value="3x8dt7jsqm44jem93jqfjayyqfsuhnac" />
         <activity
+            android:name=".WifiLoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".RegistrationActivity"
             android:exported="false" />
         <activity
@@ -34,7 +37,6 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

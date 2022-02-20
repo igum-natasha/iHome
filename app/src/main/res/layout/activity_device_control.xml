@@ -42,8 +42,8 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.806"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.713"
+        app:layout_constraintStart_toEndOf="@+id/labelScene"
         app:layout_constraintTop_toBottomOf="@+id/sbBrightness"
         app:layout_constraintVertical_bias="0.316" />
 
@@ -66,6 +66,7 @@
         android:id="@+id/swStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:minHeight="48dp"
         android:text="Bulb Status"
         android:textColor="#009688"
         android:textSize="16sp"
@@ -99,18 +100,24 @@
         android:id="@+id/spScene"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/labelScene"
         app:layout_constraintVertical_bias="0.077"
-        tools:layout_editor_absoluteX="16dp" />
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <Spinner
         android:id="@+id/spWorkMode"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.705"
+        app:layout_constraintStart_toEndOf="@+id/spScene"
         app:layout_constraintTop_toBottomOf="@+id/labelWorkMode"
-        app:layout_constraintVertical_bias="0.081"
-        tools:layout_editor_absoluteX="229dp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintVertical_bias="0.077"
+        tools:ignore="MissingConstraints,SpeakableTextPresentCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>

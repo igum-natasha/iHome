@@ -38,8 +38,8 @@ public class HomeActivity extends AppCompatActivity {
     String homeName = "MyHome";
     private static final String TAG = "TuyaSmartHome";
 
-    private String ssid = "dk1";
-    private String password = "12345678";
+    private String ssid;
+    private String password;
     private HomeBean currentHomeBean;
     private DeviceBean currentDeviceBean;
     ITuyaActivator tuyaActivator;
@@ -48,6 +48,13 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        Bundle bundle = getIntent().getExtras();
+
+        if(bundle!= null) {
+            ssid = bundle.getString("WifiLogin");
+            password = bundle.getString("WifiPassword");
+        }
 
         initViews();
 
@@ -100,6 +107,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onSuccess(HomeBean homeBean) {
                 currentHomeBean = homeBean;
                 Toast.makeText(HomeActivity.this, "Home creation successful!", Toast.LENGTH_LONG).show();
+                getRegistrationToken();
             }
 
             @Override
@@ -123,6 +131,7 @@ public class HomeActivity extends AppCompatActivity {
                     @Override
                     public void onError(String s, String s1) {
                         Toast.makeText(HomeActivity.this, "Devices detection failed!", Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(HomeActivity.this, WifiLoginActivity.class));
                     }
 
                     @Override
