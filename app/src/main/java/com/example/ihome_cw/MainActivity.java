@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
         public void onSuccess(User user) {
             Toast.makeText(MainActivity.this, "login Successful", Toast.LENGTH_LONG).show();
             startActivity(new Intent(MainActivity.this, WifiLoginActivity.class));
-//            startActivity(new Intent(MainActivity.this, HomeActivity.class));
         }
 
         @Override
