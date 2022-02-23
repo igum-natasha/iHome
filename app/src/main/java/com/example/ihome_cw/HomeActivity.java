@@ -1,8 +1,5 @@
 package com.example.ihome_cw;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.home.sdk.bean.HomeBean;
@@ -96,6 +96,7 @@ public class HomeActivity extends AppCompatActivity {
             bundle.putString("DeviceName", currentDeviceBean.name);
             bundle.putString("ProductId", currentDeviceBean.productId);
             Intent intent = new Intent(HomeActivity.this, DeviceControlActivity.class);
+//            Intent intent = new Intent(HomeActivity.this, SocketControlActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
           }

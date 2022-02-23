@@ -16,12 +16,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/Theme.IHome_CW">
+        <activity
+            android:name=".PreMainActivity"
+            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".SocketControlActivity"-->
+<!--            android:exported="false" />-->
+
         <meta-data
             android:name="TUYA_SMART_APPKEY"
             android:value="g7vx5ktc8qpwcexyufc3" />
         <meta-data
             android:name="TUYA_SMART_SECRET"
             android:value="3x8dt7jsqm44jem93jqfjayyqfsuhnac" />
+
         <activity
             android:name=".WifiLoginActivity"
             android:exported="false" />

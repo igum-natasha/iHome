@@ -34,6 +34,11 @@ android {
 }
 apply plugin: 'kotlin-android'
 dependencies {
+
+    def room_version = "2.3.0"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.0.4"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.4.1'
@@ -48,4 +53,7 @@ dependencies {
     implementation 'com.tuya.smart:tuyasmart:3.20.0'
     // Control SDK dependencies
     implementation 'com.tuya.smart:tuyasmart-centralcontrol:1.0.2'
+//    implementation 'com.tuya.smart:socket-sdk:0.1.1'
+//    implementation 'com.tuya.smart:TuyaSocketPanel:1.0.1'
+
 }
