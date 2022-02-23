@@ -96,7 +96,8 @@ public class HomeActivity extends AppCompatActivity {
             bundle.putString("DeviceName", currentDeviceBean.name);
             bundle.putString("ProductId", currentDeviceBean.productId);
             Intent intent = new Intent(HomeActivity.this, DeviceControlActivity.class);
-//            Intent intent = new Intent(HomeActivity.this, SocketControlActivity.class);
+            //            Intent intent = new Intent(HomeActivity.this,
+            // SocketControlActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
           }

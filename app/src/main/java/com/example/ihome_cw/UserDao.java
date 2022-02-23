@@ -10,15 +10,15 @@ import java.util.List;
 @Dao
 public interface UserDao {
 
-    @Query("DELETE FROM users WHERE email LIKE :email")
-    void deleteByid(String email);
+  @Query("DELETE FROM users WHERE email LIKE :email")
+  void deleteByid(String email);
 
-    @Query("SELECT * FROM users")
-    List<User> getAll();
+  @Query("SELECT * FROM users")
+  List<User> getAll();
 
-    @Query("SELECT * FROM users WHERE first_name LIKE :first")
-    List<User> findUserWithName(String first);
+  @Query("SELECT * FROM users WHERE first_name LIKE :first")
+  List<User> findUserWithName(String first);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertUser(User user);
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
+  void insertUser(User user);
 }

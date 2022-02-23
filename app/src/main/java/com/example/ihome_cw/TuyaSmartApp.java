@@ -15,6 +15,7 @@ import java.util.List;
 public class TuyaSmartApp extends Application {
   private User user;
   private List<User> usersList;
+
   @Override
   public void onCreate() {
     super.onCreate();
@@ -25,26 +26,28 @@ public class TuyaSmartApp extends Application {
     user = new User();
     usersList = new ArrayList<>();
     usersList = db.userDao().getAll();
-    Toast.makeText(TuyaSmartApp.this, usersList.get(0).email + usersList.get(0).password + usersList.get(0).countryCode, Toast.LENGTH_LONG).show();
+    Toast.makeText(
+            TuyaSmartApp.this,
+            usersList.get(0).email + usersList.get(0).password + usersList.get(0).countryCode,
+            Toast.LENGTH_LONG)
+        .show();
     if (usersList.size() == 0) {
-        TuyaHomeSdk.setOnNeedLoginListener(
-                new INeedLoginListener() {
-                    @Override
-                    public void onNeedLogin(Context context) {
-                        startActivity(new Intent(TuyaSmartApp.this, PreMainActivity.class));
-                    }
-                });
+      TuyaHomeSdk.setOnNeedLoginListener(
+          new INeedLoginListener() {
+            @Override
+            public void onNeedLogin(Context context) {
+              startActivity(new Intent(TuyaSmartApp.this, PreMainActivity.class));
+            }
+          });
     } else {
-        Bundle bundle = new Bundle();
-        bundle.putString("Email", usersList.get(0).email);
-        bundle.putString("Password", usersList.get(0).password);
-        bundle.putString("CountryCode", usersList.get(0).countryCode);
-        Intent intent = new Intent(TuyaSmartApp.this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtras(bundle);
-        startActivity(intent);
+      Bundle bundle = new Bundle();
+      bundle.putString("Email", usersList.get(0).email);
+      bundle.putString("Password", usersList.get(0).password);
+      bundle.putString("CountryCode", usersList.get(0).countryCode);
+      Intent intent = new Intent(TuyaSmartApp.this, MainActivity.class);
+      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      intent.putExtras(bundle);
+      startActivity(intent);
     }
-
   }
-
 }

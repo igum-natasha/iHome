@@ -34,15 +34,14 @@ public class MainActivity extends AppCompatActivity {
     Bundle bundle = getIntent().getExtras();
 
     if (bundle != null) {
-        email = bundle.getString("Email");
-        password = bundle.getString("Password");
-        countryCode = bundle.getString("CountryCode");
-        TuyaHomeSdk.getUserInstance()
-                .loginWithEmail(countryCode, email, password, loginCallback);
+      email = bundle.getString("Email");
+      password = bundle.getString("Password");
+      countryCode = bundle.getString("CountryCode");
+      TuyaHomeSdk.getUserInstance().loginWithEmail(countryCode, email, password, loginCallback);
     } else {
-        etCountryCode.setVisibility(View.VISIBLE);
-        etEmail.setVisibility(View.VISIBLE);
-        etPassword.setVisibility(View.VISIBLE);
+      etCountryCode.setVisibility(View.VISIBLE);
+      etEmail.setVisibility(View.VISIBLE);
+      etPassword.setVisibility(View.VISIBLE);
     }
 
     btnLogin.setOnClickListener(
