@@ -68,7 +68,11 @@ public class MainActivity extends AppCompatActivity {
           user1.setCountryCode(countryCode);
           user1.setPassword(password);
           db.userDao().insertUser(user1);
-          startActivity(new Intent(MainActivity.this, WifiLoginActivity.class));
+          Bundle bundle = new Bundle();
+          bundle.putString("Email", email);
+          Intent intent = new Intent(MainActivity.this, WifiLoginActivity.class);
+          intent.putExtras(bundle);
+          startActivity(intent);
         }
 
         @Override

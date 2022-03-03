@@ -11,7 +11,7 @@ import java.util.List;
 public interface UserDao {
 
   @Query("DELETE FROM users WHERE email LIKE :email")
-  void deleteByid(String email);
+  void deleteByEmail(String email);
 
   @Query("SELECT * FROM users")
   List<User> getAll();

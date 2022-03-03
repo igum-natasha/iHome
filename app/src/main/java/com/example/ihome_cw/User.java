@@ -66,9 +66,4 @@ public class User {
     this.lastName = lastName;
   }
 
-  @NonNull
-  @Override
-  public String toString() {
-    return "ID: " + email + " FIRSTNAME:" + firstName + " LASTNAME: " + lastName;
-  }
 }

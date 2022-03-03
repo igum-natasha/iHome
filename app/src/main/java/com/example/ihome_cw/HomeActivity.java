@@ -1,7 +1,6 @@
 package com.example.ihome_cw;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,10 +10,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.home.sdk.bean.HomeBean;
 import com.tuya.smart.home.sdk.builder.ActivatorBuilder;
+import com.tuya.smart.home.sdk.callback.ITuyaGetHomeListCallback;
 import com.tuya.smart.home.sdk.callback.ITuyaHomeResultCallback;
 import com.tuya.smart.sdk.api.ITuyaActivator;
 import com.tuya.smart.sdk.api.ITuyaActivatorGetToken;
@@ -38,33 +40,30 @@ public class HomeActivity extends AppCompatActivity {
   String homeName = "MyHome";
   private static final String TAG = "TuyaSmartHome";
 
-  private String ssid;
+  private String ssid, email;
   private String password;
   private HomeBean currentHomeBean;
+  private long homeId;
   private DeviceBean currentDeviceBean;
+
+  private List<Home> homesList;
   ITuyaActivator tuyaActivator;
+  private List<Device> devices;
+  private RecyclerView rv;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_home);
-
     Bundle bundle = getIntent().getExtras();
 
     if (bundle != null) {
+      email = bundle.getString("Email");
       ssid = bundle.getString("WifiLogin");
       password = bundle.getString("WifiPassword");
     }
-
     initViews();
-
-    cvDevice.setClickable(false);
-    cvDevice.setBackgroundColor(Color.LTGRAY);
-
-    roomList = new ArrayList<>();
-    roomList.addAll(Arrays.asList(rooms));
-
-    createHome(homeName, roomList);
+    createHome();
 
     btnSearch.setOnClickListener(
         new View.OnClickListener() {
@@ -87,52 +86,129 @@ public class HomeActivity extends AppCompatActivity {
           }
         });
 
-    cvDevice.setOnClickListener(
-        new View.OnClickListener() {
+  }
+  private void initializeData(){
+      TuyaHomeSdk.newHomeInstance(homeId).getHomeDetail(new ITuyaHomeResultCallback() {
           @Override
-          public void onClick(View view) {
+          public void onSuccess(HomeBean bean) {
+              if (bean.getDeviceList().size() > 0) {
+                  Device dev = new Device();
+
+                  dev.setDeviceId(bean.getDeviceList().get(0).getDevId());
+                  dev.setProductId(bean.getDeviceList().get(0).getProductId());
+                  dev.setDeviceName(bean.getDeviceList().get(0).getName());
+                  dev.setUserEmail(email);
+                  devices.add(dev);
+
+              }
+          }
+          @Override
+          public void onError(String errorCode, String errorMsg) {
+              Toast.makeText(HomeActivity.this, "Not found devices", Toast.LENGTH_LONG)
+                      .show();
+          }
+      });
+      AppDatabase db = AppDatabase.build(getApplicationContext());
+      devices = db.deviceDao().getAll();
+  }
+
+  private void initializeAdapter(){
+      RVAdapter adapter = new RVAdapter(devices);
+      rv.setAdapter(adapter);
+      adapter.setOnItemClickListener(new RVAdapter.ClickListener() {
+          @Override
+          public void onItemClick(int position, View v) {
             Bundle bundle = new Bundle();
-            bundle.putString("DeviceId", currentDeviceBean.devId);
-            bundle.putString("DeviceName", currentDeviceBean.name);
-            bundle.putString("ProductId", currentDeviceBean.productId);
+            bundle.putString("DeviceId", devices.get(position).getDeviceId());
+            bundle.putString("DeviceName", devices.get(position).getDeviceName());
+            bundle.putString("ProductId", devices.get(position).getProductId());
             Intent intent = new Intent(HomeActivity.this, DeviceControlActivity.class);
-            //            Intent intent = new Intent(HomeActivity.this,
-            // SocketControlActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
           }
-        });
+
+          @Override
+          public void onItemLongClick(int position, View v) {
+              Log.d(TAG, "onItemLongClick pos = " + position);
+          }
+      });
+  }
+  private void showDevices() {
+      rv = findViewById(R.id.rv);
+
+      LinearLayoutManager llm = new LinearLayoutManager(this);
+      rv.setLayoutManager(llm);
+      rv.setHasFixedSize(true);
+
+      initializeData();
+      initializeAdapter();
+
   }
 
-  private void createHome(String homeName, List<String> roomList) {
+  private void addDevice(DeviceBean bean) {
+      AppDatabase db = AppDatabase.build(this.getApplicationContext());
+      Device device = new Device();
+      device.setUserEmail(email);
+      device.setDeviceId(bean.devId);
+      device.setDeviceName(bean.name);
+      device.setProductId(bean.productId);
+      db.deviceDao().insertDevice(device);
+  }
+  private void createHome() {
+    roomList = new ArrayList<>();
+    roomList.addAll(Arrays.asList(rooms));
 
-    TuyaHomeSdk.getHomeManagerInstance()
-        .createHome(
-            homeName,
-            0,
-            0,
-            "",
-            roomList,
-            new ITuyaHomeResultCallback() {
-              @Override
-              public void onSuccess(HomeBean homeBean) {
-                currentHomeBean = homeBean;
-                Toast.makeText(HomeActivity.this, "Home creation successful!", Toast.LENGTH_LONG)
-                    .show();
+    AppDatabase db = AppDatabase.build(this.getApplicationContext());
+
+    homesList = db.homeDao().getAll();
+    if (homesList.isEmpty()) {
+        TuyaHomeSdk.getHomeManagerInstance()
+                .createHome(
+                        homeName,
+                        0,
+                        0,
+                        "",
+                        roomList,
+                        new ITuyaHomeResultCallback() {
+                            @Override
+                            public void onSuccess(HomeBean homeBean) {
+                                currentHomeBean = homeBean;
+                                Toast.makeText(HomeActivity.this, "Home creation successful!", Toast.LENGTH_LONG)
+                                        .show();
+                                addHome();
+                                getRegistrationToken();
+                            }
+
+                            @Override
+                            public void onError(String s, String s1) {
+                                Log.d(TAG, "Home creation failed with error: " + s1);
+                                Toast.makeText(HomeActivity.this, "Home creation failed!", Toast.LENGTH_LONG)
+                                        .show();
+                            }
+                        });
+    } else {
+        TuyaHomeSdk.getHomeManagerInstance().queryHomeList(new ITuyaGetHomeListCallback() {
+            @Override
+            public void onSuccess(List<HomeBean> homeBeans) {
+                Toast.makeText(HomeActivity.this, "Home found successful!", Toast.LENGTH_LONG).show();
+                currentHomeBean = homeBeans.get(0);
                 getRegistrationToken();
-              }
+                showDevices();
+            }
 
-              @Override
-              public void onError(String s, String s1) {
-                Log.d(TAG, "Home creation failed with error: " + s1);
-                Toast.makeText(HomeActivity.this, "Home creation failed!", Toast.LENGTH_LONG)
-                    .show();
-              }
-            });
+            @Override
+            public void onError(String errorCode, String error) {
+                Log.d(TAG, "Home finding failed with error: " + error);
+                Toast.makeText(HomeActivity.this, "Home finding failed!", Toast.LENGTH_LONG)
+                        .show();
+            }
+        });
+
+    }
+    btnSearch.setVisibility(View.VISIBLE);
   }
 
   private void searchDevices(String token) {
-
     tuyaActivator =
         TuyaHomeSdk.getActivatorInstance()
             .newMultiActivator(
@@ -163,13 +239,9 @@ public class HomeActivity extends AppCompatActivity {
                                     Toast.LENGTH_LONG)
                                 .show();
                             currentDeviceBean = deviceBean;
-                            cvDevice.setClickable(true);
-                            cvDevice.setBackgroundColor(Color.WHITE);
-                            tvDeviceId.setText("Device ID: " + currentDeviceBean.devId);
-                            tvDeviceName.setText("Device Name: " + currentDeviceBean.name);
-                            tvProductId.setText("Product ID: " + currentDeviceBean.productId);
-                            btnSearch.setText("Search Devices");
                             tuyaActivator.stop();
+                            addDevice(currentDeviceBean);
+                            showDevices();
                           }
 
                           @Override
@@ -192,8 +264,16 @@ public class HomeActivity extends AppCompatActivity {
                         }));
   }
 
+  private void addHome() {
+      AppDatabase db = AppDatabase.build(getApplicationContext());
+      Home home = new Home();
+      home.setUserEmail(email);
+      home.setHomeName(homeName);
+      home.setRoomList(roomList);
+      db.homeDao().insertHome(home);
+  }
   private void getRegistrationToken() {
-    long homeId = currentHomeBean.getHomeId();
+    homeId = currentHomeBean.getHomeId();
     TuyaHomeSdk.getActivatorInstance()
         .getActivatorToken(
             homeId,
@@ -209,10 +289,8 @@ public class HomeActivity extends AppCompatActivity {
   }
 
   private void initViews() {
-    cvDevice = findViewById(R.id.cvDevice);
     btnSearch = findViewById(R.id.btnSearch);
-    tvDeviceName = findViewById(R.id.tvDeviceName);
-    tvDeviceId = findViewById(R.id.tvDeviceId);
-    tvProductId = findViewById(R.id.tvProductId);
+    rv = findViewById(R.id.rv);
   }
+
 }
