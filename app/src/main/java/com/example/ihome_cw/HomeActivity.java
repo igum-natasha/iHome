@@ -85,13 +85,15 @@ public class HomeActivity extends AppCompatActivity {
             }
           }
         });
-
   }
-  private void initializeData(){
-      TuyaHomeSdk.newHomeInstance(homeId).getHomeDetail(new ITuyaHomeResultCallback() {
-          @Override
-          public void onSuccess(HomeBean bean) {
-              if (bean.getDeviceList().size() > 0) {
+
+  private void initializeData() {
+    TuyaHomeSdk.newHomeInstance(homeId)
+        .getHomeDetail(
+            new ITuyaHomeResultCallback() {
+              @Override
+              public void onSuccess(HomeBean bean) {
+                if (bean.getDeviceList().size() > 0) {
                   Device dev = new Device();
 
                   dev.setDeviceId(bean.getDeviceList().get(0).getDevId());
@@ -99,23 +101,23 @@ public class HomeActivity extends AppCompatActivity {
                   dev.setDeviceName(bean.getDeviceList().get(0).getName());
                   dev.setUserEmail(email);
                   devices.add(dev);
-
+                }
               }
-          }
-          @Override
-          public void onError(String errorCode, String errorMsg) {
-              Toast.makeText(HomeActivity.this, "Not found devices", Toast.LENGTH_LONG)
-                      .show();
-          }
-      });
-      AppDatabase db = AppDatabase.build(getApplicationContext());
-      devices = db.deviceDao().getAll();
+
+              @Override
+              public void onError(String errorCode, String errorMsg) {
+                Toast.makeText(HomeActivity.this, "Not found devices", Toast.LENGTH_LONG).show();
+              }
+            });
+    AppDatabase db = AppDatabase.build(getApplicationContext());
+    devices = db.deviceDao().getAll();
   }
 
-  private void initializeAdapter(){
-      RVAdapter adapter = new RVAdapter(devices);
-      rv.setAdapter(adapter);
-      adapter.setOnItemClickListener(new RVAdapter.ClickListener() {
+  private void initializeAdapter() {
+    RVAdapter adapter = new RVAdapter(devices);
+    rv.setAdapter(adapter);
+    adapter.setOnItemClickListener(
+        new RVAdapter.ClickListener() {
           @Override
           public void onItemClick(int position, View v) {
             Bundle bundle = new Bundle();
@@ -129,31 +131,32 @@ public class HomeActivity extends AppCompatActivity {
 
           @Override
           public void onItemLongClick(int position, View v) {
-              Log.d(TAG, "onItemLongClick pos = " + position);
+            Log.d(TAG, "onItemLongClick pos = " + position);
           }
-      });
+        });
   }
+
   private void showDevices() {
-      rv = findViewById(R.id.rv);
+    rv = findViewById(R.id.rv);
 
-      LinearLayoutManager llm = new LinearLayoutManager(this);
-      rv.setLayoutManager(llm);
-      rv.setHasFixedSize(true);
+    LinearLayoutManager llm = new LinearLayoutManager(this);
+    rv.setLayoutManager(llm);
+    rv.setHasFixedSize(true);
 
-      initializeData();
-      initializeAdapter();
-
+    initializeData();
+    initializeAdapter();
   }
 
   private void addDevice(DeviceBean bean) {
-      AppDatabase db = AppDatabase.build(this.getApplicationContext());
-      Device device = new Device();
-      device.setUserEmail(email);
-      device.setDeviceId(bean.devId);
-      device.setDeviceName(bean.name);
-      device.setProductId(bean.productId);
-      db.deviceDao().insertDevice(device);
+    AppDatabase db = AppDatabase.build(this.getApplicationContext());
+    Device device = new Device();
+    device.setUserEmail(email);
+    device.setDeviceId(bean.devId);
+    device.setDeviceName(bean.name);
+    device.setProductId(bean.productId);
+    db.deviceDao().insertDevice(device);
   }
+
   private void createHome() {
     roomList = new ArrayList<>();
     roomList.addAll(Arrays.asList(rooms));
@@ -162,48 +165,50 @@ public class HomeActivity extends AppCompatActivity {
 
     homesList = db.homeDao().getAll();
     if (homesList.isEmpty()) {
-        TuyaHomeSdk.getHomeManagerInstance()
-                .createHome(
-                        homeName,
-                        0,
-                        0,
-                        "",
-                        roomList,
-                        new ITuyaHomeResultCallback() {
-                            @Override
-                            public void onSuccess(HomeBean homeBean) {
-                                currentHomeBean = homeBean;
-                                Toast.makeText(HomeActivity.this, "Home creation successful!", Toast.LENGTH_LONG)
-                                        .show();
-                                addHome();
-                                getRegistrationToken();
-                            }
+      TuyaHomeSdk.getHomeManagerInstance()
+          .createHome(
+              homeName,
+              0,
+              0,
+              "",
+              roomList,
+              new ITuyaHomeResultCallback() {
+                @Override
+                public void onSuccess(HomeBean homeBean) {
+                  currentHomeBean = homeBean;
+                  Toast.makeText(HomeActivity.this, "Home creation successful!", Toast.LENGTH_LONG)
+                      .show();
+                  addHome();
+                  getRegistrationToken();
+                }
 
-                            @Override
-                            public void onError(String s, String s1) {
-                                Log.d(TAG, "Home creation failed with error: " + s1);
-                                Toast.makeText(HomeActivity.this, "Home creation failed!", Toast.LENGTH_LONG)
-                                        .show();
-                            }
-                        });
+                @Override
+                public void onError(String s, String s1) {
+                  Log.d(TAG, "Home creation failed with error: " + s1);
+                  Toast.makeText(HomeActivity.this, "Home creation failed!", Toast.LENGTH_LONG)
+                      .show();
+                }
+              });
     } else {
-        TuyaHomeSdk.getHomeManagerInstance().queryHomeList(new ITuyaGetHomeListCallback() {
-            @Override
-            public void onSuccess(List<HomeBean> homeBeans) {
-                Toast.makeText(HomeActivity.this, "Home found successful!", Toast.LENGTH_LONG).show();
-                currentHomeBean = homeBeans.get(0);
-                getRegistrationToken();
-                showDevices();
-            }
+      TuyaHomeSdk.getHomeManagerInstance()
+          .queryHomeList(
+              new ITuyaGetHomeListCallback() {
+                @Override
+                public void onSuccess(List<HomeBean> homeBeans) {
+                  Toast.makeText(HomeActivity.this, "Home found successful!", Toast.LENGTH_LONG)
+                      .show();
+                  currentHomeBean = homeBeans.get(0);
+                  getRegistrationToken();
+                  showDevices();
+                }
 
-            @Override
-            public void onError(String errorCode, String error) {
-                Log.d(TAG, "Home finding failed with error: " + error);
-                Toast.makeText(HomeActivity.this, "Home finding failed!", Toast.LENGTH_LONG)
-                        .show();
-            }
-        });
-
+                @Override
+                public void onError(String errorCode, String error) {
+                  Log.d(TAG, "Home finding failed with error: " + error);
+                  Toast.makeText(HomeActivity.this, "Home finding failed!", Toast.LENGTH_LONG)
+                      .show();
+                }
+              });
     }
     btnSearch.setVisibility(View.VISIBLE);
   }
@@ -265,13 +270,14 @@ public class HomeActivity extends AppCompatActivity {
   }
 
   private void addHome() {
-      AppDatabase db = AppDatabase.build(getApplicationContext());
-      Home home = new Home();
-      home.setUserEmail(email);
-      home.setHomeName(homeName);
-      home.setRoomList(roomList);
-      db.homeDao().insertHome(home);
+    AppDatabase db = AppDatabase.build(getApplicationContext());
+    Home home = new Home();
+    home.setUserEmail(email);
+    home.setHomeName(homeName);
+    home.setRoomList(roomList);
+    db.homeDao().insertHome(home);
   }
+
   private void getRegistrationToken() {
     homeId = currentHomeBean.getHomeId();
     TuyaHomeSdk.getActivatorInstance()
@@ -292,5 +298,4 @@ public class HomeActivity extends AppCompatActivity {
     btnSearch = findViewById(R.id.btnSearch);
     rv = findViewById(R.id.rv);
   }
-
 }

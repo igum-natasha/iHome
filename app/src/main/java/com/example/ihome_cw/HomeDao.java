@@ -10,12 +10,12 @@ import java.util.List;
 @Dao
 public interface HomeDao {
 
-    @Query("DELETE FROM home WHERE userEmail LIKE :email")
-    void deleteByEmail(String email);
+  @Query("DELETE FROM home WHERE userEmail LIKE :email")
+  void deleteByEmail(String email);
 
-    @Query("SELECT * FROM home")
-    List<Home> getAll();
+  @Query("SELECT * FROM home")
+  List<Home> getAll();
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertHome(Home home);
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
+  void insertHome(Home home);
 }

@@ -23,9 +23,9 @@ public class TuyaSmartApp extends Application {
     AppDatabase db = AppDatabase.build(this.getApplicationContext());
     usersList = new ArrayList<>();
     usersList = db.userDao().getAll();
-//    Home home2 = db.homeDao().getAll().get(0);
-//    Toast.makeText(TuyaSmartApp.this, home2.getHomeName(), Toast.LENGTH_LONG)
-//            .show();
+    //    Home home2 = db.homeDao().getAll().get(0);
+    //    Toast.makeText(TuyaSmartApp.this, home2.getHomeName(), Toast.LENGTH_LONG)
+    //            .show();
     if (usersList.size() == 0) {
       TuyaHomeSdk.setOnNeedLoginListener(
           new INeedLoginListener() {
