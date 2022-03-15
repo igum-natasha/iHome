@@ -17,9 +17,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/Theme.IHome_CW">
-        <activity
-            android:name=".TaskAdditionActivity"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".TaskAdditionActivity"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".PreMainActivity"
             android:exported="false" /> <!-- <activity -->

@@ -86,6 +86,7 @@ public class HomeActivity extends AppCompatActivity {
           }
         });
   }
+
   private void initializeData() {
     TuyaHomeSdk.newHomeInstance(homeId)
         .getHomeDetail(
@@ -93,16 +94,16 @@ public class HomeActivity extends AppCompatActivity {
               @Override
               public void onSuccess(HomeBean bean) {
                 if (bean.getDeviceList().size() > 0) {
-                   List<DeviceBean> devArr = bean.getDeviceList();
-                    for (int i = 0; i < devArr.size(); i++) {
-                        Device dev = new Device();
-                        dev.setDeviceId(devArr.get(i).getDevId());
-                        dev.setProductId(devArr.get(i).getProductId());
-                        dev.setDeviceName(devArr.get(i).getName());
-                        dev.setUserEmail(email);
-                        dev.setCategory(devArr.get(i).getDeviceCategory());
-                        devices.add(dev);
-                    }
+                  List<DeviceBean> devArr = bean.getDeviceList();
+                  for (int i = 0; i < devArr.size(); i++) {
+                    Device dev = new Device();
+                    dev.setDeviceId(devArr.get(i).getDevId());
+                    dev.setProductId(devArr.get(i).getProductId());
+                    dev.setDeviceName(devArr.get(i).getName());
+                    dev.setUserEmail(email);
+                    dev.setCategory(devArr.get(i).getDeviceCategory());
+                    devices.add(dev);
+                  }
                 }
               }
 
@@ -126,7 +127,7 @@ public class HomeActivity extends AppCompatActivity {
             bundle.putString("DeviceId", devices.get(position).getDeviceId());
             bundle.putString("DeviceName", devices.get(position).getDeviceName());
             bundle.putString("ProductId", devices.get(position).getProductId());
-              bundle.putString("Category", devices.get(position).getCategory());
+            bundle.putString("Category", devices.get(position).getCategory());
             Intent intent = new Intent(HomeActivity.this, DeviceControlActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);

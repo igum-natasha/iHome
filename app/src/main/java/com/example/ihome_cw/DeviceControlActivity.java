@@ -1,6 +1,5 @@
 package com.example.ihome_cw;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -67,243 +66,246 @@ public class DeviceControlActivity extends AppCompatActivity {
       tvDeviceName.setText(devName);
     }
 
-    btnAddTask.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Bundle bundle = new Bundle();
-            bundle.putString("DeviceId", devId);
-            bundle.putString("DeviceName", devName);
-            bundle.putString("ProductId", prodId);
-            bundle.putString("Category", category);
-            Intent intent = new Intent(DeviceControlActivity.this, TaskAdditionActivity.class);
-            intent.putExtras(bundle);
-            startActivity(intent);
-        }
-    });
+    //    btnAddTask.setOnClickListener(
+    //        new View.OnClickListener() {
+    //          @Override
+    //          public void onClick(View view) {
+    //            Bundle bundle = new Bundle();
+    //            bundle.putString("DeviceId", devId);
+    //            bundle.putString("DeviceName", devName);
+    //            bundle.putString("ProductId", prodId);
+    //            bundle.putString("Category", category);
+    //            Intent intent = new Intent(DeviceControlActivity.this,
+    // TaskAdditionActivity.class);
+    //            intent.putExtras(bundle);
+    //            startActivity(intent);
+    //          }
+    //        });
 
     if (category.equals("dj")) {
-        ITuyaLightDevice controlDevice = new TuyaLightDevice(devId);
+      ITuyaLightDevice controlDevice = new TuyaLightDevice(devId);
 
-        controlDevice.registerLightListener(
-                new ILightListener() {
-                    @Override
-                    public void onDpUpdate(LightDataPoint lightDataPoint) {}
-
-                    @Override
-                    public void onRemoved() {}
-
-                    @Override
-                    public void onStatusChanged(boolean b) {}
-
-                    @Override
-                    public void onNetworkStatusChanged(boolean b) {}
-
-                    @Override
-                    public void onDevInfoUpdate() {}
-                });
-        swStatus.setOnCheckedChangeListener(
-                new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                        controlDevice.powerSwitch(
-                                b,
-                                new IResultCallback() {
-                                    @Override
-                                    public void onError(String code, String error) {
-                                        Toast.makeText(
-                                                DeviceControlActivity.this, "Light change failed!", Toast.LENGTH_LONG)
-                                                .show();
-                                    }
-
-                                    @Override
-                                    public void onSuccess() {
-                    Toast.makeText(
-                            DeviceControlActivity.this,
-                            "Light change successful!",
-                            Toast.LENGTH_LONG)
-                        .show();
-                                    }
-                                });
-                    }
-                });
-        sbBrightness.setOnSeekBarChangeListener(
-                new SeekBar.OnSeekBarChangeListener() {
-                    @Override
-                    public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                        controlDevice.brightness(
-                                i,
-                                new IResultCallback() {
-                                    @Override
-                                    public void onError(String code, String error) {
-                                        Toast.makeText(
-                                                DeviceControlActivity.this,
-                                                "Light brightness change failed!",
-                                                Toast.LENGTH_LONG)
-                                                .show();
-                                    }
-
-                                    @Override
-                                    public void onSuccess() {
-                                        Toast.makeText(DeviceControlActivity.this,
-                                                "Light brightness change successful!",
-                                                Toast.LENGTH_LONG).show();
-                                    }
-                                });
-                    }
-
-                    @Override
-                    public void onStartTrackingTouch(SeekBar seekBar) {}
-
-                    @Override
-                    public void onStopTrackingTouch(SeekBar seekBar) {}
-                });
-
-        spWorkMode.setOnItemSelectedListener(
-                new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-                        LightMode selectedLightMode = LightMode.MODE_WHITE;
-                        String selectedWorkMode = workModeAdapter.getItem(i);
-
-                        switch (selectedWorkMode) {
-                            case "Scene":
-                                selectedLightMode = LightMode.MODE_SCENE;
-                                break;
-                            case "White":
-                                selectedLightMode = LightMode.MODE_WHITE;
-                                break;
-                            case "Color":
-                                selectedLightMode = LightMode.MODE_COLOUR;
-                                break;
-                        }
-
-                        controlDevice.workMode(
-                                selectedLightMode,
-                                new IResultCallback() {
-                                    @Override
-                                    public void onError(String code, String error) {
-                                        Toast.makeText(
-                                                DeviceControlActivity.this,
-                                                "Work mode change failed!",
-                                                Toast.LENGTH_LONG)
-                                                .show();
-                                    }
-
-                                    @Override
-                                    public void onSuccess() {
-                                        Toast.makeText(
-                                                DeviceControlActivity.this,
-                                                "Work mode change successful!",
-                                                Toast.LENGTH_LONG)
-                                                .show();
-                                    }
-                                });
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {}
-                });
-
-        spScene.setOnItemSelectedListener(
-                new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-                        LightScene selectedLightScene = LightScene.SCENE_CASUAL;
-                        String selectedScene = sceneAdapter.getItem(i);
-
-                        switch (selectedScene) {
-                            case "Goodnight":
-                                selectedLightScene = LightScene.SCENE_GOODNIGHT;
-                                break;
-                            case "Casual":
-                                selectedLightScene = LightScene.SCENE_CASUAL;
-                                break;
-                            case "Read":
-                                selectedLightScene = LightScene.SCENE_READ;
-                                break;
-                            case "Work":
-                                selectedLightScene = LightScene.SCENE_WORK;
-                                break;
-                        }
-
-                        controlDevice.scene(
-                                selectedLightScene,
-                                new IResultCallback() {
-                                    @Override
-                                    public void onError(String code, String error) {
-                                        Toast.makeText(
-                                                DeviceControlActivity.this, "Scene change failed!", Toast.LENGTH_LONG)
-                                                .show();
-                                    }
-
-                                    @Override
-                                    public void onSuccess() {
-                                        Toast.makeText(
-                                                DeviceControlActivity.this,
-                                                "Scene change successful!",
-                                                Toast.LENGTH_LONG)
-                                                .show();
-                                    }
-                                });
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {}
-                });
-    } else {
-        ITuyaDevice conDevice = TuyaHomeSdk.newDeviceInstance(devId);
-        sbBrightness.setVisibility(View.INVISIBLE);
-        spWorkMode.setVisibility(View.INVISIBLE);
-        spScene.setVisibility(View.INVISIBLE);
-        labelScene.setVisibility(View.INVISIBLE);
-        labelWorkMode.setVisibility(View.INVISIBLE);
-        conDevice.registerDevListener(new IDevListener() {
+      controlDevice.registerLightListener(
+          new ILightListener() {
             @Override
-            public void onDpUpdate(String devId, String dpStr) {
-                Toast.makeText(
-                        DeviceControlActivity.this, "Device state updated!", Toast.LENGTH_LONG)
-                        .show();
-            }
+            public void onDpUpdate(LightDataPoint lightDataPoint) {}
+
             @Override
-            public void onRemoved(String devId) {
+            public void onRemoved() {}
 
-            }
             @Override
-            public void onStatusChanged(String devId, boolean online) {
+            public void onStatusChanged(boolean b) {}
 
-            }
             @Override
-            public void onNetworkStatusChanged(String devId, boolean status) {
+            public void onNetworkStatusChanged(boolean b) {}
 
-            }
             @Override
-            public void onDevInfoUpdate(String devId) {
-
-            }
-        });
-
-        swStatus.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onDevInfoUpdate() {}
+          });
+      swStatus.setOnCheckedChangeListener(
+          new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                HashMap<String, Object> hashMap = new HashMap<>();
-                hashMap.put(STHEME_DPID_101, b);
-                conDevice.publishDps(JSONObject.toJSONString(hashMap),
-                        new IResultCallback() {
-                            @Override
-                            public void onError(String code, String error) {
-                                Toast.makeText(
-                                        DeviceControlActivity.this, "Socket change failed!", Toast.LENGTH_LONG)
-                                        .show();
-                            }
+              controlDevice.powerSwitch(
+                  b,
+                  new IResultCallback() {
+                    @Override
+                    public void onError(String code, String error) {
+                      Toast.makeText(
+                              DeviceControlActivity.this, "Light change failed!", Toast.LENGTH_LONG)
+                          .show();
+                    }
 
-                            @Override
-                            public void onSuccess() {
-                            }
-                        });
+                    @Override
+                    public void onSuccess() {
+                      Toast.makeText(
+                              DeviceControlActivity.this,
+                              "Light change successful!",
+                              Toast.LENGTH_LONG)
+                          .show();
+                    }
+                  });
             }
-        });
+          });
+      sbBrightness.setOnSeekBarChangeListener(
+          new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+              controlDevice.brightness(
+                  i,
+                  new IResultCallback() {
+                    @Override
+                    public void onError(String code, String error) {
+                      Toast.makeText(
+                              DeviceControlActivity.this,
+                              "Light brightness change failed!",
+                              Toast.LENGTH_LONG)
+                          .show();
+                    }
+
+                    @Override
+                    public void onSuccess() {
+                      Toast.makeText(
+                              DeviceControlActivity.this,
+                              "Light brightness change successful!",
+                              Toast.LENGTH_LONG)
+                          .show();
+                    }
+                  });
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+          });
+
+      spWorkMode.setOnItemSelectedListener(
+          new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+              LightMode selectedLightMode = LightMode.MODE_WHITE;
+              String selectedWorkMode = workModeAdapter.getItem(i);
+
+              switch (selectedWorkMode) {
+                case "Scene":
+                  selectedLightMode = LightMode.MODE_SCENE;
+                  break;
+                case "White":
+                  selectedLightMode = LightMode.MODE_WHITE;
+                  break;
+                case "Color":
+                  selectedLightMode = LightMode.MODE_COLOUR;
+                  break;
+              }
+
+              controlDevice.workMode(
+                  selectedLightMode,
+                  new IResultCallback() {
+                    @Override
+                    public void onError(String code, String error) {
+                      Toast.makeText(
+                              DeviceControlActivity.this,
+                              "Work mode change failed!",
+                              Toast.LENGTH_LONG)
+                          .show();
+                    }
+
+                    @Override
+                    public void onSuccess() {
+                      Toast.makeText(
+                              DeviceControlActivity.this,
+                              "Work mode change successful!",
+                              Toast.LENGTH_LONG)
+                          .show();
+                    }
+                  });
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+          });
+
+      spScene.setOnItemSelectedListener(
+          new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+              LightScene selectedLightScene = LightScene.SCENE_CASUAL;
+              String selectedScene = sceneAdapter.getItem(i);
+
+              switch (selectedScene) {
+                case "Goodnight":
+                  selectedLightScene = LightScene.SCENE_GOODNIGHT;
+                  break;
+                case "Casual":
+                  selectedLightScene = LightScene.SCENE_CASUAL;
+                  break;
+                case "Read":
+                  selectedLightScene = LightScene.SCENE_READ;
+                  break;
+                case "Work":
+                  selectedLightScene = LightScene.SCENE_WORK;
+                  break;
+              }
+
+              controlDevice.scene(
+                  selectedLightScene,
+                  new IResultCallback() {
+                    @Override
+                    public void onError(String code, String error) {
+                      Toast.makeText(
+                              DeviceControlActivity.this, "Scene change failed!", Toast.LENGTH_LONG)
+                          .show();
+                    }
+
+                    @Override
+                    public void onSuccess() {
+                      Toast.makeText(
+                              DeviceControlActivity.this,
+                              "Scene change successful!",
+                              Toast.LENGTH_LONG)
+                          .show();
+                    }
+                  });
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+          });
+    } else {
+      ITuyaDevice conDevice = TuyaHomeSdk.newDeviceInstance(devId);
+      sbBrightness.setVisibility(View.INVISIBLE);
+      spWorkMode.setVisibility(View.INVISIBLE);
+      spScene.setVisibility(View.INVISIBLE);
+      labelScene.setVisibility(View.INVISIBLE);
+      labelWorkMode.setVisibility(View.INVISIBLE);
+      conDevice.registerDevListener(
+          new IDevListener() {
+            @Override
+            public void onDpUpdate(String devId, String dpStr) {
+              Toast.makeText(DeviceControlActivity.this, "Device state updated!", Toast.LENGTH_LONG)
+                  .show();
+            }
+
+            @Override
+            public void onRemoved(String devId) {}
+
+            @Override
+            public void onStatusChanged(String devId, boolean online) {}
+
+            @Override
+            public void onNetworkStatusChanged(String devId, boolean status) {}
+
+            @Override
+            public void onDevInfoUpdate(String devId) {}
+          });
+
+      swStatus.setOnCheckedChangeListener(
+          new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+              HashMap<String, Object> hashMap = new HashMap<>();
+              hashMap.put(STHEME_DPID_101, b);
+              conDevice.publishDps(
+                  JSONObject.toJSONString(hashMap),
+                  new IResultCallback() {
+                    @Override
+                    public void onError(String code, String error) {
+                      Toast.makeText(
+                              DeviceControlActivity.this,
+                              "Socket change failed!",
+                              Toast.LENGTH_LONG)
+                          .show();
+                    }
+
+                    @Override
+                    public void onSuccess() {}
+                  });
+            }
+          });
     }
   }
 
