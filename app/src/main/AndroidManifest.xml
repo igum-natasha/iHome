@@ -18,12 +18,13 @@
         android:supportsRtl="false"
         android:theme="@style/Theme.IHome_CW">
         <activity
-            android:name=".PreMainActivity"
+            android:name=".TaskAdditionActivity"
             android:exported="false" />
-<!--        <activity-->
-<!--            android:name=".SocketControlActivity"-->
-<!--            android:exported="false" />-->
-
+        <activity
+            android:name=".PreMainActivity"
+            android:exported="false" /> <!-- <activity -->
+        <!-- android:name=".SocketControlActivity" -->
+        <!-- android:exported="false" /> -->
         <meta-data
             android:name="TUYA_SMART_APPKEY"
             android:value="g7vx5ktc8qpwcexyufc3" />

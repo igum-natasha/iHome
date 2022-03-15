@@ -23,8 +23,17 @@ public class Device {
   public String productId;
 
   @NonNull
+  @ColumnInfo(name = "Category")
+  public String category;
+
+  @NonNull
   public String getUserEmail() {
     return userEmail;
+  }
+
+  @NonNull
+  public String getCategory() {
+    return category;
   }
 
   @NonNull
@@ -44,6 +53,10 @@ public class Device {
 
   public void setUserEmail(@NonNull String email) {
     this.userEmail = email;
+  }
+
+  public void setCategory(@NonNull String category) {
+    this.category = category;
   }
 
   public void setDeviceId(@NonNull String deviceId) {

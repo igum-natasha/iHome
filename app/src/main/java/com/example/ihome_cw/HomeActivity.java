@@ -86,7 +86,6 @@ public class HomeActivity extends AppCompatActivity {
           }
         });
   }
-
   private void initializeData() {
     TuyaHomeSdk.newHomeInstance(homeId)
         .getHomeDetail(
@@ -94,13 +93,16 @@ public class HomeActivity extends AppCompatActivity {
               @Override
               public void onSuccess(HomeBean bean) {
                 if (bean.getDeviceList().size() > 0) {
-                  Device dev = new Device();
-
-                  dev.setDeviceId(bean.getDeviceList().get(0).getDevId());
-                  dev.setProductId(bean.getDeviceList().get(0).getProductId());
-                  dev.setDeviceName(bean.getDeviceList().get(0).getName());
-                  dev.setUserEmail(email);
-                  devices.add(dev);
+                   List<DeviceBean> devArr = bean.getDeviceList();
+                    for (int i = 0; i < devArr.size(); i++) {
+                        Device dev = new Device();
+                        dev.setDeviceId(devArr.get(i).getDevId());
+                        dev.setProductId(devArr.get(i).getProductId());
+                        dev.setDeviceName(devArr.get(i).getName());
+                        dev.setUserEmail(email);
+                        dev.setCategory(devArr.get(i).getDeviceCategory());
+                        devices.add(dev);
+                    }
                 }
               }
 
@@ -124,6 +126,7 @@ public class HomeActivity extends AppCompatActivity {
             bundle.putString("DeviceId", devices.get(position).getDeviceId());
             bundle.putString("DeviceName", devices.get(position).getDeviceName());
             bundle.putString("ProductId", devices.get(position).getProductId());
+              bundle.putString("Category", devices.get(position).getCategory());
             Intent intent = new Intent(HomeActivity.this, DeviceControlActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
@@ -151,9 +154,10 @@ public class HomeActivity extends AppCompatActivity {
     AppDatabase db = AppDatabase.build(this.getApplicationContext());
     Device device = new Device();
     device.setUserEmail(email);
-    device.setDeviceId(bean.devId);
-    device.setDeviceName(bean.name);
-    device.setProductId(bean.productId);
+    device.setDeviceId(bean.getDevId());
+    device.setDeviceName(bean.getName());
+    device.setProductId(bean.getProductId());
+    device.setCategory(bean.getDeviceCategory());
     db.deviceDao().insertDevice(device);
   }
 

@@ -67,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minHeight="48dp"
-        android:text="Bulb Status"
+        android:text="Status"
         android:textColor="#009688"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -120,4 +120,14 @@
         app:layout_constraintTop_toBottomOf="@+id/labelWorkMode"
         app:layout_constraintVertical_bias="0.077"
         tools:ignore="MissingConstraints,SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/btnAddTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="296dp"
+        android:text="Add task"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sbBrightness" />
 </androidx.constraintlayout.widget.ConstraintLayout>
