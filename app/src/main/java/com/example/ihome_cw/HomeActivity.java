@@ -43,7 +43,7 @@ public class HomeActivity extends AppCompatActivity {
   private String ssid, email;
   private String password;
   private HomeBean currentHomeBean;
-  private long homeId;
+  public static long homeId;
   private DeviceBean currentDeviceBean;
 
   private List<Home> homesList;
@@ -295,12 +295,18 @@ public class HomeActivity extends AppCompatActivity {
               }
 
               @Override
-              public void onFailure(String s, String s1) {}
+              public void onFailure(String s, String s1) {
+
+              }
             });
   }
 
   private void initViews() {
     btnSearch = findViewById(R.id.btnSearch);
     rv = findViewById(R.id.rv);
+  }
+
+  public static long getHomeId() {
+      return homeId;
   }
 }

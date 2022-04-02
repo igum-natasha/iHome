@@ -55,5 +55,9 @@ dependencies {
     implementation 'com.tuya.smart:tuyasmart-centralcontrol:1.0.2'
 //    implementation 'com.tuya.smart:socket-sdk:0.1.1'
 //    implementation 'com.tuya.smart:TuyaSocketPanel:1.0.1'
+    implementation 'com.google.code.gson:gson:2.8.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.2.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.2.0'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
 
 }

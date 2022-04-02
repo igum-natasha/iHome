@@ -1,5 +1,6 @@
 package com.example.ihome_cw;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -66,21 +67,21 @@ public class DeviceControlActivity extends AppCompatActivity {
       tvDeviceName.setText(devName);
     }
 
-    //    btnAddTask.setOnClickListener(
-    //        new View.OnClickListener() {
-    //          @Override
-    //          public void onClick(View view) {
-    //            Bundle bundle = new Bundle();
-    //            bundle.putString("DeviceId", devId);
-    //            bundle.putString("DeviceName", devName);
-    //            bundle.putString("ProductId", prodId);
-    //            bundle.putString("Category", category);
-    //            Intent intent = new Intent(DeviceControlActivity.this,
-    // TaskAdditionActivity.class);
-    //            intent.putExtras(bundle);
-    //            startActivity(intent);
-    //          }
-    //        });
+        btnAddTask.setOnClickListener(
+            new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("DeviceId", devId);
+                bundle.putString("DeviceName", devName);
+                bundle.putString("ProductId", prodId);
+                bundle.putString("Category", category);
+                Intent intent = new Intent(DeviceControlActivity.this,
+     TaskActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+              }
+            });
 
     if (category.equals("dj")) {
       ITuyaLightDevice controlDevice = new TuyaLightDevice(devId);

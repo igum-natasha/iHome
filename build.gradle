@@ -5,7 +5,7 @@ buildscript {
         google()
         maven {
             url "https://maven-other.tuya.com/repository/maven-releases/"
-        }
+            }
         mavenCentral()
     }
     dependencies {
