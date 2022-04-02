@@ -6,9 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class TaskLocationAdditionActivity extends AppCompatActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_location_addition);
-    }
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_task_location_addition);
+  }
 }

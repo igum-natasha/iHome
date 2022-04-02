@@ -295,9 +295,7 @@ public class HomeActivity extends AppCompatActivity {
               }
 
               @Override
-              public void onFailure(String s, String s1) {
-
-              }
+              public void onFailure(String s, String s1) {}
             });
   }
 
@@ -307,6 +305,6 @@ public class HomeActivity extends AppCompatActivity {
   }
 
   public static long getHomeId() {
-      return homeId;
+    return homeId;
   }
 }

@@ -13,72 +13,73 @@ import com.tuya.smart.home.sdk.bean.scene.SceneBean;
 import java.util.List;
 
 public class RVAdapterTasks extends RecyclerView.Adapter<RVAdapterTasks.TaskViewHolder> {
-    private static ClickListener clickListener;
+  private static ClickListener clickListener;
 
-    public static class TaskViewHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener, View.OnLongClickListener {
+  public static class TaskViewHolder extends RecyclerView.ViewHolder
+      implements View.OnClickListener, View.OnLongClickListener {
 
-        CardView cv;
-        TextView taskName;
-        TextView deviceId;
+    CardView cv;
+    TextView taskName;
+    TextView deviceId;
 
-        TaskViewHolder(View itemView) {
-            super(itemView);
-            itemView.setOnClickListener(this);
-            itemView.setOnLongClickListener(this);
-            cv = itemView.findViewById(R.id.cv_tasks);
-            taskName = itemView.findViewById(R.id.task_name);
-            deviceId = itemView.findViewById(R.id.device_id_tasks);
-        }
-
-        @Override
-        public void onClick(View v) {
-            clickListener.onItemClick(getAdapterPosition(), v);
-        }
-
-        @Override
-        public boolean onLongClick(View v) {
-            clickListener.onItemLongClick(getAdapterPosition(), v);
-            return false;
-        }
-    }
-
-    List<SceneBean> tasks;
-
-    RVAdapterTasks(List<SceneBean> tasks) {
-        this.tasks = tasks;
+    TaskViewHolder(View itemView) {
+      super(itemView);
+      itemView.setOnClickListener(this);
+      itemView.setOnLongClickListener(this);
+      cv = itemView.findViewById(R.id.cv_tasks);
+      taskName = itemView.findViewById(R.id.task_name);
+      deviceId = itemView.findViewById(R.id.device_id_tasks);
     }
 
     @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
+    public void onClick(View v) {
+      clickListener.onItemClick(getAdapterPosition(), v);
     }
 
     @Override
-    public TaskViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_tasks, viewGroup, false);
-        TaskViewHolder task = new TaskViewHolder(v);
-        return task;
+    public boolean onLongClick(View v) {
+      clickListener.onItemLongClick(getAdapterPosition(), v);
+      return false;
     }
+  }
 
-    @Override
-    public void onBindViewHolder(TaskViewHolder taskViewHolder, int i) {
-        taskViewHolder.taskName.setText(tasks.get(i).getName());
-        taskViewHolder.deviceId.setText(tasks.get(i).getId());
-    }
+  List<SceneBean> tasks;
 
-    @Override
-    public int getItemCount() {
-        return tasks.size();
-    }
+  RVAdapterTasks(List<SceneBean> tasks) {
+    this.tasks = tasks;
+  }
 
-    public void setOnItemClickListener(ClickListener clickListener) {
-        RVAdapterTasks.clickListener = clickListener;
-    }
+  @Override
+  public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+    super.onAttachedToRecyclerView(recyclerView);
+  }
 
-    public interface ClickListener {
-        void onItemClick(int position, View v);
+  @Override
+  public TaskViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    View v =
+        LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_tasks, viewGroup, false);
+    TaskViewHolder task = new TaskViewHolder(v);
+    return task;
+  }
 
-        void onItemLongClick(int position, View v);
-    }
+  @Override
+  public void onBindViewHolder(TaskViewHolder taskViewHolder, int i) {
+    taskViewHolder.taskName.setText(tasks.get(i).getName());
+    taskViewHolder.deviceId.setText(tasks.get(i).getId());
+  }
+
+  @Override
+  public int getItemCount() {
+    return tasks.size();
+  }
+
+  public void setOnItemClickListener(ClickListener clickListener) {
+    RVAdapterTasks.clickListener = clickListener;
+  }
+
+  public interface ClickListener {
+    void onItemClick(int position, View v);
+
+    void onItemLongClick(int position, View v);
+  }
 }
