@@ -19,6 +19,9 @@
         android:theme="@style/Theme.IHome_CW"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".SimpleTaskActivity"
+            android:exported="false" />
+        <activity
             android:name=".SceneInfoActivity"
             android:exported="false" />
         <activity
@@ -36,6 +39,7 @@
         <activity
             android:name=".PreMainActivity"
             android:exported="false" />
+
         <meta-data
             android:name="TUYA_SMART_APPKEY"
             android:value="g7vx5ktc8qpwcexyufc3" />

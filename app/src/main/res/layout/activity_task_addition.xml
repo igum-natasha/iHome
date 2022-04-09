@@ -12,35 +12,7 @@
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp"
         tools:ignore="MissingConstraints" />
-<!--    <EditText-->
-<!--        android:id="@+id/etDate"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="52dp"-->
-<!--        android:ems="10"-->
-<!--        android:inputType="date"-->
-<!--        android:minHeight="48dp"-->
-<!--        android:text="Enter date"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/etTime"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.497"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        tools:ignore="MissingConstraints" />-->
 
-<!--    <EditText-->
-<!--        android:id="@+id/etTime"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="76dp"-->
-<!--        android:ems="10"-->
-<!--        android:inputType="time"-->
-<!--        android:minHeight="48dp"-->
-<!--        android:text="Enter time"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/btnAdd"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.497"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        tools:ignore="MissingConstraints" />-->
 
     <Button
         android:id="@+id/btnAdd"
@@ -53,15 +25,5 @@
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteY="682dp" />
 
-    <!--    <EditText-->
-<!--        android:id="@+id/etName"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:ems="10"-->
-<!--        android:inputType="textPersonName"-->
-<!--        android:text="Enter name"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/etDate"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
 </androidx.constraintlayout.widget.ConstraintLayout>
