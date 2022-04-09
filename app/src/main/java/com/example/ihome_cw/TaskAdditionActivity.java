@@ -31,7 +31,6 @@ public class TaskAdditionActivity extends AppCompatActivity {
 
     Bundle bundle = getIntent().getExtras();
 
-
     btnAdd = findViewById(R.id.btnAdd);
     if (bundle != null) {
       devId = bundle.getString("DeviceId");
@@ -45,14 +44,14 @@ public class TaskAdditionActivity extends AppCompatActivity {
         new View.OnClickListener() {
           @Override
           public void onClick(View view) {
-          Bundle bundle = new Bundle();
-          bundle.putString("DeviceId", devId);
-          bundle.putString("DeviceName", devName);
-          bundle.putString("ProductId", prodId);
-          bundle.putString("Category", category);
-          Intent intent = new Intent(TaskAdditionActivity.this, SimpleTaskActivity.class);
-          intent.putExtras(bundle);
-          startActivity(intent);
+            Bundle bundle = new Bundle();
+            bundle.putString("DeviceId", devId);
+            bundle.putString("DeviceName", devName);
+            bundle.putString("ProductId", prodId);
+            bundle.putString("Category", category);
+            Intent intent = new Intent(TaskAdditionActivity.this, SimpleTaskActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
           }
         });
   }
@@ -101,5 +100,4 @@ public class TaskAdditionActivity extends AppCompatActivity {
     initializeData();
     initializeAdapter();
   }
-
 }

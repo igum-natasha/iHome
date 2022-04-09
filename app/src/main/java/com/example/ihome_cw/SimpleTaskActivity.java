@@ -25,98 +25,95 @@ import java.util.TimeZone;
 
 public class SimpleTaskActivity extends AppCompatActivity {
 
-    private EditText etTime, etDate, etName;
-    private Button btnAddTask;
-    String devId, devName, prodId, category;
-    private List<SceneTask> tasks = new ArrayList<>();
-    private List<SceneCondition> conditions = new ArrayList<>();
+  private EditText etTime, etDate, etName;
+  private Button btnAddTask;
+  String devId, devName, prodId, category;
+  private List<SceneTask> tasks = new ArrayList<>();
+  private List<SceneCondition> conditions = new ArrayList<>();
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_simple_task);
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_simple_task);
 
-        initViews();
+    initViews();
 
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            devId = bundle.getString("DeviceId");
-            devName = bundle.getString("DeviceName");
-            prodId = bundle.getString("ProductId");
-            category = bundle.getString("Category");
-        }
+    Bundle bundle = getIntent().getExtras();
+    if (bundle != null) {
+      devId = bundle.getString("DeviceId");
+      devName = bundle.getString("DeviceName");
+      prodId = bundle.getString("ProductId");
+      category = bundle.getString("Category");
+    }
 
-        btnAddTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String Date = etDate.getText().toString();
-                String Time = etTime.getText().toString();
-                String Name = etName.getText().toString();
-                HashMap taskMap = new HashMap();
-                taskMap.put("1", true);
-                SceneTask task =
-                        TuyaHomeSdk.getSceneManagerInstance().createDpTask(
-                                devId,
-                                taskMap
-                        );
-                tasks.add(task);
-                TimerRule timerRule =
-                        TimerRule.newInstance("1111111", Time, Date);
-                SceneCondition condition =
-                        SceneCondition.createTimerCondition(
-                                "Saturday, Sunday, Monday, Tuesday, Wednesday, Thursday, Friday",
-                                "Scheduled for weekday",
-                                "timer",
-                                timerRule);
-                conditions.add(condition);
+    btnAddTask.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            String Date = etDate.getText().toString();
+            String Time = etTime.getText().toString();
+            String Name = etName.getText().toString();
+            HashMap taskMap = new HashMap();
+            taskMap.put("1", true);
+            SceneTask task = TuyaHomeSdk.getSceneManagerInstance().createDpTask(devId, taskMap);
+            tasks.add(task);
+            TimerRule timerRule = TimerRule.newInstance("1111111", Time, Date);
+            SceneCondition condition =
+                SceneCondition.createTimerCondition(
+                    "Saturday, Sunday, Monday, Tuesday, Wednesday, Thursday, Friday",
+                    "Scheduled for weekday",
+                    "timer",
+                    timerRule);
+            conditions.add(condition);
 
-                PreCondition preCondition = new PreCondition();
-                PreConditionExpr expr = new PreConditionExpr();
-                expr.setStart("00:00");
-                expr.setEnd("23:59");
-                expr.setTimeInterval(PreCondition.TIMEINTERVAL_ALLDAY);
-                preCondition.setCondType(PreCondition.TYPE_TIME_CHECK);
-                expr.setTimeZoneId(TimeZone.getDefault().getID());
-                preCondition.setExpr(expr);
-                List<PreCondition> preConditions = new ArrayList<>();
-                preConditions.add(preCondition);
+            PreCondition preCondition = new PreCondition();
+            PreConditionExpr expr = new PreConditionExpr();
+            expr.setStart("00:00");
+            expr.setEnd("23:59");
+            expr.setTimeInterval(PreCondition.TIMEINTERVAL_ALLDAY);
+            preCondition.setCondType(PreCondition.TYPE_TIME_CHECK);
+            expr.setTimeZoneId(TimeZone.getDefault().getID());
+            preCondition.setExpr(expr);
+            List<PreCondition> preConditions = new ArrayList<>();
+            preConditions.add(preCondition);
 
-                TuyaHomeSdk.getSceneManagerInstance()
-                        .createScene(
-                                HomeActivity.getHomeId(),
-                                Name, // The name of the scene.
-                                false,
-                                "", // Indicates whether the scene is displayed on the homepage.
-                                conditions, // The conditions.
-                                tasks, // The tasks.
-                                preConditions, // The effective period. This parameter is optional.
-                                SceneBean.MATCH_TYPE_AND, // The type of trigger conditions to match.
-                                new ITuyaResultCallback<SceneBean>() {
-                                    @Override
-                                    public void onSuccess(SceneBean sceneBean) {
-                                        Toast.makeText(SimpleTaskActivity.this, "successful!", Toast.LENGTH_LONG)
-                                                .show();
-                                        Bundle bundle = new Bundle();
-                                        bundle.putString("DeviceId", devId);
-                                        bundle.putString("DeviceName", devName);
-                                        bundle.putString("ProductId", prodId);
-                                        bundle.putString("Category", category);
-                                        Intent intent = new Intent(SimpleTaskActivity.this, TaskAdditionActivity.class);
-                                        intent.putExtras(bundle);
-                                        startActivity(intent);
-                                    }
+            TuyaHomeSdk.getSceneManagerInstance()
+                .createScene(
+                    HomeActivity.getHomeId(),
+                    Name, // The name of the scene.
+                    false,
+                    "", // Indicates whether the scene is displayed on the homepage.
+                    conditions, // The conditions.
+                    tasks, // The tasks.
+                    preConditions, // The effective period. This parameter is optional.
+                    SceneBean.MATCH_TYPE_AND, // The type of trigger conditions to match.
+                    new ITuyaResultCallback<SceneBean>() {
+                      @Override
+                      public void onSuccess(SceneBean sceneBean) {
+                        Toast.makeText(SimpleTaskActivity.this, "successful!", Toast.LENGTH_LONG)
+                            .show();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("DeviceId", devId);
+                        bundle.putString("DeviceName", devName);
+                        bundle.putString("ProductId", prodId);
+                        bundle.putString("Category", category);
+                        Intent intent =
+                            new Intent(SimpleTaskActivity.this, TaskAdditionActivity.class);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                      }
 
-                                    @Override
-                                    public void onError(String errorCode, String errorMessage) {}
-                                });
-            }
+                      @Override
+                      public void onError(String errorCode, String errorMessage) {}
+                    });
+          }
         });
-    }
+  }
 
-    private void initViews() {
-        etDate = findViewById(R.id.etDate);
-        etTime = findViewById(R.id.etTime);
-        btnAddTask = findViewById(R.id.btnAddTask);
-        etName = findViewById(R.id.etName);
-    }
+  private void initViews() {
+    etDate = findViewById(R.id.etDate);
+    etTime = findViewById(R.id.etTime);
+    btnAddTask = findViewById(R.id.btnAddTask);
+    etName = findViewById(R.id.etName);
+  }
 }

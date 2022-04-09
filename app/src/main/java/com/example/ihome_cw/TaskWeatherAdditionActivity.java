@@ -49,7 +49,6 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
   WeatherAPI.ApiInterface api;
   LocationManager locationManager;
 
-
   private List<SceneTask> tasks = new ArrayList<>();
   private List<SceneBean> scenes = new ArrayList<>();
   private List<SceneCondition> conditions = new ArrayList<>();
@@ -104,141 +103,136 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
         new View.OnClickListener() {
           @Override
           public void onClick(View view) {
-              Location bestLocation = getLocation();
-              temp = etWeather.getText().toString();
-              TuyaHomeSdk.getSceneManagerInstance().getCityByLatLng(String.valueOf(bestLocation.getLongitude()),
-                      String.valueOf(bestLocation.getLatitude()),
-                      new ITuyaResultCallback<PlaceFacadeBean>() {
-                          @Override
-                          public void onSuccess(PlaceFacadeBean result) {
-                              placeFacadeBean = result;
-                          }
+            Location bestLocation = getLocation();
+            temp = etWeather.getText().toString();
+            TuyaHomeSdk.getSceneManagerInstance()
+                .getCityByLatLng(
+                    String.valueOf(bestLocation.getLongitude()),
+                    String.valueOf(bestLocation.getLatitude()),
+                    new ITuyaResultCallback<PlaceFacadeBean>() {
+                      @Override
+                      public void onSuccess(PlaceFacadeBean result) {
+                        placeFacadeBean = result;
+                      }
 
-                          @Override
-                          public void onError(String errorCode, String errorMessage) {
-                          }
-                      });
-              tempRule = ValueRule.newInstance(
-                      "temp",
-                      condititon,
-                      Integer.parseInt(temp)
-              );
-              sceneCondition = SceneCondition.createWeatherCondition(
-                      placeFacadeBean,
-                      "temp",
-                      tempRule
-              );
-              HashMap taskMap = new HashMap();
-              taskMap.put("1", true);
-              SceneTask task =
-                      TuyaHomeSdk.getSceneManagerInstance().createDpTask(
-                              devId,
-                              taskMap
-                      );
-              tasks.add(task);
-              conditions.add(sceneCondition);
+                      @Override
+                      public void onError(String errorCode, String errorMessage) {}
+                    });
+            tempRule = ValueRule.newInstance("temp", condititon, Integer.parseInt(temp));
+            sceneCondition =
+                SceneCondition.createWeatherCondition(placeFacadeBean, "temp", tempRule);
+            HashMap taskMap = new HashMap();
+            taskMap.put("1", true);
+            SceneTask task = TuyaHomeSdk.getSceneManagerInstance().createDpTask(devId, taskMap);
+            tasks.add(task);
+            conditions.add(sceneCondition);
 
-              PreCondition preCondition = new PreCondition();
-              PreConditionExpr expr = new PreConditionExpr();
-              expr.setStart("00:00");
-              expr.setEnd("23:59");
-              expr.setTimeInterval(PreCondition.TIMEINTERVAL_ALLDAY);
-              preCondition.setCondType(PreCondition.TYPE_TIME_CHECK);
-              expr.setTimeZoneId(TimeZone.getDefault().getID());
-              preCondition.setExpr(expr);
-              List<PreCondition> preConditions = new ArrayList<>();
-              preConditions.add(preCondition);
+            PreCondition preCondition = new PreCondition();
+            PreConditionExpr expr = new PreConditionExpr();
+            expr.setStart("00:00");
+            expr.setEnd("23:59");
+            expr.setTimeInterval(PreCondition.TIMEINTERVAL_ALLDAY);
+            preCondition.setCondType(PreCondition.TYPE_TIME_CHECK);
+            expr.setTimeZoneId(TimeZone.getDefault().getID());
+            preCondition.setExpr(expr);
+            List<PreCondition> preConditions = new ArrayList<>();
+            preConditions.add(preCondition);
 
-              TuyaHomeSdk.getSceneManagerInstance()
-                      .createScene(
-                              HomeActivity.getHomeId(),
-                              "Test", // The name of the scene.
-                              false,
-                              "", // Indicates whether the scene is displayed on the homepage.
-                              conditions, // The conditions.
-                              tasks, // The tasks.
-                              preConditions, // The effective period. This parameter is optional.
-                              SceneBean.MATCH_TYPE_AND, // The type of trigger conditions to match.
-                              new ITuyaResultCallback<SceneBean>() {
-                                  @Override
-                                  public void onSuccess(SceneBean sceneBean) {
-                                      Toast.makeText(TaskWeatherAdditionActivity.this, "successful!", Toast.LENGTH_LONG)
-                                              .show();
-                                      Bundle bundle = new Bundle();
-                                      bundle.putString("DeviceId", devId);
-                                      bundle.putString("DeviceName", devName);
-                                      bundle.putString("ProductId", prodId);
-                                      bundle.putString("Category", category);
-                                      Intent intent = new Intent(TaskWeatherAdditionActivity.this, TaskActivity.class);
-                                      intent.putExtras(bundle);
-                                      startActivity(intent);
-                                  }
+            TuyaHomeSdk.getSceneManagerInstance()
+                .createScene(
+                    HomeActivity.getHomeId(),
+                    "Test", // The name of the scene.
+                    false,
+                    "", // Indicates whether the scene is displayed on the homepage.
+                    conditions, // The conditions.
+                    tasks, // The tasks.
+                    preConditions, // The effective period. This parameter is optional.
+                    SceneBean.MATCH_TYPE_AND, // The type of trigger conditions to match.
+                    new ITuyaResultCallback<SceneBean>() {
+                      @Override
+                      public void onSuccess(SceneBean sceneBean) {
+                        Toast.makeText(
+                                TaskWeatherAdditionActivity.this, "successful!", Toast.LENGTH_LONG)
+                            .show();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("DeviceId", devId);
+                        bundle.putString("DeviceName", devName);
+                        bundle.putString("ProductId", prodId);
+                        bundle.putString("Category", category);
+                        Intent intent =
+                            new Intent(TaskWeatherAdditionActivity.this, TaskActivity.class);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                      }
 
-                                  @Override
-                                  public void onError(String errorCode, String errorMessage) {
-                                      Toast.makeText(TaskWeatherAdditionActivity.this, "fail!", Toast.LENGTH_LONG)
-                                              .show();
-                                  }
-                              });
+                      @Override
+                      public void onError(String errorCode, String errorMessage) {
+                        Toast.makeText(TaskWeatherAdditionActivity.this, "fail!", Toast.LENGTH_LONG)
+                            .show();
+                      }
+                    });
           }
-//            String ref_temp = etWeather.getText().toString();
-//            getWeather();
-//            temp = tvTemp.getText().toString();
-//            if (!temp.isEmpty()) {
-//              if (condititon.equals(">") && Integer.parseInt(ref_temp) > Integer.parseInt(temp)) {
-//                ITuyaDevice controlDevice = TuyaHomeSdk.newDeviceInstance(devId);
-//                HashMap<String, Object> hashMap = new HashMap<>();
-//                hashMap.put(STHEME_DPID_101, true);
-//                controlDevice.publishDps(
-//                    JSONObject.toJSONString(hashMap),
-//                    new IResultCallback() {
-//                      @Override
-//                      public void onError(String code, String error) {
-//                        Toast.makeText(
-//                                TaskWeatherAdditionActivity.this,
-//                                "Socket change failed!",
-//                                Toast.LENGTH_LONG)
-//                            .show();
-//                      }
-//
-//                      @Override
-//                      public void onSuccess() {}
-//                    });
-//              }
-//            }
-//          }
+          //            String ref_temp = etWeather.getText().toString();
+          //            getWeather();
+          //            temp = tvTemp.getText().toString();
+          //            if (!temp.isEmpty()) {
+          //              if (condititon.equals(">") && Integer.parseInt(ref_temp) >
+          // Integer.parseInt(temp)) {
+          //                ITuyaDevice controlDevice = TuyaHomeSdk.newDeviceInstance(devId);
+          //                HashMap<String, Object> hashMap = new HashMap<>();
+          //                hashMap.put(STHEME_DPID_101, true);
+          //                controlDevice.publishDps(
+          //                    JSONObject.toJSONString(hashMap),
+          //                    new IResultCallback() {
+          //                      @Override
+          //                      public void onError(String code, String error) {
+          //                        Toast.makeText(
+          //                                TaskWeatherAdditionActivity.this,
+          //                                "Socket change failed!",
+          //                                Toast.LENGTH_LONG)
+          //                            .show();
+          //                      }
+          //
+          //                      @Override
+          //                      public void onSuccess() {}
+          //                    });
+          //              }
+          //            }
+          //          }
         });
   }
-  public Location getLocation() {
-      Location bestLocation = null;
-      locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-      if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-              != PackageManager.PERMISSION_GRANTED
-              && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-              != PackageManager.PERMISSION_GRANTED) {
-          ActivityCompat.requestPermissions(
-                  this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-          return bestLocation;
-      } else {
-          List<String> providers = locationManager.getProviders(true);
-          for (String provider : providers) {
-              Location l = locationManager.getLastKnownLocation(provider);
-              if (l == null) {
-                  continue;
-              }
-              if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
-                  // Found best last known location: %s", l);
-                  bestLocation = l;
-              }
-          }
-          if (bestLocation == null) {
-              Toast.makeText(TaskWeatherAdditionActivity.this, "Error! Turn on GPS", Toast.LENGTH_LONG)
-                      .show();
-          }
-      }
+  public Location getLocation() {
+    Location bestLocation = null;
+    locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED
+        && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED) {
+      ActivityCompat.requestPermissions(
+          this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 1);
       return bestLocation;
+    } else {
+      List<String> providers = locationManager.getProviders(true);
+      for (String provider : providers) {
+        Location l = locationManager.getLastKnownLocation(provider);
+        if (l == null) {
+          continue;
+        }
+        if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+          // Found best last known location: %s", l);
+          bestLocation = l;
+        }
+      }
+      if (bestLocation == null) {
+        Toast.makeText(TaskWeatherAdditionActivity.this, "Error! Turn on GPS", Toast.LENGTH_LONG)
+            .show();
+      }
+    }
+    return bestLocation;
   }
+
   public void getWeather() {
     Location bestLocation = getLocation();
 
