@@ -5,76 +5,89 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomeActivity">
-<!--    <androidx.cardview.widget.CardView-->
-<!--        android:id="@+id/cvDevice"-->
-<!--        android:layout_width="414dp"-->
-<!--        android:layout_height="136dp"-->
-<!--        android:layout_margin="16dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.202"-->
-<!--        tools:ignore="MissingConstraints">-->
 
-<!--        <RelativeLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content">-->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvWeather"
+        android:layout_width="414dp"
+        android:layout_height="136dp"
+        android:layout_margin="16dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/rv"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
 
-<!--            <ImageView-->
-<!--                android:id="@+id/ivIcon"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_margin="5dp"-->
-<!--                tools:srcCompat="@tools:sample/avatars" />-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-<!--            <TextView-->
-<!--                android:id="@+id/tvDeviceName"-->
-<!--                android:layout_width="wrap_content"-->
+            <ImageView
+                android:id="@+id/ivIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:adjustViewBounds="true"
+                android:maxWidth="300dp"
+                android:maxHeight="300dp"
+                android:scaleType="fitCenter"
+                tools:srcCompat="@tools:sample/avatars" />
 
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="5dp"-->
-<!--                android:layout_marginLeft="5dp"-->
-<!--                android:layout_marginTop="5dp"-->
-<!--                android:layout_marginEnd="5dp"-->
-<!--                android:layout_marginRight="5dp"-->
-<!--                android:layout_marginBottom="5dp"-->
-<!--                android:layout_toRightOf="@id/ivIcon"-->
-<!--                android:text="TextView"-->
-<!--                tools:text="Device Name" />-->
+            <TextView
+                android:id="@+id/tvWeather"
+                android:layout_width="wrap_content"
 
-<!--            <TextView-->
-<!--                android:id="@+id/tvDeviceId"-->
-<!--                android:layout_width="wrap_content"-->
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toRightOf="@id/ivIcon"
+                android:text="TextView"
+                android:textColor="#5199AF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:text="Weather" />
 
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_below="@id/tvDeviceName"-->
-<!--                android:layout_marginStart="5dp"-->
-<!--                android:layout_marginLeft="5dp"-->
-<!--                android:layout_marginTop="5dp"-->
-<!--                android:layout_marginEnd="5dp"-->
-<!--                android:layout_marginRight="5dp"-->
-<!--                android:layout_marginBottom="5dp"-->
-<!--                android:layout_toRightOf="@id/ivIcon"-->
-<!--                android:text="Device Id"-->
-<!--                tools:text="Device Id" />-->
+            <TextView
+                android:id="@+id/tvWeatherTemp"
+                android:layout_width="wrap_content"
 
-<!--            <TextView-->
-<!--                android:id="@+id/tvProductId"-->
-<!--                android:layout_width="wrap_content"-->
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvWeather"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toRightOf="@id/ivIcon"
+                android:text="Device Id"
+                android:textSize="16sp"
+                tools:text="Weather Temp" />
 
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_below="@id/tvDeviceId"-->
-<!--                android:layout_marginStart="5dp"-->
-<!--                android:layout_marginLeft="5dp"-->
-<!--                android:layout_marginTop="5dp"-->
-<!--                android:layout_marginEnd="5dp"-->
-<!--                android:layout_marginRight="5dp"-->
-<!--                android:layout_marginBottom="5dp"-->
-<!--                android:layout_toRightOf="@id/ivIcon"-->
-<!--                android:text="Product Id"-->
-<!--                tools:text="Product Id" />-->
-<!--        </RelativeLayout>-->
+            <TextView
+                android:id="@+id/tvWeatherHumidity"
+                android:layout_width="wrap_content"
 
-<!--    </androidx.cardview.widget.CardView>-->
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvWeatherTemp"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toRightOf="@id/ivIcon"
+                android:text="Product Id"
+                android:textSize="16sp"
+                tools:text="Weather Humidity" />
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
 
 
     <Button
@@ -88,11 +101,11 @@
         app:layout_constraintVertical_bias="0.855" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="409dp"
-        android:layout_height="681dp"
         android:id="@+id/rv"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp"
-        tools:ignore="MissingConstraints" />
+        android:layout_width="407dp"
+        android:layout_height="513dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnSearch"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="2dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

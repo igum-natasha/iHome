@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,21 +32,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class TaskWeatherAdditionActivity extends AppCompatActivity {
   String devId, devName, prodId, category;
   String condititon;
   ImageButton btnLess, btnMore, btnEqual;
   Button btnAddWtask;
+  LocationManager locationManager;
   EditText etWeather;
   TextView tvTemp;
-  String API = "a489972de36b54432056bbefac20242b";
-  ImageView tvImage;
-  WeatherAPI.ApiInterface api;
-  LocationManager locationManager;
+
 
   private List<SceneTask> tasks = new ArrayList<>();
   private List<SceneBean> scenes = new ArrayList<>();
@@ -73,7 +66,6 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
       category = bundle.getString("Category");
     }
 
-    api = WeatherAPI.getClient().create(WeatherAPI.ApiInterface.class);
 
     btnLess.setOnClickListener(
         new View.OnClickListener() {
@@ -172,98 +164,39 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
                       }
                     });
           }
-          //            String ref_temp = etWeather.getText().toString();
-          //            getWeather();
-          //            temp = tvTemp.getText().toString();
-          //            if (!temp.isEmpty()) {
-          //              if (condititon.equals(">") && Integer.parseInt(ref_temp) >
-          // Integer.parseInt(temp)) {
-          //                ITuyaDevice controlDevice = TuyaHomeSdk.newDeviceInstance(devId);
-          //                HashMap<String, Object> hashMap = new HashMap<>();
-          //                hashMap.put(STHEME_DPID_101, true);
-          //                controlDevice.publishDps(
-          //                    JSONObject.toJSONString(hashMap),
-          //                    new IResultCallback() {
-          //                      @Override
-          //                      public void onError(String code, String error) {
-          //                        Toast.makeText(
-          //                                TaskWeatherAdditionActivity.this,
-          //                                "Socket change failed!",
-          //                                Toast.LENGTH_LONG)
-          //                            .show();
-          //                      }
-          //
-          //                      @Override
-          //                      public void onSuccess() {}
-          //                    });
-          //              }
-          //            }
-          //          }
         });
   }
+    public Location getLocation() {
+        Location bestLocation = null;
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-  public Location getLocation() {
-    Location bestLocation = null;
-    locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED
-        && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED) {
-      ActivityCompat.requestPermissions(
-          this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-      return bestLocation;
-    } else {
-      List<String> providers = locationManager.getProviders(true);
-      for (String provider : providers) {
-        Location l = locationManager.getLastKnownLocation(provider);
-        if (l == null) {
-          continue;
-        }
-        if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
-          // Found best last known location: %s", l);
-          bestLocation = l;
-        }
-      }
-      if (bestLocation == null) {
-        Toast.makeText(TaskWeatherAdditionActivity.this, "Error! Turn on GPS", Toast.LENGTH_LONG)
-            .show();
-      }
-    }
-    return bestLocation;
-  }
-
-  public void getWeather() {
-    Location bestLocation = getLocation();
-
-    String key = WeatherAPI.KEY;
-    // get weather for today
-
-    Call<WeatherDay> callToday =
-        api.getToday(bestLocation.getLatitude(), bestLocation.getLongitude(), "metric", key);
-    callToday.enqueue(
-        new Callback<WeatherDay>() {
-          @Override
-          public void onResponse(Call<WeatherDay> call, Response<WeatherDay> response) {
-            WeatherDay data = response.body();
-            if (response.isSuccessful()) {
-              tvTemp.setText(data.getTempInteger());
-              //                    Toast.makeText(
-              //                            TaskWeatherAdditionActivity.this,
-              //                            "Weather successful!",
-              //                            Toast.LENGTH_LONG)
-              //                            .show();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            return bestLocation;
+        } else {
+            List<String> providers = locationManager.getProviders(true);
+            for (String provider : providers) {
+                Location l = locationManager.getLastKnownLocation(provider);
+                if (l == null) {
+                    continue;
+                }
+                if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                    // Found best last known location: %s", l);
+                    bestLocation = l;
+                }
             }
-          }
+            if (bestLocation == null) {
+                Toast.makeText(TaskWeatherAdditionActivity.this, "Error! Turn on GPS", Toast.LENGTH_LONG)
+                        .show();
+            }
+        }
+        return bestLocation;
+    }
 
-          @Override
-          public void onFailure(Call<WeatherDay> call, Throwable t) {
-            Toast.makeText(
-                    TaskWeatherAdditionActivity.this, "Weather failed!" + t, Toast.LENGTH_LONG)
-                .show();
-          }
-        });
-  }
 
   private void initViews() {
     btnLess = findViewById(R.id.btnLess);

@@ -1,23 +1,32 @@
 package com.example.ihome_cw;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.home.sdk.bean.HomeBean;
+import com.tuya.smart.home.sdk.bean.scene.PlaceFacadeBean;
 import com.tuya.smart.home.sdk.builder.ActivatorBuilder;
 import com.tuya.smart.home.sdk.callback.ITuyaGetHomeListCallback;
 import com.tuya.smart.home.sdk.callback.ITuyaHomeResultCallback;
+import com.tuya.smart.home.sdk.callback.ITuyaResultCallback;
 import com.tuya.smart.sdk.api.ITuyaActivator;
 import com.tuya.smart.sdk.api.ITuyaActivatorGetToken;
 import com.tuya.smart.sdk.api.ITuyaSmartActivatorListener;
@@ -29,11 +38,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class HomeActivity extends AppCompatActivity {
 
   private CardView cvDevice;
   private Button btnSearch;
-  private TextView tvDeviceName, tvDeviceId, tvProductId;
+  private TextView tvWeather, tvWeatherTemp, tvWeatherHumidity;
+
+  String API = "a489972de36b54432056bbefac20242b";
+  ImageView tvImage;
+  WeatherAPI.ApiInterface api;
+  LocationManager locationManager;
 
   ArrayList<String> roomList;
   String[] rooms = {"kitchen", "bedroom", "study"};
@@ -63,6 +81,8 @@ public class HomeActivity extends AppCompatActivity {
       password = bundle.getString("WifiPassword");
     }
     initViews();
+    api = WeatherAPI.getClient().create(WeatherAPI.ApiInterface.class);
+    getWeather();
     createHome();
 
     btnSearch.setOnClickListener(
@@ -86,7 +106,80 @@ public class HomeActivity extends AppCompatActivity {
           }
         });
   }
+    public Location getLocation() {
+        Location bestLocation = null;
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            return bestLocation;
+        } else {
+            List<String> providers = locationManager.getProviders(true);
+            for (String provider : providers) {
+                Location l = locationManager.getLastKnownLocation(provider);
+                if (l == null) {
+                    continue;
+                }
+                if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                    // Found best last known location: %s", l);
+                    bestLocation = l;
+                }
+            }
+            if (bestLocation == null) {
+                Toast.makeText(HomeActivity.this, "Error! Turn on GPS", Toast.LENGTH_LONG)
+                        .show();
+            }
+        }
+        return bestLocation;
+    }
+
+    public void getWeather() {
+        Location bestLocation = getLocation();
+
+        String key = WeatherAPI.KEY;
+        // get weather for today
+
+        Call<WeatherDay> callToday =
+                api.getToday(bestLocation.getLatitude(), bestLocation.getLongitude(), "metric", key);
+        callToday.enqueue(
+                new Callback<WeatherDay>() {
+                    @Override
+                    public void onResponse(Call<WeatherDay> call, Response<WeatherDay> response) {
+                        WeatherDay data = response.body();
+                        if (response.isSuccessful()) {
+//                            tvTemp.setText(data.getTempInteger());
+                            TuyaHomeSdk.getSceneManagerInstance()
+                                    .getCityByLatLng(
+                                            String.valueOf(bestLocation.getLongitude()),
+                                            String.valueOf(bestLocation.getLatitude()),
+                                            new ITuyaResultCallback<PlaceFacadeBean>() {
+                                                @Override
+                                                public void onSuccess(PlaceFacadeBean result) {
+                                                    tvWeather.setText(result.getCity());
+                                                }
+
+                                                @Override
+                                                public void onError(String errorCode, String errorMessage) {}
+                                            });
+
+                            tvImage.setImageResource(R.drawable.cloud_sun);
+                            tvWeatherTemp.setText(data.getTempWithDegree());
+                            tvWeatherHumidity.setText(data.getHumidity());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<WeatherDay> call, Throwable t) {
+                        Toast.makeText(
+                                HomeActivity.this, "Weather failed!" + t, Toast.LENGTH_LONG)
+                                .show();
+                    }
+                });
+    }
   private void initializeData() {
     TuyaHomeSdk.newHomeInstance(homeId)
         .getHomeDetail(
@@ -302,6 +395,10 @@ public class HomeActivity extends AppCompatActivity {
   private void initViews() {
     btnSearch = findViewById(R.id.btnSearch);
     rv = findViewById(R.id.rv);
+    tvWeather = findViewById(R.id.tvWeather);
+    tvWeatherTemp = findViewById(R.id.tvWeatherTemp);
+    tvWeatherHumidity = findViewById(R.id.tvWeatherHumidity);
+    tvImage = findViewById(R.id.ivIcon);
   }
 
   public static long getHomeId() {

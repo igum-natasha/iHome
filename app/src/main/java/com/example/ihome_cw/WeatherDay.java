@@ -9,6 +9,7 @@ public class WeatherDay {
     Double temp;
     Double temp_min;
     Double temp_max;
+    Double humidity;
   }
 
   public class WeatherDescription {
@@ -48,8 +49,12 @@ public class WeatherDay {
     return String.valueOf(temp.temp.intValue());
   }
 
+  public String getHumidity() {
+    return temp.humidity.intValue() + "%";
+  }
+
   public String getTempWithDegree() {
-    return String.valueOf(temp.temp.intValue()) + "\u00B0";
+    return temp.temp.intValue() + "°C";
   }
 
   public String getCity() {
