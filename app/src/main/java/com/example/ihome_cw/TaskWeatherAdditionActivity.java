@@ -41,7 +41,6 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
   EditText etWeather;
   TextView tvTemp;
 
-
   private List<SceneTask> tasks = new ArrayList<>();
   private List<SceneBean> scenes = new ArrayList<>();
   private List<SceneCondition> conditions = new ArrayList<>();
@@ -65,7 +64,6 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
       prodId = bundle.getString("ProductId");
       category = bundle.getString("Category");
     }
-
 
     btnLess.setOnClickListener(
         new View.OnClickListener() {
@@ -166,37 +164,37 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
           }
         });
   }
-    public Location getLocation() {
-        Location bestLocation = null;
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                    this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-            return bestLocation;
-        } else {
-            List<String> providers = locationManager.getProviders(true);
-            for (String provider : providers) {
-                Location l = locationManager.getLastKnownLocation(provider);
-                if (l == null) {
-                    continue;
-                }
-                if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
-                    // Found best last known location: %s", l);
-                    bestLocation = l;
-                }
-            }
-            if (bestLocation == null) {
-                Toast.makeText(TaskWeatherAdditionActivity.this, "Error! Turn on GPS", Toast.LENGTH_LONG)
-                        .show();
-            }
+  public Location getLocation() {
+    Location bestLocation = null;
+    locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED
+        && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED) {
+      ActivityCompat.requestPermissions(
+          this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+      return bestLocation;
+    } else {
+      List<String> providers = locationManager.getProviders(true);
+      for (String provider : providers) {
+        Location l = locationManager.getLastKnownLocation(provider);
+        if (l == null) {
+          continue;
         }
-        return bestLocation;
+        if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+          // Found best last known location: %s", l);
+          bestLocation = l;
+        }
+      }
+      if (bestLocation == null) {
+        Toast.makeText(TaskWeatherAdditionActivity.this, "Error! Turn on GPS", Toast.LENGTH_LONG)
+            .show();
+      }
     }
-
+    return bestLocation;
+  }
 
   private void initViews() {
     btnLess = findViewById(R.id.btnLess);

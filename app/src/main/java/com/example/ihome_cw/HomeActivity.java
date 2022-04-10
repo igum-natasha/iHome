@@ -106,80 +106,79 @@ public class HomeActivity extends AppCompatActivity {
           }
         });
   }
-    public Location getLocation() {
-        Location bestLocation = null;
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                    this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-            return bestLocation;
-        } else {
-            List<String> providers = locationManager.getProviders(true);
-            for (String provider : providers) {
-                Location l = locationManager.getLastKnownLocation(provider);
-                if (l == null) {
-                    continue;
-                }
-                if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
-                    // Found best last known location: %s", l);
-                    bestLocation = l;
-                }
-            }
-            if (bestLocation == null) {
-                Toast.makeText(HomeActivity.this, "Error! Turn on GPS", Toast.LENGTH_LONG)
-                        .show();
-            }
+  public Location getLocation() {
+    Location bestLocation = null;
+    locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED
+        && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED) {
+      ActivityCompat.requestPermissions(
+          this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+      return bestLocation;
+    } else {
+      List<String> providers = locationManager.getProviders(true);
+      for (String provider : providers) {
+        Location l = locationManager.getLastKnownLocation(provider);
+        if (l == null) {
+          continue;
         }
-        return bestLocation;
+        if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+          // Found best last known location: %s", l);
+          bestLocation = l;
+        }
+      }
+      if (bestLocation == null) {
+        Toast.makeText(HomeActivity.this, "Error! Turn on GPS", Toast.LENGTH_LONG).show();
+      }
     }
+    return bestLocation;
+  }
 
-    public void getWeather() {
-        Location bestLocation = getLocation();
+  public void getWeather() {
+    Location bestLocation = getLocation();
 
-        String key = WeatherAPI.KEY;
-        // get weather for today
+    String key = WeatherAPI.KEY;
+    // get weather for today
 
-        Call<WeatherDay> callToday =
-                api.getToday(bestLocation.getLatitude(), bestLocation.getLongitude(), "metric", key);
-        callToday.enqueue(
-                new Callback<WeatherDay>() {
-                    @Override
-                    public void onResponse(Call<WeatherDay> call, Response<WeatherDay> response) {
-                        WeatherDay data = response.body();
-                        if (response.isSuccessful()) {
-//                            tvTemp.setText(data.getTempInteger());
-                            TuyaHomeSdk.getSceneManagerInstance()
-                                    .getCityByLatLng(
-                                            String.valueOf(bestLocation.getLongitude()),
-                                            String.valueOf(bestLocation.getLatitude()),
-                                            new ITuyaResultCallback<PlaceFacadeBean>() {
-                                                @Override
-                                                public void onSuccess(PlaceFacadeBean result) {
-                                                    tvWeather.setText(result.getCity());
-                                                }
-
-                                                @Override
-                                                public void onError(String errorCode, String errorMessage) {}
-                                            });
-
-                            tvImage.setImageResource(R.drawable.cloud_sun);
-                            tvWeatherTemp.setText(data.getTempWithDegree());
-                            tvWeatherHumidity.setText(data.getHumidity());
+    Call<WeatherDay> callToday =
+        api.getToday(bestLocation.getLatitude(), bestLocation.getLongitude(), "metric", key);
+    callToday.enqueue(
+        new Callback<WeatherDay>() {
+          @Override
+          public void onResponse(Call<WeatherDay> call, Response<WeatherDay> response) {
+            WeatherDay data = response.body();
+            if (response.isSuccessful()) {
+              //                            tvTemp.setText(data.getTempInteger());
+              TuyaHomeSdk.getSceneManagerInstance()
+                  .getCityByLatLng(
+                      String.valueOf(bestLocation.getLongitude()),
+                      String.valueOf(bestLocation.getLatitude()),
+                      new ITuyaResultCallback<PlaceFacadeBean>() {
+                        @Override
+                        public void onSuccess(PlaceFacadeBean result) {
+                          tvWeather.setText(result.getCity());
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<WeatherDay> call, Throwable t) {
-                        Toast.makeText(
-                                HomeActivity.this, "Weather failed!" + t, Toast.LENGTH_LONG)
-                                .show();
-                    }
-                });
-    }
+                        @Override
+                        public void onError(String errorCode, String errorMessage) {}
+                      });
+
+              tvImage.setImageResource(R.drawable.cloud_sun);
+              tvWeatherTemp.setText(data.getTempWithDegree());
+              tvWeatherHumidity.setText(data.getHumidity());
+            }
+          }
+
+          @Override
+          public void onFailure(Call<WeatherDay> call, Throwable t) {
+            Toast.makeText(HomeActivity.this, "Weather failed!" + t, Toast.LENGTH_LONG).show();
+          }
+        });
+  }
+
   private void initializeData() {
     TuyaHomeSdk.newHomeInstance(homeId)
         .getHomeDetail(
