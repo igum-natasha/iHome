@@ -47,32 +47,35 @@ public class SimpleTaskActivity extends AppCompatActivity {
       prodId = bundle.getString("ProductId");
       category = bundle.getString("Category");
     }
-    btnHome.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        Bundle bundle = new Bundle();
-        bundle.putString("Email", HomeActivity.getEmail());
-        bundle.putString("WifiLogin", HomeActivity.getSsid());
-        bundle.putString("WifiPassword", HomeActivity.getPassword());
-        Intent intent = new Intent(SimpleTaskActivity.this, HomeActivity.class);
-        intent.putExtras(bundle);
-        startActivity(intent);
-      }
-    });
-    btnControl.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        Intent intent = new Intent(SimpleTaskActivity.this, TaskActivity.class);
-        startActivity(intent);
-      }
-    });
-    btnAccount.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        Intent intent = new Intent(SimpleTaskActivity.this, AccountActivity.class);
-        startActivity(intent);
-      }
-    });
+    btnHome.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            Bundle bundle = new Bundle();
+            bundle.putString("Email", HomeActivity.getEmail());
+            bundle.putString("WifiLogin", HomeActivity.getSsid());
+            bundle.putString("WifiPassword", HomeActivity.getPassword());
+            Intent intent = new Intent(SimpleTaskActivity.this, HomeActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+          }
+        });
+    btnControl.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            Intent intent = new Intent(SimpleTaskActivity.this, TaskActivity.class);
+            startActivity(intent);
+          }
+        });
+    btnAccount.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            Intent intent = new Intent(SimpleTaskActivity.this, AccountActivity.class);
+            startActivity(intent);
+          }
+        });
     btnAddTask.setOnClickListener(
         new View.OnClickListener() {
           @Override

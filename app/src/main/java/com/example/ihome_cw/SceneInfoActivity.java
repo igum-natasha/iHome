@@ -17,7 +17,7 @@ public class SceneInfoActivity extends AppCompatActivity {
   private String sceneId;
   public static long homeId;
   private TextView tvSceneName, tvSceneDate, tvSceneTime, tvSceneEnable;
-    LinearLayout btnHome, btnControl, btnAccount;
+  LinearLayout btnHome, btnControl, btnAccount;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -30,32 +30,35 @@ public class SceneInfoActivity extends AppCompatActivity {
     }
 
     initViews();
-      btnHome.setOnClickListener(new View.OnClickListener() {
+    btnHome.setOnClickListener(
+        new View.OnClickListener() {
           @Override
           public void onClick(View view) {
-              Bundle bundle = new Bundle();
-              bundle.putString("Email", HomeActivity.getEmail());
-              bundle.putString("WifiLogin", HomeActivity.getSsid());
-              bundle.putString("WifiPassword", HomeActivity.getPassword());
-              Intent intent = new Intent(SceneInfoActivity.this, HomeActivity.class);
-              intent.putExtras(bundle);
-              startActivity(intent);
+            Bundle bundle = new Bundle();
+            bundle.putString("Email", HomeActivity.getEmail());
+            bundle.putString("WifiLogin", HomeActivity.getSsid());
+            bundle.putString("WifiPassword", HomeActivity.getPassword());
+            Intent intent = new Intent(SceneInfoActivity.this, HomeActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
           }
-      });
-      btnControl.setOnClickListener(new View.OnClickListener() {
+        });
+    btnControl.setOnClickListener(
+        new View.OnClickListener() {
           @Override
           public void onClick(View view) {
-              Intent intent = new Intent(SceneInfoActivity.this, TaskActivity.class);
-              startActivity(intent);
+            Intent intent = new Intent(SceneInfoActivity.this, TaskActivity.class);
+            startActivity(intent);
           }
-      });
-      btnAccount.setOnClickListener(new View.OnClickListener() {
+        });
+    btnAccount.setOnClickListener(
+        new View.OnClickListener() {
           @Override
           public void onClick(View view) {
-              Intent intent = new Intent(SceneInfoActivity.this, AccountActivity.class);
-              startActivity(intent);
+            Intent intent = new Intent(SceneInfoActivity.this, AccountActivity.class);
+            startActivity(intent);
           }
-      });
+        });
     TuyaHomeSdk.getSceneManagerInstance()
         .getSceneDetail(
             homeId,
@@ -86,8 +89,8 @@ public class SceneInfoActivity extends AppCompatActivity {
     tvSceneTime = findViewById(R.id.tvSceneTime);
     tvSceneEnable = findViewById(R.id.tvSceneEnable);
 
-      btnAccount = findViewById(R.id.btnAccount);
-      btnControl = findViewById(R.id.btnControl);
-      btnHome = findViewById(R.id.btnHome);
+    btnAccount = findViewById(R.id.btnAccount);
+    btnControl = findViewById(R.id.btnControl);
+    btnHome = findViewById(R.id.btnHome);
   }
 }

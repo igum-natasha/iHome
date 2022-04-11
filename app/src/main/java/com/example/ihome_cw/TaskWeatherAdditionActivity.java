@@ -65,9 +65,10 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
       category = bundle.getString("Category");
     }
 
-    btnHome.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
+    btnHome.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
             Bundle bundle = new Bundle();
             bundle.putString("Email", HomeActivity.getEmail());
             bundle.putString("WifiLogin", HomeActivity.getSsid());
@@ -75,22 +76,24 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
             Intent intent = new Intent(TaskWeatherAdditionActivity.this, HomeActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
-        }
-    });
-    btnControl.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
+          }
+        });
+    btnControl.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
             Intent intent = new Intent(TaskWeatherAdditionActivity.this, TaskActivity.class);
             startActivity(intent);
-        }
-    });
-    btnAccount.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
+          }
+        });
+    btnAccount.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
             Intent intent = new Intent(TaskWeatherAdditionActivity.this, AccountActivity.class);
             startActivity(intent);
-        }
-    });
+          }
+        });
     btnLess.setOnClickListener(
         new View.OnClickListener() {
           @Override
