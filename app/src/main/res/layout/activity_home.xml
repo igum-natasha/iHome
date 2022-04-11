@@ -95,17 +95,136 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Search Devices"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.855" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv"
-        android:layout_width="407dp"
-        android:layout_height="513dp"
+        android:layout_width="411dp"
+        android:layout_height="428dp"
+        android:layout_marginBottom="36dp"
         app:layout_constraintBottom_toTopOf="@+id/btnSearch"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="2dp" />
+        tools:layout_editor_absoluteX="0dp" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#D9D9D9"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:id="@+id/btnHome"
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:background="#00FFFFFF"
+            android:backgroundTint="#00FFFFFF"
+            android:clickable="true"
+            android:descendantFocusability="blocksDescendants"
+            android:gravity="center"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="65dp"
+            tools:layout_editor_absoluteY="659dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="#00FFFFFF"
+                android:contentDescription="Home"
+                android:src="@drawable/home"
+                app:tint="#7B7B7B" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00FFFFFF"
+                android:backgroundTint="#00FFFFFF"
+                android:text="Home"
+                android:textColor="#7B7B7B"
+                app:drawableTint="#00FFFFFF" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnControl"
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:background="#00FFFFFF"
+            android:backgroundTint="#00FFFFFF"
+            android:clickable="true"
+            android:descendantFocusability="blocksDescendants"
+            android:gravity="center"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="182dp"
+            tools:layout_editor_absoluteY="649dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="#00FFFFFF"
+                android:contentDescription="Control"
+                android:src="@drawable/control"
+                app:tint="#7B7B7B" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00FFFFFF"
+                android:backgroundTint="#00FFFFFF"
+                android:text="Control"
+                android:textColor="#7B7B7B"
+                app:drawableTint="#00FFFFFF" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:background="#00FFFFFF"
+            android:backgroundTint="#00FFFFFF"
+            android:clickable="true"
+            android:descendantFocusability="blocksDescendants"
+            android:gravity="center"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="302dp"
+            tools:layout_editor_absoluteY="659dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="#00FFFFFF"
+                android:contentDescription="Account"
+                android:src="@drawable/account"
+                app:tint="#7B7B7B" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00FFFFFF"
+                android:backgroundTint="#00FFFFFF"
+                android:text="Account"
+                android:textColor="#7B7B7B"
+                app:drawableTint="#00FFFFFF" />
+        </LinearLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

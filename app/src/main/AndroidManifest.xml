@@ -19,6 +19,9 @@
         android:theme="@style/Theme.IHome_CW"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".AccountActivity"
+            android:exported="false" />
+        <activity
             android:name=".SimpleTaskActivity"
             android:exported="false" />
         <activity

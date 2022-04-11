@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +31,7 @@ public class SimpleTaskActivity extends AppCompatActivity {
   String devId, devName, prodId, category;
   private List<SceneTask> tasks = new ArrayList<>();
   private List<SceneCondition> conditions = new ArrayList<>();
+  LinearLayout btnHome, btnControl, btnAccount;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +47,32 @@ public class SimpleTaskActivity extends AppCompatActivity {
       prodId = bundle.getString("ProductId");
       category = bundle.getString("Category");
     }
-
+    btnHome.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Bundle bundle = new Bundle();
+        bundle.putString("Email", HomeActivity.getEmail());
+        bundle.putString("WifiLogin", HomeActivity.getSsid());
+        bundle.putString("WifiPassword", HomeActivity.getPassword());
+        Intent intent = new Intent(SimpleTaskActivity.this, HomeActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
+      }
+    });
+    btnControl.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Intent intent = new Intent(SimpleTaskActivity.this, TaskActivity.class);
+        startActivity(intent);
+      }
+    });
+    btnAccount.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Intent intent = new Intent(SimpleTaskActivity.this, AccountActivity.class);
+        startActivity(intent);
+      }
+    });
     btnAddTask.setOnClickListener(
         new View.OnClickListener() {
           @Override
@@ -115,5 +142,9 @@ public class SimpleTaskActivity extends AppCompatActivity {
     etTime = findViewById(R.id.etTime);
     btnAddTask = findViewById(R.id.btnAddTask);
     etName = findViewById(R.id.etName);
+
+    btnAccount = findViewById(R.id.btnAccount);
+    btnControl = findViewById(R.id.btnControl);
+    btnHome = findViewById(R.id.btnHome);
   }
 }

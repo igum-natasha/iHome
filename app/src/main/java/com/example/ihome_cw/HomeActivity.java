@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,8 +59,8 @@ public class HomeActivity extends AppCompatActivity {
   String homeName = "MyHome";
   private static final String TAG = "TuyaSmartHome";
 
-  private String ssid, email;
-  private String password;
+  public static String ssid, email;
+  public static String password;
   private HomeBean currentHomeBean;
   public static long homeId;
   private DeviceBean currentDeviceBean;
@@ -68,6 +69,7 @@ public class HomeActivity extends AppCompatActivity {
   ITuyaActivator tuyaActivator;
   private List<Device> devices;
   private RecyclerView rv;
+    LinearLayout btnHome, btnControl, btnAccount;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,32 @@ public class HomeActivity extends AppCompatActivity {
       password = bundle.getString("WifiPassword");
     }
     initViews();
+      btnHome.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              Bundle bundle = new Bundle();
+              bundle.putString("Email", email);
+              bundle.putString("WifiLogin", ssid);
+              bundle.putString("WifiPassword", password);
+              Intent intent = new Intent(HomeActivity.this, HomeActivity.class);
+              intent.putExtras(bundle);
+              startActivity(intent);
+          }
+      });
+      btnControl.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              Intent intent = new Intent(HomeActivity.this, TaskActivity.class);
+              startActivity(intent);
+          }
+      });
+      btnAccount.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              Intent intent = new Intent(HomeActivity.this, AccountActivity.class);
+              startActivity(intent);
+          }
+      });
     api = WeatherAPI.getClient().create(WeatherAPI.ApiInterface.class);
     getWeather();
     createHome();
@@ -398,9 +426,17 @@ public class HomeActivity extends AppCompatActivity {
     tvWeatherTemp = findViewById(R.id.tvWeatherTemp);
     tvWeatherHumidity = findViewById(R.id.tvWeatherHumidity);
     tvImage = findViewById(R.id.ivIcon);
+
+      btnAccount = findViewById(R.id.btnAccount);
+      btnControl = findViewById(R.id.btnControl);
+      btnHome = findViewById(R.id.btnHome);
   }
 
   public static long getHomeId() {
     return homeId;
   }
+
+  public static String getPassword() {return password; }
+  public static String getSsid() {return ssid; }
+  public static String getEmail() {return email; }
 }

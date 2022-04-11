@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,6 +24,7 @@ public class TaskAdditionActivity extends AppCompatActivity {
   private Button btnAdd;
   private List<SceneBean> scenes = new ArrayList<>();
   private RecyclerView rv_tasks;
+    LinearLayout btnHome, btnControl, btnAccount;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +33,39 @@ public class TaskAdditionActivity extends AppCompatActivity {
 
     Bundle bundle = getIntent().getExtras();
 
-    btnAdd = findViewById(R.id.btnAdd);
+      initViews();
     if (bundle != null) {
       devId = bundle.getString("DeviceId");
       devName = bundle.getString("DeviceName");
       prodId = bundle.getString("ProductId");
       category = bundle.getString("Category");
     }
+      btnHome.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              Bundle bundle = new Bundle();
+              bundle.putString("Email", HomeActivity.getEmail());
+              bundle.putString("WifiLogin", HomeActivity.getSsid());
+              bundle.putString("WifiPassword", HomeActivity.getPassword());
+              Intent intent = new Intent(TaskAdditionActivity.this, HomeActivity.class);
+              intent.putExtras(bundle);
+              startActivity(intent);
+          }
+      });
+      btnControl.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              Intent intent = new Intent(TaskAdditionActivity.this, TaskActivity.class);
+              startActivity(intent);
+          }
+      });
+      btnAccount.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(TaskAdditionActivity.this, AccountActivity.class);
+            startActivity(intent);
+        }
+    });
     showTasks();
 
     btnAdd.setOnClickListener(
@@ -100,4 +128,11 @@ public class TaskAdditionActivity extends AppCompatActivity {
     initializeData();
     initializeAdapter();
   }
+    private void initViews() {
+        btnAdd = findViewById(R.id.btnAdd);
+
+        btnAccount = findViewById(R.id.btnAccount);
+        btnControl = findViewById(R.id.btnControl);
+        btnHome = findViewById(R.id.btnHome);
+    }
 }

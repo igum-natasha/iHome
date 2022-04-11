@@ -1,6 +1,9 @@
 package com.example.ihome_cw;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +17,7 @@ public class SceneInfoActivity extends AppCompatActivity {
   private String sceneId;
   public static long homeId;
   private TextView tvSceneName, tvSceneDate, tvSceneTime, tvSceneEnable;
+    LinearLayout btnHome, btnControl, btnAccount;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +30,32 @@ public class SceneInfoActivity extends AppCompatActivity {
     }
 
     initViews();
+      btnHome.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              Bundle bundle = new Bundle();
+              bundle.putString("Email", HomeActivity.getEmail());
+              bundle.putString("WifiLogin", HomeActivity.getSsid());
+              bundle.putString("WifiPassword", HomeActivity.getPassword());
+              Intent intent = new Intent(SceneInfoActivity.this, HomeActivity.class);
+              intent.putExtras(bundle);
+              startActivity(intent);
+          }
+      });
+      btnControl.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              Intent intent = new Intent(SceneInfoActivity.this, TaskActivity.class);
+              startActivity(intent);
+          }
+      });
+      btnAccount.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              Intent intent = new Intent(SceneInfoActivity.this, AccountActivity.class);
+              startActivity(intent);
+          }
+      });
     TuyaHomeSdk.getSceneManagerInstance()
         .getSceneDetail(
             homeId,
@@ -55,5 +85,9 @@ public class SceneInfoActivity extends AppCompatActivity {
     tvSceneDate = findViewById(R.id.tvSceneDate);
     tvSceneTime = findViewById(R.id.tvSceneTime);
     tvSceneEnable = findViewById(R.id.tvSceneEnable);
+
+      btnAccount = findViewById(R.id.btnAccount);
+      btnControl = findViewById(R.id.btnControl);
+      btnHome = findViewById(R.id.btnHome);
   }
 }

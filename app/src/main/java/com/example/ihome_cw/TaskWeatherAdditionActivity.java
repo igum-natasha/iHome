@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,9 +37,9 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
   String condititon;
   ImageButton btnLess, btnMore, btnEqual;
   Button btnAddWtask;
+  LinearLayout btnHome, btnControl, btnAccount;
   LocationManager locationManager;
   EditText etWeather;
-  TextView tvTemp;
 
   private List<SceneTask> tasks = new ArrayList<>();
   private List<SceneBean> scenes = new ArrayList<>();
@@ -65,6 +65,32 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
       category = bundle.getString("Category");
     }
 
+    btnHome.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Bundle bundle = new Bundle();
+            bundle.putString("Email", HomeActivity.getEmail());
+            bundle.putString("WifiLogin", HomeActivity.getSsid());
+            bundle.putString("WifiPassword", HomeActivity.getPassword());
+            Intent intent = new Intent(TaskWeatherAdditionActivity.this, HomeActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
+    });
+    btnControl.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(TaskWeatherAdditionActivity.this, TaskActivity.class);
+            startActivity(intent);
+        }
+    });
+    btnAccount.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(TaskWeatherAdditionActivity.this, AccountActivity.class);
+            startActivity(intent);
+        }
+    });
     btnLess.setOnClickListener(
         new View.OnClickListener() {
           @Override
@@ -201,7 +227,9 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
     btnMore = findViewById(R.id.btnMore);
     btnEqual = findViewById(R.id.btnEqual);
     btnAddWtask = findViewById(R.id.btnAddWtask);
-    tvTemp = findViewById(R.id.tvTemp);
     etWeather = findViewById(R.id.etTemp);
+    btnAccount = findViewById(R.id.btnAccount);
+    btnControl = findViewById(R.id.btnControl);
+    btnHome = findViewById(R.id.btnHome);
   }
 }

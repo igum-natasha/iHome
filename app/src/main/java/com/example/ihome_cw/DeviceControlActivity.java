@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -37,6 +38,7 @@ public class DeviceControlActivity extends AppCompatActivity {
   private Spinner spWorkMode, spScene;
   private Button btnAddTask;
   String devId, devName, prodId, category;
+    LinearLayout btnHome, btnControl, btnAccount;
   public static final String STHEME_DPID_101 = "1";
 
   @Override
@@ -47,7 +49,32 @@ public class DeviceControlActivity extends AppCompatActivity {
     Bundle bundle = getIntent().getExtras();
 
     initViews();
-
+      btnHome.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              Bundle bundle = new Bundle();
+              bundle.putString("Email", HomeActivity.getEmail());
+              bundle.putString("WifiLogin", HomeActivity.getSsid());
+              bundle.putString("WifiPassword", HomeActivity.getPassword());
+              Intent intent = new Intent(DeviceControlActivity.this, HomeActivity.class);
+              intent.putExtras(bundle);
+              startActivity(intent);
+          }
+      });
+      btnControl.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              Intent intent = new Intent(DeviceControlActivity.this, TaskActivity.class);
+              startActivity(intent);
+          }
+      });
+      btnAccount.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              Intent intent = new Intent(DeviceControlActivity.this, AccountActivity.class);
+              startActivity(intent);
+          }
+      });
     String[] scenes = new String[] {"Goodnight", "Casual", "Read", "Work"};
     String[] workModes = new String[] {"Scene", "White", "Color"};
 
@@ -318,5 +345,9 @@ public class DeviceControlActivity extends AppCompatActivity {
     btnAddTask = findViewById(R.id.btnAddTask);
     labelScene = findViewById(R.id.labelScene);
     labelWorkMode = findViewById(R.id.labelWorkMode);
+
+      btnAccount = findViewById(R.id.btnAccount);
+      btnControl = findViewById(R.id.btnControl);
+      btnHome = findViewById(R.id.btnHome);
   }
 }
