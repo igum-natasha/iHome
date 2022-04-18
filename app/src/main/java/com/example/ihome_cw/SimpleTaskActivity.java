@@ -2,14 +2,16 @@ package com.example.ihome_cw;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.home.sdk.bean.scene.PreCondition;
 import com.tuya.smart.home.sdk.bean.scene.PreConditionExpr;
@@ -31,7 +33,6 @@ public class SimpleTaskActivity extends AppCompatActivity {
   String devId, devName, prodId, category;
   private List<SceneTask> tasks = new ArrayList<>();
   private List<SceneCondition> conditions = new ArrayList<>();
-  LinearLayout btnHome, btnControl, btnAccount;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -47,35 +48,33 @@ public class SimpleTaskActivity extends AppCompatActivity {
       prodId = bundle.getString("ProductId");
       category = bundle.getString("Category");
     }
-    btnHome.setOnClickListener(
-        new View.OnClickListener() {
+      BottomNavigationView nav_view = findViewById(R.id.bottom_navigatin_view);
+
+      nav_view.setSelectedItemId(R.id.control);
+      nav_view.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
           @Override
-          public void onClick(View view) {
-            Bundle bundle = new Bundle();
-            bundle.putString("Email", HomeActivity.getEmail());
-            bundle.putString("WifiLogin", HomeActivity.getSsid());
-            bundle.putString("WifiPassword", HomeActivity.getPassword());
-            Intent intent = new Intent(SimpleTaskActivity.this, HomeActivity.class);
-            intent.putExtras(bundle);
-            startActivity(intent);
+          public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+              switch (item.getItemId()) {
+                  case R.id.home:
+                      Bundle bundle = new Bundle();
+                      bundle.putString("Email", HomeActivity.getEmail());
+                      bundle.putString("WifiLogin", HomeActivity.getSsid());
+                      bundle.putString("WifiPassword", HomeActivity.getPassword());
+                      Intent intent = new Intent(SimpleTaskActivity.this, HomeActivity.class);
+                      intent.putExtras(bundle);
+                      startActivity(intent);
+                      return true;
+                  case R.id.control:
+                      overridePendingTransition(0,0);
+                      return true;
+                  case R.id.account:
+                      startActivity(new Intent(getApplicationContext(), AccountActivity.class));
+                      overridePendingTransition(0,0);
+                      return true;
+              }
+              return false;
           }
-        });
-    btnControl.setOnClickListener(
-        new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-            Intent intent = new Intent(SimpleTaskActivity.this, TaskActivity.class);
-            startActivity(intent);
-          }
-        });
-    btnAccount.setOnClickListener(
-        new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-            Intent intent = new Intent(SimpleTaskActivity.this, AccountActivity.class);
-            startActivity(intent);
-          }
-        });
+      });
     btnAddTask.setOnClickListener(
         new View.OnClickListener() {
           @Override
@@ -145,9 +144,5 @@ public class SimpleTaskActivity extends AppCompatActivity {
     etTime = findViewById(R.id.etTime);
     btnAddTask = findViewById(R.id.btnAddTask);
     etName = findViewById(R.id.etName);
-
-    btnAccount = findViewById(R.id.btnAccount);
-    btnControl = findViewById(R.id.btnControl);
-    btnHome = findViewById(R.id.btnHome);
   }
 }

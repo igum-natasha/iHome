@@ -2,21 +2,23 @@ package com.example.ihome_cw;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.fastjson.JSONObject;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tuya.smart.centralcontrol.TuyaLightDevice;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.sdk.api.IDevListener;
@@ -38,7 +40,6 @@ public class DeviceControlActivity extends AppCompatActivity {
   private Spinner spWorkMode, spScene;
   private Button btnAddTask;
   String devId, devName, prodId, category;
-  LinearLayout btnHome, btnControl, btnAccount;
   public static final String STHEME_DPID_101 = "1";
 
   @Override
@@ -49,35 +50,33 @@ public class DeviceControlActivity extends AppCompatActivity {
     Bundle bundle = getIntent().getExtras();
 
     initViews();
-    btnHome.setOnClickListener(
-        new View.OnClickListener() {
+      BottomNavigationView nav_view = findViewById(R.id.bottom_navigatin_view);
+
+      nav_view.setSelectedItemId(R.id.control);
+      nav_view.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
           @Override
-          public void onClick(View view) {
-            Bundle bundle = new Bundle();
-            bundle.putString("Email", HomeActivity.getEmail());
-            bundle.putString("WifiLogin", HomeActivity.getSsid());
-            bundle.putString("WifiPassword", HomeActivity.getPassword());
-            Intent intent = new Intent(DeviceControlActivity.this, HomeActivity.class);
-            intent.putExtras(bundle);
-            startActivity(intent);
+          public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+              switch (item.getItemId()) {
+                  case R.id.home:
+                      Bundle bundle = new Bundle();
+                      bundle.putString("Email", HomeActivity.getEmail());
+                      bundle.putString("WifiLogin", HomeActivity.getSsid());
+                      bundle.putString("WifiPassword", HomeActivity.getPassword());
+                      Intent intent = new Intent(DeviceControlActivity.this, HomeActivity.class);
+                      intent.putExtras(bundle);
+                      startActivity(intent);
+                      return true;
+                  case R.id.control:
+                      overridePendingTransition(0,0);
+                      return true;
+                  case R.id.account:
+                      startActivity(new Intent(getApplicationContext(), AccountActivity.class));
+                      overridePendingTransition(0,0);
+                      return true;
+              }
+              return false;
           }
-        });
-    btnControl.setOnClickListener(
-        new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-            Intent intent = new Intent(DeviceControlActivity.this, TaskActivity.class);
-            startActivity(intent);
-          }
-        });
-    btnAccount.setOnClickListener(
-        new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-            Intent intent = new Intent(DeviceControlActivity.this, AccountActivity.class);
-            startActivity(intent);
-          }
-        });
+      });
     String[] scenes = new String[] {"Goodnight", "Casual", "Read", "Work"};
     String[] workModes = new String[] {"Scene", "White", "Color"};
 
@@ -349,8 +348,5 @@ public class DeviceControlActivity extends AppCompatActivity {
     labelScene = findViewById(R.id.labelScene);
     labelWorkMode = findViewById(R.id.labelWorkMode);
 
-    btnAccount = findViewById(R.id.btnAccount);
-    btnControl = findViewById(R.id.btnControl);
-    btnHome = findViewById(R.id.btnHome);
   }
 }

@@ -1,6 +1,7 @@
 package com.example.ihome_cw;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -8,19 +9,25 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.home.sdk.bean.HomeBean;
 import com.tuya.smart.home.sdk.bean.scene.PlaceFacadeBean;
@@ -46,7 +53,9 @@ import retrofit2.Response;
 public class HomeActivity extends AppCompatActivity {
 
   private CardView cvDevice;
+  private Toolbar mToolbar;
   private Button btnSearch;
+  private ImageButton btnAdd, btnAvatar;
   private TextView tvWeather, tvWeatherTemp, tvWeatherHumidity;
 
   String API = "a489972de36b54432056bbefac20242b";
@@ -70,6 +79,7 @@ public class HomeActivity extends AppCompatActivity {
   private List<Device> devices;
   private RecyclerView rv;
   LinearLayout btnHome, btnControl, btnAccount;
+  Dialog locationDialog;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -83,35 +93,44 @@ public class HomeActivity extends AppCompatActivity {
       password = bundle.getString("WifiPassword");
     }
     initViews();
-    btnHome.setOnClickListener(
-        new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-            Bundle bundle = new Bundle();
-            bundle.putString("Email", email);
-            bundle.putString("WifiLogin", ssid);
-            bundle.putString("WifiPassword", password);
-            Intent intent = new Intent(HomeActivity.this, HomeActivity.class);
-            intent.putExtras(bundle);
-            startActivity(intent);
-          }
-        });
-    btnControl.setOnClickListener(
-        new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
+    defineLocationDialog();
+    btnAdd.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
             Intent intent = new Intent(HomeActivity.this, TaskActivity.class);
             startActivity(intent);
-          }
-        });
-    btnAccount.setOnClickListener(
-        new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
+        }
+    });
+    btnAvatar.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
             Intent intent = new Intent(HomeActivity.this, AccountActivity.class);
             startActivity(intent);
+        }
+    });
+
+      BottomNavigationView nav_view = findViewById(R.id.bottom_navigatin_view);
+
+      nav_view.setSelectedItemId(R.id.home);
+      nav_view.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+          @Override
+          public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+              switch (item.getItemId()) {
+                  case R.id.home:
+                      return true;
+                  case R.id.control:
+                      Intent intent = new Intent(HomeActivity.this, TaskActivity.class);
+                      startActivity(intent);
+                      overridePendingTransition(0,0);
+                      return true;
+                  case R.id.account:
+                      startActivity(new Intent(HomeActivity.this, AccountActivity.class));
+                      overridePendingTransition(0,0);
+                      return true;
+              }
+              return false;
           }
-        });
+      });
     api = WeatherAPI.getClient().create(WeatherAPI.ApiInterface.class);
     getWeather();
     createHome();
@@ -170,44 +189,49 @@ public class HomeActivity extends AppCompatActivity {
 
   public void getWeather() {
     Location bestLocation = getLocation();
+    if (bestLocation == null) {
+        locationDialog.show();
+    } else {
 
-    String key = WeatherAPI.KEY;
-    // get weather for today
+        String key = WeatherAPI.KEY;
+        // get weather for today
 
-    Call<WeatherDay> callToday =
-        api.getToday(bestLocation.getLatitude(), bestLocation.getLongitude(), "metric", key);
-    callToday.enqueue(
-        new Callback<WeatherDay>() {
-          @Override
-          public void onResponse(Call<WeatherDay> call, Response<WeatherDay> response) {
-            WeatherDay data = response.body();
-            if (response.isSuccessful()) {
-              //                            tvTemp.setText(data.getTempInteger());
-              TuyaHomeSdk.getSceneManagerInstance()
-                  .getCityByLatLng(
-                      String.valueOf(bestLocation.getLongitude()),
-                      String.valueOf(bestLocation.getLatitude()),
-                      new ITuyaResultCallback<PlaceFacadeBean>() {
-                        @Override
-                        public void onSuccess(PlaceFacadeBean result) {
-                          tvWeather.setText(result.getCity());
+        Call<WeatherDay> callToday =
+                api.getToday(bestLocation.getLatitude(), bestLocation.getLongitude(), "metric", key);
+        callToday.enqueue(
+                new Callback<WeatherDay>() {
+                    @Override
+                    public void onResponse(Call<WeatherDay> call, Response<WeatherDay> response) {
+                        WeatherDay data = response.body();
+                        if (response.isSuccessful()) {
+                            //                            tvTemp.setText(data.getTempInteger());
+                            TuyaHomeSdk.getSceneManagerInstance()
+                                    .getCityByLatLng(
+                                            String.valueOf(bestLocation.getLongitude()),
+                                            String.valueOf(bestLocation.getLatitude()),
+                                            new ITuyaResultCallback<PlaceFacadeBean>() {
+                                                @Override
+                                                public void onSuccess(PlaceFacadeBean result) {
+                                                    tvWeather.setText(result.getCity());
+                                                }
+
+                                                @Override
+                                                public void onError(String errorCode, String errorMessage) {
+                                                }
+                                            });
+
+                            tvImage.setImageResource(R.drawable.cloud_sun);
+                            tvWeatherTemp.setText(data.getTempWithDegree());
+                            tvWeatherHumidity.setText(data.getHumidity());
                         }
+                    }
 
-                        @Override
-                        public void onError(String errorCode, String errorMessage) {}
-                      });
-
-              tvImage.setImageResource(R.drawable.cloud_sun);
-              tvWeatherTemp.setText(data.getTempWithDegree());
-              tvWeatherHumidity.setText(data.getHumidity());
-            }
-          }
-
-          @Override
-          public void onFailure(Call<WeatherDay> call, Throwable t) {
-            Toast.makeText(HomeActivity.this, "Weather failed!" + t, Toast.LENGTH_LONG).show();
-          }
-        });
+                    @Override
+                    public void onFailure(Call<WeatherDay> call, Throwable t) {
+                        Toast.makeText(HomeActivity.this, "Weather failed!" + t, Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
   }
 
   private void initializeData() {
@@ -423,16 +447,38 @@ public class HomeActivity extends AppCompatActivity {
   }
 
   private void initViews() {
+    btnAvatar = findViewById(R.id.avatar_icon);
+    btnAdd = findViewById(R.id.plus_icon);
+
     btnSearch = findViewById(R.id.btnSearch);
     rv = findViewById(R.id.rv);
     tvWeather = findViewById(R.id.tvWeather);
     tvWeatherTemp = findViewById(R.id.tvWeatherTemp);
     tvWeatherHumidity = findViewById(R.id.tvWeatherHumidity);
     tvImage = findViewById(R.id.ivIcon);
+  }
 
-    btnAccount = findViewById(R.id.btnAccount);
-    btnControl = findViewById(R.id.btnControl);
-    btnHome = findViewById(R.id.btnHome);
+  private void defineLocationDialog() {
+      locationDialog = new Dialog(HomeActivity.this);
+      locationDialog.setContentView(R.layout.location_dialog);
+      locationDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
+      locationDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+      locationDialog.setCancelable(false);
+
+      Button ok = locationDialog.findViewById(R.id.btn_okay);
+      ok.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              locationDialog.dismiss();
+              Bundle bundle = new Bundle();
+              bundle.putString("Email", email);
+              bundle.putString("WifiLogin", ssid);
+              bundle.putString("WifiPassword", password);
+              Intent intent = new Intent(HomeActivity.this, HomeActivity.class);
+              intent.putExtras(bundle);
+              startActivity(intent);
+          }
+      });
   }
 
   public static long getHomeId() {

@@ -7,16 +7,18 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.home.sdk.bean.scene.PlaceFacadeBean;
 import com.tuya.smart.home.sdk.bean.scene.PreCondition;
@@ -37,7 +39,6 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
   String condititon;
   ImageButton btnLess, btnMore, btnEqual;
   Button btnAddWtask;
-  LinearLayout btnHome, btnControl, btnAccount;
   LocationManager locationManager;
   EditText etWeather;
 
@@ -65,35 +66,33 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
       category = bundle.getString("Category");
     }
 
-    btnHome.setOnClickListener(
-        new View.OnClickListener() {
+      BottomNavigationView nav_view = findViewById(R.id.bottom_navigatin_view);
+
+      nav_view.setSelectedItemId(R.id.control);
+      nav_view.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
           @Override
-          public void onClick(View view) {
-            Bundle bundle = new Bundle();
-            bundle.putString("Email", HomeActivity.getEmail());
-            bundle.putString("WifiLogin", HomeActivity.getSsid());
-            bundle.putString("WifiPassword", HomeActivity.getPassword());
-            Intent intent = new Intent(TaskWeatherAdditionActivity.this, HomeActivity.class);
-            intent.putExtras(bundle);
-            startActivity(intent);
+          public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+              switch (item.getItemId()) {
+                  case R.id.home:
+                      Bundle bundle = new Bundle();
+                      bundle.putString("Email", HomeActivity.getEmail());
+                      bundle.putString("WifiLogin", HomeActivity.getSsid());
+                      bundle.putString("WifiPassword", HomeActivity.getPassword());
+                      Intent intent = new Intent(TaskWeatherAdditionActivity.this, HomeActivity.class);
+                      intent.putExtras(bundle);
+                      startActivity(intent);
+                      return true;
+                  case R.id.control:
+                      overridePendingTransition(0,0);
+                      return true;
+                  case R.id.account:
+                      startActivity(new Intent(getApplicationContext(), AccountActivity.class));
+                      overridePendingTransition(0,0);
+                      return true;
+              }
+              return false;
           }
-        });
-    btnControl.setOnClickListener(
-        new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-            Intent intent = new Intent(TaskWeatherAdditionActivity.this, TaskActivity.class);
-            startActivity(intent);
-          }
-        });
-    btnAccount.setOnClickListener(
-        new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-            Intent intent = new Intent(TaskWeatherAdditionActivity.this, AccountActivity.class);
-            startActivity(intent);
-          }
-        });
+      });
     btnLess.setOnClickListener(
         new View.OnClickListener() {
           @Override
@@ -231,8 +230,5 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
     btnEqual = findViewById(R.id.btnEqual);
     btnAddWtask = findViewById(R.id.btnAddWtask);
     etWeather = findViewById(R.id.etTemp);
-    btnAccount = findViewById(R.id.btnAccount);
-    btnControl = findViewById(R.id.btnControl);
-    btnHome = findViewById(R.id.btnHome);
   }
 }

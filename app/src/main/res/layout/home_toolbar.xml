@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/design_default_color_primary">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <ImageButton
+            android:id="@+id/avatar_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/circle"
+            android:scaleType="centerInside"
+            android:src="@drawable/avatar"
+            />
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/plus_icon"
+            android:scaleType="fitCenter"
+            android:textColor="@color/white"
+            android:text="Hi, user!"
+            android:textSize="18dp" />
+
+        <ImageButton
+            android:id="@+id/plus_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:scaleType="fitCenter"
+            android:background="@color/design_default_color_primary"
+            android:src="@drawable/plus"
+            app:tint="@color/white" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
