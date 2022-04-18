@@ -34,31 +34,31 @@ public class WifiLoginActivity extends AppCompatActivity {
     }
 
     btnWifiVerify.setOnClickListener(
-            new View.OnClickListener() {
-              @Override
-              public void onClick(View view) {
-                String WifiLogin = etWifiLogin.getText().toString();
-                String WifiPassword = etWifiPassword.getText().toString();
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            String WifiLogin = etWifiLogin.getText().toString();
+            String WifiPassword = etWifiPassword.getText().toString();
 
-//                try {
-//                  if (!checkWifiConnection(WifiLogin, WifiPassword)) {
-//                    wifiDialog.show();
-//                  } else {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("Email", email);
-                    bundle.putString("WifiLogin", WifiLogin);
-                    bundle.putString("WifiPassword", WifiPassword);
-                    Toast.makeText(WifiLoginActivity.this, WifiLogin+WifiPassword, Toast.LENGTH_LONG)
-                            .show();
-                    Intent intent = new Intent(WifiLoginActivity.this, HomeActivity.class);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-//                  }
-//                } catch (InterruptedException e) {
-//                  e.printStackTrace();
-//                }
-              }
-            });
+            //                try {
+            //                  if (!checkWifiConnection(WifiLogin, WifiPassword)) {
+            //                    wifiDialog.show();
+            //                  } else {
+            Bundle bundle = new Bundle();
+            bundle.putString("Email", email);
+            bundle.putString("WifiLogin", WifiLogin);
+            bundle.putString("WifiPassword", WifiPassword);
+            Toast.makeText(WifiLoginActivity.this, WifiLogin + WifiPassword, Toast.LENGTH_LONG)
+                .show();
+            Intent intent = new Intent(WifiLoginActivity.this, HomeActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            //                  }
+            //                } catch (InterruptedException e) {
+            //                  e.printStackTrace();
+            //                }
+          }
+        });
   }
 
   @SuppressLint("NewApi")
@@ -71,32 +71,36 @@ public class WifiLoginActivity extends AppCompatActivity {
     wifiConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
     wifiConfig.status = WifiConfiguration.Status.ENABLED;
 
+    WifiManager wifiManager =
+        (WifiManager) this.getApplicationContext().getSystemService(WIFI_SERVICE);
 
-    WifiManager wifiManager = (WifiManager) this.getApplicationContext().getSystemService(WIFI_SERVICE);
-
-//    int netId = wifiManager.addNetwork(wifiConfig);
+    //    int netId = wifiManager.addNetwork(wifiConfig);
     wifiManager.disconnect();
-//    wifiManager.enableNetwork(netId, true);
+    //    wifiManager.enableNetwork(netId, true);
     boolean isConnected = wifiManager.reconnect();
     state = wifiManager.enableNetwork(wifiConfig.networkId, true);
     return state;
   }
+
   private void defineWifiDialog() {
     wifiDialog = new Dialog(WifiLoginActivity.this);
     wifiDialog.setContentView(R.layout.wifi_dialog);
     wifiDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
-    wifiDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    wifiDialog
+        .getWindow()
+        .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     wifiDialog.setCancelable(false);
 
     Button ok = wifiDialog.findViewById(R.id.btn_retry);
-    ok.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        wifiDialog.dismiss();
-        Intent intent = new Intent(WifiLoginActivity.this, WifiLoginActivity.class);
-        startActivity(intent);
-      }
-    });
+    ok.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            wifiDialog.dismiss();
+            Intent intent = new Intent(WifiLoginActivity.this, WifiLoginActivity.class);
+            startActivity(intent);
+          }
+        });
   }
 
   private void initViews() {

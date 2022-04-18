@@ -32,57 +32,58 @@ public class TaskActivity extends AppCompatActivity {
       prodId = bundle.getString("ProductId");
       category = bundle.getString("Category");
     }
-//    btnHome.setOnClickListener(
-//        new View.OnClickListener() {
-//          @Override
-//          public void onClick(View view) {
-//            Bundle bundle = new Bundle();
-//            bundle.putString("Email", HomeActivity.getEmail());
-//            bundle.putString("WifiLogin", HomeActivity.getSsid());
-//            bundle.putString("WifiPassword", HomeActivity.getPassword());
-//            Intent intent = new Intent(TaskActivity.this, HomeActivity.class);
-//            intent.putExtras(bundle);
-//            startActivity(intent);
-//          }
-//        });
-//    btnControl.setOnClickListener(
-//        new View.OnClickListener() {
-//          @Override
-//          public void onClick(View view) {
-//            Intent intent = new Intent(TaskActivity.this, TaskActivity.class);
-//            startActivity(intent);
-//          }
-//        });
-//    btnAccount.setOnClickListener(
-//        new View.OnClickListener() {
-//          @Override
-//          public void onClick(View view) {
-//            Intent intent = new Intent(TaskActivity.this, AccountActivity.class);
-//            startActivity(intent);
-//          }
-//        });
+    //    btnHome.setOnClickListener(
+    //        new View.OnClickListener() {
+    //          @Override
+    //          public void onClick(View view) {
+    //            Bundle bundle = new Bundle();
+    //            bundle.putString("Email", HomeActivity.getEmail());
+    //            bundle.putString("WifiLogin", HomeActivity.getSsid());
+    //            bundle.putString("WifiPassword", HomeActivity.getPassword());
+    //            Intent intent = new Intent(TaskActivity.this, HomeActivity.class);
+    //            intent.putExtras(bundle);
+    //            startActivity(intent);
+    //          }
+    //        });
+    //    btnControl.setOnClickListener(
+    //        new View.OnClickListener() {
+    //          @Override
+    //          public void onClick(View view) {
+    //            Intent intent = new Intent(TaskActivity.this, TaskActivity.class);
+    //            startActivity(intent);
+    //          }
+    //        });
+    //    btnAccount.setOnClickListener(
+    //        new View.OnClickListener() {
+    //          @Override
+    //          public void onClick(View view) {
+    //            Intent intent = new Intent(TaskActivity.this, AccountActivity.class);
+    //            startActivity(intent);
+    //          }
+    //        });
 
-      BottomNavigationView nav_view = findViewById(R.id.bottom_navigatin_view);
+    BottomNavigationView nav_view = findViewById(R.id.bottom_navigatin_view);
 
-      nav_view.setSelectedItemId(R.id.control);
-      nav_view.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+    nav_view.setSelectedItemId(R.id.control);
+    nav_view.setOnNavigationItemSelectedListener(
+        new BottomNavigationView.OnNavigationItemSelectedListener() {
           @Override
           public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-              switch (item.getItemId()) {
-                  case R.id.home:
-                      startActivity(new Intent(TaskActivity.this, HomeActivity.class));
-                      overridePendingTransition(0,0);
-                      return true;
-                  case R.id.control:
-                      return true;
-                  case R.id.account:
-                      startActivity(new Intent(TaskActivity.this, AccountActivity.class));
-                      overridePendingTransition(0,0);
-                      return true;
-              }
-              return false;
+            switch (item.getItemId()) {
+              case R.id.home:
+                startActivity(new Intent(TaskActivity.this, HomeActivity.class));
+                overridePendingTransition(0, 0);
+                return true;
+              case R.id.control:
+                return true;
+              case R.id.account:
+                startActivity(new Intent(TaskActivity.this, AccountActivity.class));
+                overridePendingTransition(0, 0);
+                return true;
+            }
+            return false;
           }
-      });
+        });
     btnWeather.setOnClickListener(
         new View.OnClickListener() {
           @Override
@@ -125,6 +126,5 @@ public class TaskActivity extends AppCompatActivity {
     btnShedule = findViewById(R.id.btnSheduledTask);
     btnLocation = findViewById(R.id.btnLocationTask);
     btnWeather = findViewById(R.id.btnWeatherTask);
-
   }
 }

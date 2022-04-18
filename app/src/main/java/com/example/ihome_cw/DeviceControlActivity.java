@@ -50,33 +50,34 @@ public class DeviceControlActivity extends AppCompatActivity {
     Bundle bundle = getIntent().getExtras();
 
     initViews();
-      BottomNavigationView nav_view = findViewById(R.id.bottom_navigatin_view);
+    BottomNavigationView nav_view = findViewById(R.id.bottom_navigatin_view);
 
-      nav_view.setSelectedItemId(R.id.control);
-      nav_view.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+    nav_view.setSelectedItemId(R.id.control);
+    nav_view.setOnNavigationItemSelectedListener(
+        new BottomNavigationView.OnNavigationItemSelectedListener() {
           @Override
           public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-              switch (item.getItemId()) {
-                  case R.id.home:
-                      Bundle bundle = new Bundle();
-                      bundle.putString("Email", HomeActivity.getEmail());
-                      bundle.putString("WifiLogin", HomeActivity.getSsid());
-                      bundle.putString("WifiPassword", HomeActivity.getPassword());
-                      Intent intent = new Intent(DeviceControlActivity.this, HomeActivity.class);
-                      intent.putExtras(bundle);
-                      startActivity(intent);
-                      return true;
-                  case R.id.control:
-                      overridePendingTransition(0,0);
-                      return true;
-                  case R.id.account:
-                      startActivity(new Intent(getApplicationContext(), AccountActivity.class));
-                      overridePendingTransition(0,0);
-                      return true;
-              }
-              return false;
+            switch (item.getItemId()) {
+              case R.id.home:
+                Bundle bundle = new Bundle();
+                bundle.putString("Email", HomeActivity.getEmail());
+                bundle.putString("WifiLogin", HomeActivity.getSsid());
+                bundle.putString("WifiPassword", HomeActivity.getPassword());
+                Intent intent = new Intent(DeviceControlActivity.this, HomeActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                return true;
+              case R.id.control:
+                overridePendingTransition(0, 0);
+                return true;
+              case R.id.account:
+                startActivity(new Intent(getApplicationContext(), AccountActivity.class));
+                overridePendingTransition(0, 0);
+                return true;
+            }
+            return false;
           }
-      });
+        });
     String[] scenes = new String[] {"Goodnight", "Casual", "Read", "Work"};
     String[] workModes = new String[] {"Scene", "White", "Color"};
 
@@ -347,6 +348,5 @@ public class DeviceControlActivity extends AppCompatActivity {
     btnAddTask = findViewById(R.id.btnAddTask);
     labelScene = findViewById(R.id.labelScene);
     labelWorkMode = findViewById(R.id.labelWorkMode);
-
   }
 }

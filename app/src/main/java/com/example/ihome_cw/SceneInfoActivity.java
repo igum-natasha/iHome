@@ -30,33 +30,34 @@ public class SceneInfoActivity extends AppCompatActivity {
     }
 
     initViews();
-      BottomNavigationView nav_view = findViewById(R.id.bottom_navigatin_view);
+    BottomNavigationView nav_view = findViewById(R.id.bottom_navigatin_view);
 
-      nav_view.setSelectedItemId(R.id.control);
-      nav_view.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+    nav_view.setSelectedItemId(R.id.control);
+    nav_view.setOnNavigationItemSelectedListener(
+        new BottomNavigationView.OnNavigationItemSelectedListener() {
           @Override
           public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-              switch (item.getItemId()) {
-                  case R.id.home:
-                      Bundle bundle = new Bundle();
-                      bundle.putString("Email", HomeActivity.getEmail());
-                      bundle.putString("WifiLogin", HomeActivity.getSsid());
-                      bundle.putString("WifiPassword", HomeActivity.getPassword());
-                      Intent intent = new Intent(SceneInfoActivity.this, HomeActivity.class);
-                      intent.putExtras(bundle);
-                      startActivity(intent);
-                      return true;
-                  case R.id.control:
-                      overridePendingTransition(0,0);
-                      return true;
-                  case R.id.account:
-                      startActivity(new Intent(getApplicationContext(), AccountActivity.class));
-                      overridePendingTransition(0,0);
-                      return true;
-              }
-              return false;
+            switch (item.getItemId()) {
+              case R.id.home:
+                Bundle bundle = new Bundle();
+                bundle.putString("Email", HomeActivity.getEmail());
+                bundle.putString("WifiLogin", HomeActivity.getSsid());
+                bundle.putString("WifiPassword", HomeActivity.getPassword());
+                Intent intent = new Intent(SceneInfoActivity.this, HomeActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                return true;
+              case R.id.control:
+                overridePendingTransition(0, 0);
+                return true;
+              case R.id.account:
+                startActivity(new Intent(getApplicationContext(), AccountActivity.class));
+                overridePendingTransition(0, 0);
+                return true;
+            }
+            return false;
           }
-      });
+        });
     TuyaHomeSdk.getSceneManagerInstance()
         .getSceneDetail(
             homeId,
@@ -86,6 +87,5 @@ public class SceneInfoActivity extends AppCompatActivity {
     tvSceneDate = findViewById(R.id.tvSceneDate);
     tvSceneTime = findViewById(R.id.tvSceneTime);
     tvSceneEnable = findViewById(R.id.tvSceneEnable);
-
   }
 }

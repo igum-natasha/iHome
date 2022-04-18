@@ -19,29 +19,29 @@ public class AccountActivity extends AppCompatActivity {
     setContentView(R.layout.activity_account);
     initViews();
 
-      BottomNavigationView nav_view = findViewById(R.id.bottom_navigatin_view);
+    BottomNavigationView nav_view = findViewById(R.id.bottom_navigatin_view);
 
-      nav_view.setSelectedItemId(R.id.account);
-      nav_view.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+    nav_view.setSelectedItemId(R.id.account);
+    nav_view.setOnNavigationItemSelectedListener(
+        new BottomNavigationView.OnNavigationItemSelectedListener() {
           @Override
           public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-              switch (item.getItemId()) {
-                  case R.id.home:
-                      startActivity(new Intent(AccountActivity.this, HomeActivity.class));
-                      overridePendingTransition(0,0);
-                      return true;
-                  case R.id.control:
-                      startActivity(new Intent(AccountActivity.this, TaskActivity.class));
-                      overridePendingTransition(0,0);
-                      return true;
-                  case R.id.account:
-                      return true;
-              }
-              return false;
+            switch (item.getItemId()) {
+              case R.id.home:
+                startActivity(new Intent(AccountActivity.this, HomeActivity.class));
+                overridePendingTransition(0, 0);
+                return true;
+              case R.id.control:
+                startActivity(new Intent(AccountActivity.this, TaskActivity.class));
+                overridePendingTransition(0, 0);
+                return true;
+              case R.id.account:
+                return true;
+            }
+            return false;
           }
-      });
+        });
   }
 
-  private void initViews() {
-  }
+  private void initViews() {}
 }
