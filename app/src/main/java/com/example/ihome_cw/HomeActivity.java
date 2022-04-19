@@ -9,6 +9,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -55,7 +57,8 @@ public class HomeActivity extends AppCompatActivity {
   private CardView cvDevice;
   private Toolbar mToolbar;
   private Button btnSearch;
-  private ImageButton btnAdd, btnAvatar;
+  private ImageButton btnAdd;
+  private CircleImageView btnAvatar;
   private TextView tvWeather, tvWeatherTemp, tvWeatherHumidity;
 
   String API = "a489972de36b54432056bbefac20242b";
@@ -78,8 +81,7 @@ public class HomeActivity extends AppCompatActivity {
   ITuyaActivator tuyaActivator;
   private List<Device> devices;
   private RecyclerView rv;
-  LinearLayout btnHome, btnControl, btnAccount;
-  Dialog locationDialog;
+  Dialog locationDialog, addDialog;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -94,12 +96,12 @@ public class HomeActivity extends AppCompatActivity {
     }
     initViews();
     defineLocationDialog();
+    defineAddDialog();
     btnAdd.setOnClickListener(
         new View.OnClickListener() {
           @Override
           public void onClick(View view) {
-            Intent intent = new Intent(HomeActivity.this, TaskActivity.class);
-            startActivity(intent);
+              addDialog.show();
           }
         });
     btnAvatar.setOnClickListener(
@@ -485,7 +487,37 @@ public class HomeActivity extends AppCompatActivity {
           }
         });
   }
+    private void defineAddDialog() {
+        addDialog = new Dialog(HomeActivity.this);
+        addDialog.setContentView(R.layout.add_dialog);
+        addDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
+        addDialog
+                .getWindow()
+                .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        addDialog.getWindow().setGravity(Gravity.CENTER);
+        addDialog.setCancelable(false);
 
+        LinearLayout addDevice = addDialog.findViewById(R.id.btnAddNewDevice);
+        addDevice.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        addDialog.dismiss();
+                        Intent intent = new Intent(HomeActivity.this, HomeActivity.class); //?
+                        startActivity(intent);
+                    }
+                });
+        LinearLayout addTask = addDialog.findViewById(R.id.btnAddNewTask);
+        addTask.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        addDialog.dismiss();
+                        Intent intent = new Intent(HomeActivity.this, TaskActivity.class); //?
+                        startActivity(intent);
+                    }
+                });
+    }
   public static long getHomeId() {
     return homeId;
   }

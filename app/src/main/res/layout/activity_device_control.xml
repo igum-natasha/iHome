@@ -5,6 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DeviceControlActivity">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/control_toolbar" />
     <TextView
         android:id="@+id/labelDeviceName"
         android:layout_width="wrap_content"

@@ -1,10 +1,15 @@
 package com.example.ihome_cw;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,13 +24,18 @@ import com.tuya.smart.home.sdk.callback.ITuyaResultCallback;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class TaskAdditionActivity extends AppCompatActivity {
 
   String devId, devName, prodId, category;
 
-  private Button btnAdd;
+  private Button btnAddTask;
   private List<SceneBean> scenes = new ArrayList<>();
   private RecyclerView rv_tasks;
+    ImageButton btnAdd;
+    CircleImageView btnAccount;
+    Dialog addDialog;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +43,7 @@ public class TaskAdditionActivity extends AppCompatActivity {
     setContentView(R.layout.activity_task_addition);
 
     Bundle bundle = getIntent().getExtras();
-
+    defineAddDialog();
     initViews();
     if (bundle != null) {
       devId = bundle.getString("DeviceId");
@@ -41,6 +51,20 @@ public class TaskAdditionActivity extends AppCompatActivity {
       prodId = bundle.getString("ProductId");
       category = bundle.getString("Category");
     }
+
+      btnAdd.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              addDialog.show();
+          }
+      });
+      btnAccount.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              Intent intent = new Intent(TaskAdditionActivity.this, AccountActivity.class);
+              startActivity(intent);
+          }
+      });
     BottomNavigationView nav_view = findViewById(R.id.bottom_navigatin_view);
 
     nav_view.setSelectedItemId(R.id.control);
@@ -59,6 +83,7 @@ public class TaskAdditionActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
               case R.id.control:
+                  startActivity(new Intent(TaskAdditionActivity.this, TaskActivity.class));
                 overridePendingTransition(0, 0);
                 return true;
               case R.id.account:
@@ -71,7 +96,7 @@ public class TaskAdditionActivity extends AppCompatActivity {
         });
     showTasks();
 
-    btnAdd.setOnClickListener(
+    btnAddTask.setOnClickListener(
         new View.OnClickListener() {
           @Override
           public void onClick(View view) {
@@ -131,8 +156,42 @@ public class TaskAdditionActivity extends AppCompatActivity {
     initializeData();
     initializeAdapter();
   }
+    private void defineAddDialog() {
+        addDialog = new Dialog(TaskAdditionActivity.this);
+        addDialog.setContentView(R.layout.add_dialog);
+        addDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
+        addDialog
+                .getWindow()
+                .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        addDialog.getWindow().setGravity(Gravity.CENTER);
+        addDialog.setCancelable(false);
 
+        LinearLayout addDevice = addDialog.findViewById(R.id.btnAddNewDevice);
+        addDevice.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        addDialog.dismiss();
+                        Intent intent = new Intent(TaskAdditionActivity.this, HomeActivity.class); //?
+                        startActivity(intent);
+                    }
+                });
+        LinearLayout addTask = addDialog.findViewById(R.id.btnAddNewTask);
+        addTask.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        addDialog.dismiss();
+                        Intent intent = new Intent(TaskAdditionActivity.this, TaskActivity.class); //?
+                        startActivity(intent);
+                    }
+                });
+    }
   private void initViews() {
-    btnAdd = findViewById(R.id.btnAdd);
+
+      btnAdd = findViewById(R.id.plus_icon);
+      btnAccount = findViewById(R.id.avatar_icon);
+
+      btnAddTask = findViewById(R.id.btnAdd);
   }
 }

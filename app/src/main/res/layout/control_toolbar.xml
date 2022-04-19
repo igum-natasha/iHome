@@ -26,15 +26,15 @@
             android:layout_toEndOf="@+id/plus_icon"
             android:scaleType="fitCenter"
             android:textColor="@color/white"
-            android:text="Hi, user!"
+            android:text="Control Center"
             android:textSize="18dp" />
 
         <ImageButton
             android:id="@+id/plus_icon"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:scaleType="fitCenter"
             android:background="@color/design_default_color_primary"
+            android:scaleType="fitCenter"
             android:src="@drawable/plus"
             app:tint="@color/white" />
 

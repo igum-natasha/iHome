@@ -1,11 +1,16 @@
 package com.example.ihome_cw;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,6 +31,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class SimpleTaskActivity extends AppCompatActivity {
 
   private EditText etTime, etDate, etName;
@@ -33,6 +40,9 @@ public class SimpleTaskActivity extends AppCompatActivity {
   String devId, devName, prodId, category;
   private List<SceneTask> tasks = new ArrayList<>();
   private List<SceneCondition> conditions = new ArrayList<>();
+  ImageButton btnAdd;
+  CircleImageView btnAccount;
+  Dialog addDialog;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +50,7 @@ public class SimpleTaskActivity extends AppCompatActivity {
     setContentView(R.layout.activity_simple_task);
 
     initViews();
-
+    defineAddDialog();
     Bundle bundle = getIntent().getExtras();
     if (bundle != null) {
       devId = bundle.getString("DeviceId");
@@ -48,6 +58,19 @@ public class SimpleTaskActivity extends AppCompatActivity {
       prodId = bundle.getString("ProductId");
       category = bundle.getString("Category");
     }
+    btnAdd.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        addDialog.show();
+      }
+    });
+    btnAccount.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Intent intent = new Intent(SimpleTaskActivity.this, AccountActivity.class);
+        startActivity(intent);
+      }
+    });
     BottomNavigationView nav_view = findViewById(R.id.bottom_navigatin_view);
 
     nav_view.setSelectedItemId(R.id.control);
@@ -66,6 +89,7 @@ public class SimpleTaskActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
               case R.id.control:
+                startActivity(new Intent(SimpleTaskActivity.this, TaskActivity.class));
                 overridePendingTransition(0, 0);
                 return true;
               case R.id.account:
@@ -139,8 +163,41 @@ public class SimpleTaskActivity extends AppCompatActivity {
           }
         });
   }
+  private void defineAddDialog() {
+    addDialog = new Dialog(SimpleTaskActivity.this);
+    addDialog.setContentView(R.layout.add_dialog);
+    addDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
+    addDialog
+            .getWindow()
+            .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    addDialog.getWindow().setGravity(Gravity.CENTER);
+    addDialog.setCancelable(false);
 
+    LinearLayout addDevice = addDialog.findViewById(R.id.btnAddNewDevice);
+    addDevice.setOnClickListener(
+            new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                addDialog.dismiss();
+                Intent intent = new Intent(SimpleTaskActivity.this, HomeActivity.class); //?
+                startActivity(intent);
+              }
+            });
+    LinearLayout addTask = addDialog.findViewById(R.id.btnAddNewTask);
+    addTask.setOnClickListener(
+            new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                addDialog.dismiss();
+                Intent intent = new Intent(SimpleTaskActivity.this, TaskActivity.class); //?
+                startActivity(intent);
+              }
+            });
+  }
   private void initViews() {
+    btnAdd = findViewById(R.id.plus_icon);
+    btnAccount = findViewById(R.id.avatar_icon);
+
     etDate = findViewById(R.id.etDate);
     etTime = findViewById(R.id.etTime);
     btnAddTask = findViewById(R.id.btnAddTask);

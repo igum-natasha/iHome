@@ -3,7 +3,8 @@ package com.example.ihome_cw;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
+import android.view.View;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,14 +12,28 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class AccountActivity extends AppCompatActivity {
-  LinearLayout btnHome, btnControl, btnAccount;
+  ImageButton btnSetting, btnBack;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_account);
     initViews();
-
+    btnSetting.setOnClickListener(
+            new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                Intent intent = new Intent(AccountActivity.this, SettingActivity.class);
+                startActivity(intent);
+              }
+            });
+    btnBack.setOnClickListener(
+            new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                finish();
+              }
+            });
     BottomNavigationView nav_view = findViewById(R.id.bottom_navigatin_view);
 
     nav_view.setSelectedItemId(R.id.account);
@@ -43,5 +58,8 @@ public class AccountActivity extends AppCompatActivity {
         });
   }
 
-  private void initViews() {}
+  private void initViews() {
+    btnSetting = findViewById(R.id.setting_icon);
+    btnBack = findViewById(R.id.left_icon);
+  }
 }

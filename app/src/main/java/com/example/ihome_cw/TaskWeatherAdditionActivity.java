@@ -1,17 +1,21 @@
 package com.example.ihome_cw;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,6 +38,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class TaskWeatherAdditionActivity extends AppCompatActivity {
   String devId, devName, prodId, category;
   String condititon;
@@ -41,6 +47,9 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
   Button btnAddWtask;
   LocationManager locationManager;
   EditText etWeather;
+    ImageButton btnAdd;
+    CircleImageView btnAccount;
+    Dialog addDialog;
 
   private List<SceneTask> tasks = new ArrayList<>();
   private List<SceneBean> scenes = new ArrayList<>();
@@ -58,14 +67,26 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
     Bundle bundle = getIntent().getExtras();
 
     initViews();
-
+      defineAddDialog();
     if (bundle != null) {
       devId = bundle.getString("DeviceId");
       devName = bundle.getString("DeviceName");
       prodId = bundle.getString("ProductId");
       category = bundle.getString("Category");
     }
-
+      btnAdd.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              addDialog.show();
+          }
+      });
+      btnAccount.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              Intent intent = new Intent(TaskWeatherAdditionActivity.this, AccountActivity.class);
+              startActivity(intent);
+          }
+      });
     BottomNavigationView nav_view = findViewById(R.id.bottom_navigatin_view);
 
     nav_view.setSelectedItemId(R.id.control);
@@ -84,6 +105,7 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
               case R.id.control:
+                  startActivity(new Intent(TaskWeatherAdditionActivity.this, TaskActivity.class));
                 overridePendingTransition(0, 0);
                 return true;
               case R.id.account:
@@ -224,8 +246,40 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
     }
     return bestLocation;
   }
+    private void defineAddDialog() {
+        addDialog = new Dialog(TaskWeatherAdditionActivity.this);
+        addDialog.setContentView(R.layout.add_dialog);
+        addDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
+        addDialog
+                .getWindow()
+                .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        addDialog.getWindow().setGravity(Gravity.CENTER);
+        addDialog.setCancelable(false);
 
+        LinearLayout addDevice = addDialog.findViewById(R.id.btnAddNewDevice);
+        addDevice.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        addDialog.dismiss();
+                        Intent intent = new Intent(TaskWeatherAdditionActivity.this, HomeActivity.class); //?
+                        startActivity(intent);
+                    }
+                });
+        LinearLayout addTask = addDialog.findViewById(R.id.btnAddNewTask);
+        addTask.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        addDialog.dismiss();
+                        Intent intent = new Intent(TaskWeatherAdditionActivity.this, TaskActivity.class); //?
+                        startActivity(intent);
+                    }
+                });
+    }
   private void initViews() {
+      btnAdd = findViewById(R.id.plus_icon);
+      btnAccount = findViewById(R.id.avatar_icon);
     btnLess = findViewById(R.id.btnLess);
     btnMore = findViewById(R.id.btnMore);
     btnEqual = findViewById(R.id.btnEqual);
