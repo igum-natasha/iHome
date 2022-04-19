@@ -101,7 +101,7 @@ public class HomeActivity extends AppCompatActivity {
         new View.OnClickListener() {
           @Override
           public void onClick(View view) {
-              addDialog.show();
+            addDialog.show();
           }
         });
     btnAvatar.setOnClickListener(
@@ -487,37 +487,39 @@ public class HomeActivity extends AppCompatActivity {
           }
         });
   }
-    private void defineAddDialog() {
-        addDialog = new Dialog(HomeActivity.this);
-        addDialog.setContentView(R.layout.add_dialog);
-        addDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
-        addDialog
-                .getWindow()
-                .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        addDialog.getWindow().setGravity(Gravity.CENTER);
-        addDialog.setCancelable(false);
 
-        LinearLayout addDevice = addDialog.findViewById(R.id.btnAddNewDevice);
-        addDevice.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        addDialog.dismiss();
-                        Intent intent = new Intent(HomeActivity.this, HomeActivity.class); //?
-                        startActivity(intent);
-                    }
-                });
-        LinearLayout addTask = addDialog.findViewById(R.id.btnAddNewTask);
-        addTask.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        addDialog.dismiss();
-                        Intent intent = new Intent(HomeActivity.this, TaskActivity.class); //?
-                        startActivity(intent);
-                    }
-                });
-    }
+  private void defineAddDialog() {
+    addDialog = new Dialog(HomeActivity.this);
+    addDialog.setContentView(R.layout.add_dialog);
+    addDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
+    addDialog
+        .getWindow()
+        .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    addDialog.getWindow().setGravity(Gravity.CENTER);
+    addDialog.setCancelable(false);
+
+    LinearLayout addDevice = addDialog.findViewById(R.id.btnAddNewDevice);
+    addDevice.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            addDialog.dismiss();
+            Intent intent = new Intent(HomeActivity.this, HomeActivity.class); // ?
+            startActivity(intent);
+          }
+        });
+    LinearLayout addTask = addDialog.findViewById(R.id.btnAddNewTask);
+    addTask.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            addDialog.dismiss();
+            Intent intent = new Intent(HomeActivity.this, TaskActivity.class); // ?
+            startActivity(intent);
+          }
+        });
+  }
+
   public static long getHomeId() {
     return homeId;
   }

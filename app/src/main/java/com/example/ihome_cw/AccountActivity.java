@@ -20,20 +20,20 @@ public class AccountActivity extends AppCompatActivity {
     setContentView(R.layout.activity_account);
     initViews();
     btnSetting.setOnClickListener(
-            new View.OnClickListener() {
-              @Override
-              public void onClick(View view) {
-                Intent intent = new Intent(AccountActivity.this, SettingActivity.class);
-                startActivity(intent);
-              }
-            });
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            Intent intent = new Intent(AccountActivity.this, SettingActivity.class);
+            startActivity(intent);
+          }
+        });
     btnBack.setOnClickListener(
-            new View.OnClickListener() {
-              @Override
-              public void onClick(View view) {
-                finish();
-              }
-            });
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            finish();
+          }
+        });
     BottomNavigationView nav_view = findViewById(R.id.bottom_navigatin_view);
 
     nav_view.setSelectedItemId(R.id.account);

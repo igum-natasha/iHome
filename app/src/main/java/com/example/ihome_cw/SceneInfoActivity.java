@@ -42,19 +42,21 @@ public class SceneInfoActivity extends AppCompatActivity {
 
     initViews();
     defineAddDialog();
-    btnAdd.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        addDialog.show();
-      }
-    });
-    btnAccount.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        Intent intent = new Intent(SceneInfoActivity.this, AccountActivity.class);
-        startActivity(intent);
-      }
-    });
+    btnAdd.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            addDialog.show();
+          }
+        });
+    btnAccount.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            Intent intent = new Intent(SceneInfoActivity.this, AccountActivity.class);
+            startActivity(intent);
+          }
+        });
     BottomNavigationView nav_view = findViewById(R.id.bottom_navigatin_view);
 
     nav_view.setSelectedItemId(R.id.control);
@@ -107,37 +109,39 @@ public class SceneInfoActivity extends AppCompatActivity {
               public void onError(String errorCode, String errorMessage) {}
             });
   }
+
   private void defineAddDialog() {
     addDialog = new Dialog(SceneInfoActivity.this);
     addDialog.setContentView(R.layout.add_dialog);
     addDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
     addDialog
-            .getWindow()
-            .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        .getWindow()
+        .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     addDialog.getWindow().setGravity(Gravity.CENTER);
     addDialog.setCancelable(false);
 
     LinearLayout addDevice = addDialog.findViewById(R.id.btnAddNewDevice);
     addDevice.setOnClickListener(
-            new View.OnClickListener() {
-              @Override
-              public void onClick(View view) {
-                addDialog.dismiss();
-                Intent intent = new Intent(SceneInfoActivity.this, HomeActivity.class); //?
-                startActivity(intent);
-              }
-            });
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            addDialog.dismiss();
+            Intent intent = new Intent(SceneInfoActivity.this, HomeActivity.class); // ?
+            startActivity(intent);
+          }
+        });
     LinearLayout addTask = addDialog.findViewById(R.id.btnAddNewTask);
     addTask.setOnClickListener(
-            new View.OnClickListener() {
-              @Override
-              public void onClick(View view) {
-                addDialog.dismiss();
-                Intent intent = new Intent(SceneInfoActivity.this, TaskActivity.class); //?
-                startActivity(intent);
-              }
-            });
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            addDialog.dismiss();
+            Intent intent = new Intent(SceneInfoActivity.this, TaskActivity.class); // ?
+            startActivity(intent);
+          }
+        });
   }
+
   private void initViews() {
     btnAdd = findViewById(R.id.plus_icon);
     btnAccount = findViewById(R.id.avatar_icon);

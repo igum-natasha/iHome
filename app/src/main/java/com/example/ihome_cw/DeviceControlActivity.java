@@ -48,9 +48,9 @@ public class DeviceControlActivity extends AppCompatActivity {
   private Button btnAddTask;
   String devId, devName, prodId, category;
   public static final String STHEME_DPID_101 = "1";
-    ImageButton btnAdd;
-    CircleImageView btnAccount;
-    Dialog addDialog;
+  ImageButton btnAdd;
+  CircleImageView btnAccount;
+  Dialog addDialog;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -60,20 +60,22 @@ public class DeviceControlActivity extends AppCompatActivity {
     Bundle bundle = getIntent().getExtras();
 
     initViews();
-      defineAddDialog();
-      btnAdd.setOnClickListener(new View.OnClickListener() {
+    defineAddDialog();
+    btnAdd.setOnClickListener(
+        new View.OnClickListener() {
           @Override
           public void onClick(View view) {
-              addDialog.show();
+            addDialog.show();
           }
-      });
-      btnAccount.setOnClickListener(new View.OnClickListener() {
+        });
+    btnAccount.setOnClickListener(
+        new View.OnClickListener() {
           @Override
           public void onClick(View view) {
-              Intent intent = new Intent(DeviceControlActivity.this, AccountActivity.class);
-              startActivity(intent);
+            Intent intent = new Intent(DeviceControlActivity.this, AccountActivity.class);
+            startActivity(intent);
           }
-      });
+        });
     BottomNavigationView nav_view = findViewById(R.id.bottom_navigatin_view);
 
     nav_view.setSelectedItemId(R.id.control);
@@ -92,7 +94,7 @@ public class DeviceControlActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
               case R.id.control:
-                  startActivity(new Intent(DeviceControlActivity.this, TaskActivity.class));
+                startActivity(new Intent(DeviceControlActivity.this, TaskActivity.class));
                 overridePendingTransition(0, 0);
                 return true;
               case R.id.account:
@@ -363,40 +365,42 @@ public class DeviceControlActivity extends AppCompatActivity {
           });
     }
   }
-    private void defineAddDialog() {
-        addDialog = new Dialog(DeviceControlActivity.this);
-        addDialog.setContentView(R.layout.add_dialog);
-        addDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
-        addDialog
-                .getWindow()
-                .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        addDialog.getWindow().setGravity(Gravity.CENTER);
-        addDialog.setCancelable(false);
 
-        LinearLayout addDevice = addDialog.findViewById(R.id.btnAddNewDevice);
-        addDevice.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        addDialog.dismiss();
-                        Intent intent = new Intent(DeviceControlActivity.this, HomeActivity.class); //?
-                        startActivity(intent);
-                    }
-                });
-        LinearLayout addTask = addDialog.findViewById(R.id.btnAddNewTask);
-        addTask.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        addDialog.dismiss();
-                        Intent intent = new Intent(DeviceControlActivity.this, TaskActivity.class); //?
-                        startActivity(intent);
-                    }
-                });
-    }
+  private void defineAddDialog() {
+    addDialog = new Dialog(DeviceControlActivity.this);
+    addDialog.setContentView(R.layout.add_dialog);
+    addDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
+    addDialog
+        .getWindow()
+        .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    addDialog.getWindow().setGravity(Gravity.CENTER);
+    addDialog.setCancelable(false);
+
+    LinearLayout addDevice = addDialog.findViewById(R.id.btnAddNewDevice);
+    addDevice.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            addDialog.dismiss();
+            Intent intent = new Intent(DeviceControlActivity.this, HomeActivity.class); // ?
+            startActivity(intent);
+          }
+        });
+    LinearLayout addTask = addDialog.findViewById(R.id.btnAddNewTask);
+    addTask.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            addDialog.dismiss();
+            Intent intent = new Intent(DeviceControlActivity.this, TaskActivity.class); // ?
+            startActivity(intent);
+          }
+        });
+  }
+
   private void initViews() {
-      btnAdd = findViewById(R.id.plus_icon);
-      btnAccount = findViewById(R.id.avatar_icon);
+    btnAdd = findViewById(R.id.plus_icon);
+    btnAccount = findViewById(R.id.avatar_icon);
 
     tvDeviceName = findViewById(R.id.tvDeviceControlName);
     sbBrightness = findViewById(R.id.sbBrightness);
