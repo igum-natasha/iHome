@@ -28,37 +28,41 @@ public class AccountActivity extends AppCompatActivity {
     setContentView(R.layout.activity_account);
     initViews();
     tvEmail.setText(HomeActivity.getEmail());
-      String mail = HomeActivity.getEmail();
-      String regex = "^([A-Za-z0-9+_.-]+)(@.+$)";
-      Pattern pattern = Pattern.compile(regex);
+    String mail = HomeActivity.getEmail();
+    String regex = "^([A-Za-z0-9+_.-]+)(@.+$)";
+    Pattern pattern = Pattern.compile(regex);
 
-      Matcher matcher = pattern.matcher(mail);
-      if (matcher.find()) {
-          tvName.setText(matcher.group(1));
-      }
+    Matcher matcher = pattern.matcher(mail);
+    if (matcher.find()) {
+      tvName.setText(matcher.group(1));
+    }
 
-
-    timeZone.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(AccountActivity.this, SettingActivity.class); //?
+    timeZone.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            Intent intent = new Intent(AccountActivity.this, SettingActivity.class); // ?
             startActivity(intent);
-        }
-    });
-    messageCenter.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://support.tuya.com/en/help"));
+          }
+        });
+    messageCenter.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            Intent browserIntent =
+                new Intent(Intent.ACTION_VIEW, Uri.parse("https://support.tuya.com/en/help"));
             startActivity(browserIntent);
-        }
-    });
-    questions.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.tuya.com/contact"));
+          }
+        });
+    questions.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            Intent browserIntent =
+                new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.tuya.com/contact"));
             startActivity(browserIntent);
-        }
-    });
+          }
+        });
     btnSetting.setOnClickListener(
         new View.OnClickListener() {
           @Override

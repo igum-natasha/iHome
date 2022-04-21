@@ -146,7 +146,7 @@ public class SimpleTaskActivity extends AppCompatActivity {
                     new ITuyaResultCallback<SceneBean>() {
                       @Override
                       public void onSuccess(SceneBean sceneBean) {
-                          sceneBean.setEnabled(true);
+                        sceneBean.setEnabled(true);
                         Toast.makeText(SimpleTaskActivity.this, "successful!", Toast.LENGTH_LONG)
                             .show();
                         Bundle bundle = new Bundle();
