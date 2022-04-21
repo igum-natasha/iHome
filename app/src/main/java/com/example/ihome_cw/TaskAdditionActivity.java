@@ -31,7 +31,7 @@ public class TaskAdditionActivity extends AppCompatActivity {
   String devId, devName, prodId, category;
 
   private Button btnAddTask;
-  private List<SceneBean> scenes = new ArrayList<>();
+    private static List<SceneBean> scenes = new ArrayList<>();
   private RecyclerView rv_tasks;
   ImageButton btnAdd;
   CircleImageView btnAccount;
@@ -121,7 +121,7 @@ public class TaskAdditionActivity extends AppCompatActivity {
             new ITuyaResultCallback<List<SceneBean>>() {
               @Override
               public void onSuccess(List<SceneBean> result) {
-                scenes = result;
+                  scenes.addAll(result);
               }
 
               @Override

@@ -125,7 +125,7 @@ public class SimpleTaskActivity extends AppCompatActivity {
             PreCondition preCondition = new PreCondition();
             PreConditionExpr expr = new PreConditionExpr();
             expr.setStart("00:00");
-            expr.setEnd("23:59");
+            expr.setEnd(Time);
             expr.setTimeInterval(PreCondition.TIMEINTERVAL_ALLDAY);
             preCondition.setCondType(PreCondition.TYPE_TIME_CHECK);
             expr.setTimeZoneId(TimeZone.getDefault().getID());
@@ -146,6 +146,7 @@ public class SimpleTaskActivity extends AppCompatActivity {
                     new ITuyaResultCallback<SceneBean>() {
                       @Override
                       public void onSuccess(SceneBean sceneBean) {
+                          sceneBean.setEnabled(true);
                         Toast.makeText(SimpleTaskActivity.this, "successful!", Toast.LENGTH_LONG)
                             .show();
                         Bundle bundle = new Bundle();

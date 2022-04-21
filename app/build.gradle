@@ -72,4 +72,5 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.android.material:material:1.7.0-alpha01'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.loopeer.lib:shadow:0.0.4-beta3'
 }

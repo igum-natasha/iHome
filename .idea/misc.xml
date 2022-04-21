@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Android_app/iHome/app/src/main/res/layout/activity_registration.xml" value="0.17603850050658562" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/drawable/background_dialog.xml" value="0.44114583333333335" />
+        <entry key="..\:/Android_app/iHome_CW/app/src/main/res/drawable/border_shadow.xml" value="0.24010416666666667" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/drawable/button_border.xml" value="0.26197916666666665" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/drawable/circle.xml" value="0.44114583333333335" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/drawable/home.xml" value="0.29375" />
@@ -12,7 +13,7 @@
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/drawable/image_circle.xml" value="0.44114583333333335" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/drawable/images.xml" value="0.44114583333333335" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/account_toolbar.xml" value="0.22760416666666666" />
-        <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_account.xml" value="0.2526041666666667" />
+        <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_account.xml" value="0.22" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_bar.xml" value="0.33" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_device_control.xml" value="0.22" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_home.xml" value="0.25" />
