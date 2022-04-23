@@ -1,6 +1,9 @@
 package com.example.ihome_cw;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -8,9 +11,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,24 +31,30 @@ import com.tuya.smart.home.sdk.bean.scene.SceneTask;
 import com.tuya.smart.home.sdk.bean.scene.condition.rule.TimerRule;
 import com.tuya.smart.home.sdk.callback.ITuyaResultCallback;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SimpleTaskActivity extends AppCompatActivity {
 
-  private EditText etTime, etDate, etName;
-  private Button btnAddTask;
-  String devId, devName, prodId, category;
+  private EditText etName;
+  private Button btnAddTask, btnSetTime, btnSetRepeat;
+  String devId, devName, prodId, category, time;
   private List<SceneTask> tasks = new ArrayList<>();
   private List<SceneCondition> conditions = new ArrayList<>();
   ImageButton btnAdd;
   CircleImageView btnAccount;
-  Dialog addDialog;
-
+  Dialog addDialog, repeatDialog;
+  int hour, minute;
+//    List<String> resultRepeat = new ArrayList<>();
+    Map<String, Integer> resultRepeat = new HashMap<String, Integer>();
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -51,6 +62,7 @@ public class SimpleTaskActivity extends AppCompatActivity {
 
     initViews();
     defineAddDialog();
+    defineRepeatDialog();
     Bundle bundle = getIntent().getExtras();
     if (bundle != null) {
       devId = bundle.getString("DeviceId");
@@ -102,30 +114,41 @@ public class SimpleTaskActivity extends AppCompatActivity {
             return false;
           }
         });
+    btnSetRepeat.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            repeatDialog.show();
+        }
+    });
     btnAddTask.setOnClickListener(
         new View.OnClickListener() {
           @Override
           public void onClick(View view) {
-            String Date = etDate.getText().toString();
-            String Time = etTime.getText().toString();
             String Name = etName.getText().toString();
             HashMap taskMap = new HashMap();
             taskMap.put("1", true);
             SceneTask task = TuyaHomeSdk.getSceneManagerInstance().createDpTask(devId, taskMap);
             tasks.add(task);
-            TimerRule timerRule = TimerRule.newInstance("1111111", Time, Date);
+            Date date = new Date();
+            @SuppressLint("SimpleDateFormat")
+            SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy.MM.dd");
+              List<String> week = Arrays.asList("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
+              String repeatList = "";
+              for (String key : week) {
+                  repeatList += resultRepeat.get(key);
+            }
+            TimerRule timerRule = TimerRule.newInstance(repeatList, time, formatForDateNow.format(date));
             SceneCondition condition =
                 SceneCondition.createTimerCondition(
                     "Saturday, Sunday, Monday, Tuesday, Wednesday, Thursday, Friday",
-                    "Scheduled for weekday",
+                    Name,
                     "timer",
                     timerRule);
             conditions.add(condition);
-
             PreCondition preCondition = new PreCondition();
             PreConditionExpr expr = new PreConditionExpr();
-            expr.setStart("00:00");
-            expr.setEnd(Time);
+//            expr.setStart(Time);
+//            expr.setEnd("23:59");
             expr.setTimeInterval(PreCondition.TIMEINTERVAL_ALLDAY);
             preCondition.setCondType(PreCondition.TYPE_TIME_CHECK);
             expr.setTimeZoneId(TimeZone.getDefault().getID());
@@ -203,9 +226,73 @@ public class SimpleTaskActivity extends AppCompatActivity {
     btnAdd = findViewById(R.id.plus_icon);
     btnAccount = findViewById(R.id.avatar_icon);
 
-    etDate = findViewById(R.id.etDate);
-    etTime = findViewById(R.id.etTime);
+    btnSetTime = findViewById(R.id.btnSetTime);
+    btnSetRepeat = findViewById(R.id.btnSetRepeat);
     btnAddTask = findViewById(R.id.btnAddTask);
     etName = findViewById(R.id.etName);
   }
+
+    public void popTimePicker(View view) {
+        TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+            @SuppressLint("DefaultLocale")
+            @Override
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                hour = selectedHour;
+                minute = selectedMinute;
+                time = String.format("%02d:%02d", hour, minute);
+                btnSetTime.setText(time);
+            }
+        };
+        int style = AlertDialog.THEME_DEVICE_DEFAULT_DARK;
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, style, onTimeSetListener, hour, minute, true);
+        timePickerDialog.setTitle("Select Time");
+        timePickerDialog.show();
+
+  }
+    private void defineRepeatDialog() {
+        repeatDialog = new Dialog(SimpleTaskActivity.this);
+        repeatDialog.setContentView(R.layout.repeat_dialog);
+        repeatDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
+        repeatDialog
+                .getWindow()
+                .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        repeatDialog.getWindow().setGravity(Gravity.CENTER);
+        repeatDialog.setCancelable(false);
+        repeatDialog.setTitle("Select time for repeat");
+
+        CheckBox mon, tue, wed, thu, fri, sat, sun;
+        Button submit, cancel;
+        cancel = repeatDialog.findViewById(R.id.btnCancel);
+        submit = repeatDialog.findViewById(R.id.btnSubmit);
+        mon = repeatDialog.findViewById(R.id.cbMon);
+        tue = repeatDialog.findViewById(R.id.cbTue);
+        wed = repeatDialog.findViewById(R.id.cbWed);
+        thu = repeatDialog.findViewById(R.id.cbThur);
+        fri = repeatDialog.findViewById(R.id.cbFr);
+        sat = repeatDialog.findViewById(R.id.cbSat);
+        sun = repeatDialog.findViewById(R.id.cbSun);
+        List<CheckBox> checkBoxes = Arrays.asList(sun, mon, tue, wed, thu, fri, sat);
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                repeatDialog.dismiss();
+            }
+        });
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                for (CheckBox ch : checkBoxes) {
+                    resultRepeat.put(String.valueOf(ch.getText()), 0);
+                    if (ch.isChecked()) {
+                        resultRepeat.put(String.valueOf(ch.getText()), 1);
+                    }
+                }
+                repeatDialog.dismiss();
+            }
+        });
+
+
+
+    }
 }
