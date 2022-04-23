@@ -53,8 +53,9 @@ public class SimpleTaskActivity extends AppCompatActivity {
   CircleImageView btnAccount;
   Dialog addDialog, repeatDialog;
   int hour, minute;
-//    List<String> resultRepeat = new ArrayList<>();
-    Map<String, Integer> resultRepeat = new HashMap<String, Integer>();
+  //    List<String> resultRepeat = new ArrayList<>();
+  Map<String, Integer> resultRepeat = new HashMap<String, Integer>();
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -114,12 +115,13 @@ public class SimpleTaskActivity extends AppCompatActivity {
             return false;
           }
         });
-    btnSetRepeat.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
+    btnSetRepeat.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
             repeatDialog.show();
-        }
-    });
+          }
+        });
     btnAddTask.setOnClickListener(
         new View.OnClickListener() {
           @Override
@@ -132,12 +134,15 @@ public class SimpleTaskActivity extends AppCompatActivity {
             Date date = new Date();
             @SuppressLint("SimpleDateFormat")
             SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy.MM.dd");
-              List<String> week = Arrays.asList("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
-              String repeatList = "";
-              for (String key : week) {
-                  repeatList += resultRepeat.get(key);
+            List<String> week =
+                Arrays.asList(
+                    "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
+            String repeatList = "";
+            for (String key : week) {
+              repeatList += resultRepeat.get(key);
             }
-            TimerRule timerRule = TimerRule.newInstance(repeatList, time, formatForDateNow.format(date));
+            TimerRule timerRule =
+                TimerRule.newInstance(repeatList, time, formatForDateNow.format(date));
             SceneCondition condition =
                 SceneCondition.createTimerCondition(
                     "Saturday, Sunday, Monday, Tuesday, Wednesday, Thursday, Friday",
@@ -147,8 +152,8 @@ public class SimpleTaskActivity extends AppCompatActivity {
             conditions.add(condition);
             PreCondition preCondition = new PreCondition();
             PreConditionExpr expr = new PreConditionExpr();
-//            expr.setStart(Time);
-//            expr.setEnd("23:59");
+            //            expr.setStart(Time);
+            //            expr.setEnd("23:59");
             expr.setTimeInterval(PreCondition.TIMEINTERVAL_ALLDAY);
             preCondition.setCondType(PreCondition.TYPE_TIME_CHECK);
             expr.setTimeZoneId(TimeZone.getDefault().getID());
@@ -232,67 +237,68 @@ public class SimpleTaskActivity extends AppCompatActivity {
     etName = findViewById(R.id.etName);
   }
 
-    public void popTimePicker(View view) {
-        TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
-            @SuppressLint("DefaultLocale")
-            @Override
-            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                hour = selectedHour;
-                minute = selectedMinute;
-                time = String.format("%02d:%02d", hour, minute);
-                btnSetTime.setText(time);
-            }
+  public void popTimePicker(View view) {
+    TimePickerDialog.OnTimeSetListener onTimeSetListener =
+        new TimePickerDialog.OnTimeSetListener() {
+          @SuppressLint("DefaultLocale")
+          @Override
+          public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+            hour = selectedHour;
+            minute = selectedMinute;
+            time = String.format("%02d:%02d", hour, minute);
+            btnSetTime.setText(time);
+          }
         };
-        int style = AlertDialog.THEME_DEVICE_DEFAULT_DARK;
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, style, onTimeSetListener, hour, minute, true);
-        timePickerDialog.setTitle("Select Time");
-        timePickerDialog.show();
-
+    int style = AlertDialog.THEME_DEVICE_DEFAULT_DARK;
+    TimePickerDialog timePickerDialog =
+        new TimePickerDialog(this, style, onTimeSetListener, hour, minute, true);
+    timePickerDialog.setTitle("Select Time");
+    timePickerDialog.show();
   }
-    private void defineRepeatDialog() {
-        repeatDialog = new Dialog(SimpleTaskActivity.this);
-        repeatDialog.setContentView(R.layout.repeat_dialog);
-        repeatDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
-        repeatDialog
-                .getWindow()
-                .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        repeatDialog.getWindow().setGravity(Gravity.CENTER);
-        repeatDialog.setCancelable(false);
-        repeatDialog.setTitle("Select time for repeat");
 
-        CheckBox mon, tue, wed, thu, fri, sat, sun;
-        Button submit, cancel;
-        cancel = repeatDialog.findViewById(R.id.btnCancel);
-        submit = repeatDialog.findViewById(R.id.btnSubmit);
-        mon = repeatDialog.findViewById(R.id.cbMon);
-        tue = repeatDialog.findViewById(R.id.cbTue);
-        wed = repeatDialog.findViewById(R.id.cbWed);
-        thu = repeatDialog.findViewById(R.id.cbThur);
-        fri = repeatDialog.findViewById(R.id.cbFr);
-        sat = repeatDialog.findViewById(R.id.cbSat);
-        sun = repeatDialog.findViewById(R.id.cbSun);
-        List<CheckBox> checkBoxes = Arrays.asList(sun, mon, tue, wed, thu, fri, sat);
+  private void defineRepeatDialog() {
+    repeatDialog = new Dialog(SimpleTaskActivity.this);
+    repeatDialog.setContentView(R.layout.repeat_dialog);
+    repeatDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
+    repeatDialog
+        .getWindow()
+        .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    repeatDialog.getWindow().setGravity(Gravity.CENTER);
+    repeatDialog.setCancelable(false);
+    repeatDialog.setTitle("Select time for repeat");
 
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                repeatDialog.dismiss();
-            }
+    CheckBox mon, tue, wed, thu, fri, sat, sun;
+    Button submit, cancel;
+    cancel = repeatDialog.findViewById(R.id.btnCancel);
+    submit = repeatDialog.findViewById(R.id.btnSubmit);
+    mon = repeatDialog.findViewById(R.id.cbMon);
+    tue = repeatDialog.findViewById(R.id.cbTue);
+    wed = repeatDialog.findViewById(R.id.cbWed);
+    thu = repeatDialog.findViewById(R.id.cbThur);
+    fri = repeatDialog.findViewById(R.id.cbFr);
+    sat = repeatDialog.findViewById(R.id.cbSat);
+    sun = repeatDialog.findViewById(R.id.cbSun);
+    List<CheckBox> checkBoxes = Arrays.asList(sun, mon, tue, wed, thu, fri, sat);
+
+    cancel.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            repeatDialog.dismiss();
+          }
         });
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                for (CheckBox ch : checkBoxes) {
-                    resultRepeat.put(String.valueOf(ch.getText()), 0);
-                    if (ch.isChecked()) {
-                        resultRepeat.put(String.valueOf(ch.getText()), 1);
-                    }
-                }
-                repeatDialog.dismiss();
+    submit.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            for (CheckBox ch : checkBoxes) {
+              resultRepeat.put(String.valueOf(ch.getText()), 0);
+              if (ch.isChecked()) {
+                resultRepeat.put(String.valueOf(ch.getText()), 1);
+              }
             }
+            repeatDialog.dismiss();
+          }
         });
-
-
-
-    }
+  }
 }
