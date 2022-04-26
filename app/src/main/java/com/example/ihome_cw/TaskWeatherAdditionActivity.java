@@ -122,40 +122,38 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
             return false;
           }
         });
-      MaterialButtonToggleGroup toggleGroup = findViewById(R.id.toggleGroup);
-      toggleGroup.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
+    MaterialButtonToggleGroup toggleGroup = findViewById(R.id.toggleGroup);
+    toggleGroup.addOnButtonCheckedListener(
+        new MaterialButtonToggleGroup.OnButtonCheckedListener() {
           @Override
-          public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
-              switch (checkedId) {
-                  case R.id.button1:
-                      condition =  String.valueOf(btnLess.getText());
-                      break;
-                  case R.id.button2:
-                      condition =  String.valueOf(btnEqual.getText());
-                      break;
-                  case R.id.button3:
-                      condition =  String.valueOf(btnMore.getText());
-                      break;
-              }
-
+          public void onButtonChecked(
+              MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
+            switch (checkedId) {
+              case R.id.button1:
+                condition = String.valueOf(btnLess.getText());
+                break;
+              case R.id.button2:
+                condition = String.valueOf(btnEqual.getText());
+                break;
+              case R.id.button3:
+                condition = String.valueOf(btnMore.getText());
+                break;
+            }
           }
-      });
-    seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-        @Override
-        public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
-            tvProgress.setText(String.valueOf(progress+" °C"));
-        }
+        });
+    seekBar.setOnSeekBarChangeListener(
+        new SeekBar.OnSeekBarChangeListener() {
+          @Override
+          public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
+            tvProgress.setText(String.valueOf(progress + " °C"));
+          }
 
-        @Override
-        public void onStartTrackingTouch(SeekBar seekBar) {
+          @Override
+          public void onStartTrackingTouch(SeekBar seekBar) {}
 
-        }
-
-        @Override
-        public void onStopTrackingTouch(SeekBar seekBar) {
-
-        }
-    });
+          @Override
+          public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
 
     btnAddWtask.setOnClickListener(
         new View.OnClickListener() {
@@ -164,10 +162,11 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
             Location bestLocation = getLocation();
             String name = String.valueOf(etName.getText());
             temp = tvProgress.getText().toString();
-            temp = temp.substring(0, temp.indexOf(" "));;
-              Toast.makeText(
-                      TaskWeatherAdditionActivity.this, name+temp+condition, Toast.LENGTH_LONG)
-                      .show();
+            temp = temp.substring(0, temp.indexOf(" "));
+            ;
+            Toast.makeText(
+                    TaskWeatherAdditionActivity.this, name + temp + condition, Toast.LENGTH_LONG)
+                .show();
             TuyaHomeSdk.getSceneManagerInstance()
                 .getCityByLatLng(
                     String.valueOf(bestLocation.getLongitude()),
