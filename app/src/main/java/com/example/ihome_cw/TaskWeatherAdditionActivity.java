@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,6 +25,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.home.sdk.bean.scene.PlaceFacadeBean;
 import com.tuya.smart.home.sdk.bean.scene.PreCondition;
@@ -42,17 +45,18 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TaskWeatherAdditionActivity extends AppCompatActivity {
   String devId, devName, prodId, category;
-  String condititon;
-  ImageButton btnLess, btnMore, btnEqual;
+  String condition;
+  Button btnLess, btnMore, btnEqual;
   Button btnAddWtask;
   LocationManager locationManager;
-  EditText etWeather;
+  EditText etName;
   ImageButton btnAdd;
   CircleImageView btnAccount;
+  SeekBar seekBar;
+  TextView tvProgress;
   Dialog addDialog;
 
   private List<SceneTask> tasks = new ArrayList<>();
-  private List<SceneBean> scenes = new ArrayList<>();
   private List<SceneCondition> conditions = new ArrayList<>();
   public ValueRule tempRule;
   public SceneCondition sceneCondition;
@@ -118,36 +122,52 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
             return false;
           }
         });
-    btnLess.setOnClickListener(
-        new View.OnClickListener() {
+      MaterialButtonToggleGroup toggleGroup = findViewById(R.id.toggleGroup);
+      toggleGroup.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
           @Override
-          public void onClick(View view) {
-            condititon = "<";
-          }
-        });
+          public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
+              switch (checkedId) {
+                  case R.id.button1:
+                      condition =  String.valueOf(btnLess.getText());
+                      break;
+                  case R.id.button2:
+                      condition =  String.valueOf(btnEqual.getText());
+                      break;
+                  case R.id.button3:
+                      condition =  String.valueOf(btnMore.getText());
+                      break;
+              }
 
-    btnMore.setOnClickListener(
-        new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-            condititon = ">";
           }
-        });
+      });
+    seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
+            tvProgress.setText(String.valueOf(progress+" °C"));
+        }
 
-    btnEqual.setOnClickListener(
-        new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-            condititon = "=";
-          }
-        });
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
+        }
+    });
 
     btnAddWtask.setOnClickListener(
         new View.OnClickListener() {
           @Override
           public void onClick(View view) {
             Location bestLocation = getLocation();
-            temp = etWeather.getText().toString();
+            String name = String.valueOf(etName.getText());
+            temp = tvProgress.getText().toString();
+            temp = temp.substring(0, temp.indexOf(" "));;
+              Toast.makeText(
+                      TaskWeatherAdditionActivity.this, name+temp+condition, Toast.LENGTH_LONG)
+                      .show();
             TuyaHomeSdk.getSceneManagerInstance()
                 .getCityByLatLng(
                     String.valueOf(bestLocation.getLongitude()),
@@ -161,7 +181,7 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
                       @Override
                       public void onError(String errorCode, String errorMessage) {}
                     });
-            tempRule = ValueRule.newInstance("temp", condititon, Integer.parseInt(temp));
+            tempRule = ValueRule.newInstance("temp", condition, Integer.parseInt(temp));
             sceneCondition =
                 SceneCondition.createWeatherCondition(placeFacadeBean, "temp", tempRule);
             HashMap taskMap = new HashMap();
@@ -184,7 +204,7 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
             TuyaHomeSdk.getSceneManagerInstance()
                 .createScene(
                     HomeActivity.getHomeId(),
-                    "Test", // The name of the scene.
+                    name, // The name of the scene.
                     false,
                     "", // Indicates whether the scene is displayed on the homepage.
                     conditions, // The conditions.
@@ -284,10 +304,12 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
   private void initViews() {
     btnAdd = findViewById(R.id.plus_icon);
     btnAccount = findViewById(R.id.avatar_icon);
-    btnLess = findViewById(R.id.btnLess);
-    btnMore = findViewById(R.id.btnMore);
-    btnEqual = findViewById(R.id.btnEqual);
+    btnLess = findViewById(R.id.button1);
+    btnMore = findViewById(R.id.button3);
+    btnEqual = findViewById(R.id.button2);
+    etName = findViewById(R.id.etName);
     btnAddWtask = findViewById(R.id.btnAddWtask);
-    etWeather = findViewById(R.id.etTemp);
+    seekBar = findViewById(R.id.seekBar);
+    tvProgress = findViewById(R.id.tvProgress);
   }
 }
