@@ -51,7 +51,7 @@
                 android:layout_marginBottom="5dp"
                 android:layout_toRightOf="@id/ivIcon"
                 android:text="TextView"
-                android:textColor="#5199AF"
+                android:textColor="@color/alert_600"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 tools:text="Weather" />

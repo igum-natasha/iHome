@@ -18,8 +18,8 @@
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_device_control.xml" value="0.22" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_home.xml" value="0.25" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_main.xml" value="0.19984802431610943" />
-        <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_pre_main.xml" value="0.3625" />
-        <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_registration.xml" value="0.425" />
+        <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_pre_main.xml" value="0.18" />
+        <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_registration.xml" value="0.22" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_scene_info.xml" value="0.25" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_setting.xml" value="0.22760416666666666" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_simple_task.xml" value="0.3500905797101449" />
@@ -28,7 +28,7 @@
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_task_addition.xml" value="0.2609375" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_task_location_addition.xml" value="0.2604166666666667" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_task_weather_addition.xml" value="0.33" />
-        <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_wifi_login.xml" value="0.16" />
+        <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_wifi_login.xml" value="0.22" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/add_dialog.xml" value="0.33" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/control_toolbar.xml" value="0.5" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/fragment_account.xml" value="0.4076086956521739" />

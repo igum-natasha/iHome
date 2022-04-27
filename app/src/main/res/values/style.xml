@@ -4,13 +4,19 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/design_default_color_primary</item>
-        <item name="colorPrimaryDark">@color/design_default_color_primary_dark</item>
-        <item name="colorAccent">@color/design_default_color_secondary</item>
+        <item name="colorPrimary">@color/primary_600</item>
+        <item name="colorPrimaryDark">@color/primary_900</item>
+        <item name="colorAccent">@color/info_600</item>
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:actionMenuTextColor">@android:color/black</item>
+        <item name="android:actionMenuTextColor">@color/base_900</item>
+    </style>
+
+    <style name="AlertDialogCustom" parent="@android:style/Theme.Dialog">
+        <item name="android:textColor">@color/primary_900</item>
+        <item name="android:typeface">monospace</item>
+        <item name="android:textSize">10sp</item>
     </style>
 
 </resources>

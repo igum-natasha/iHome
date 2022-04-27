@@ -29,7 +29,7 @@
             android:background="#00FFFFFF"
             android:contentDescription="Add Device"
             android:src="@drawable/lightbulb"
-            app:tint="#7B7B7B" />
+            app:tint="@color/base_900" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -38,7 +38,7 @@
             android:layout_marginStart="8dp"
             android:backgroundTint="#00FFFFFF"
             android:text="Add Device"
-            android:textColor="#7B7B7B"
+            android:textColor="@color/base_900"
             app:drawableTint="#00FFFFFF" />
     </LinearLayout>
     <LinearLayout
@@ -63,7 +63,7 @@
             android:background="#00FFFFFF"
             android:contentDescription="Create Task"
             android:src="@drawable/control"
-            app:tint="#7B7B7B" />
+            app:tint="@color/base_900" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -72,7 +72,7 @@
             android:layout_marginStart="8dp"
             android:backgroundTint="#00FFFFFF"
             android:text="Create Task"
-            android:textColor="#7B7B7B"
+            android:textColor="@color/base_900"
             app:drawableTint="#00FFFFFF" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

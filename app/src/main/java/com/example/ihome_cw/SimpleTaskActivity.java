@@ -1,7 +1,6 @@
 package com.example.ihome_cw;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -249,9 +248,8 @@ public class SimpleTaskActivity extends AppCompatActivity {
             btnSetTime.setText(time);
           }
         };
-    int style = AlertDialog.THEME_DEVICE_DEFAULT_DARK;
     TimePickerDialog timePickerDialog =
-        new TimePickerDialog(this, style, onTimeSetListener, hour, minute, true);
+        new TimePickerDialog(this, onTimeSetListener, hour, minute, true);
     timePickerDialog.setTitle("Select Time");
     timePickerDialog.show();
   }
