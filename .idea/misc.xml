@@ -17,6 +17,7 @@
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_bar.xml" value="0.33" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_device_control.xml" value="0.22" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_home.xml" value="0.25" />
+        <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_login.xml" value="0.21197916666666666" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_main.xml" value="0.19984802431610943" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_pre_main.xml" value="0.18" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_registration.xml" value="0.22" />
@@ -24,6 +25,7 @@
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_setting.xml" value="0.22760416666666666" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_simple_task.xml" value="0.3500905797101449" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_socket_control.xml" value="0.3484375" />
+        <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_splash.xml" value="0.12" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_task.xml" value="0.27447916666666666" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_task_addition.xml" value="0.2609375" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_task_location_addition.xml" value="0.2604166666666667" />

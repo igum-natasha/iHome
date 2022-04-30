@@ -1,7 +1,5 @@
 package com.example.ihome_cw;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.tuya.smart.android.user.api.IRegisterCallback;
 import com.tuya.smart.android.user.bean.User;
@@ -68,7 +68,7 @@ public class RegistrationActivity extends AppCompatActivity {
         public void onSuccess(User user) {
           Toast.makeText(RegistrationActivity.this, "Registration Successful", Toast.LENGTH_LONG)
               .show();
-          startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
+          startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
         }
 
         @Override
@@ -76,6 +76,7 @@ public class RegistrationActivity extends AppCompatActivity {
           Log.d(TAG, "Registration failed with error" + s1);
           Toast.makeText(RegistrationActivity.this, "Registration Failed", Toast.LENGTH_LONG)
               .show();
+            startActivity(new Intent(RegistrationActivity.this, PreMainActivity.class));
         }
       };
 
@@ -87,6 +88,7 @@ public class RegistrationActivity extends AppCompatActivity {
           Toast.makeText(
                   RegistrationActivity.this, "Failed to sent verification code!", Toast.LENGTH_LONG)
               .show();
+            startActivity(new Intent(RegistrationActivity.this, PreMainActivity.class));
         }
 
         @Override

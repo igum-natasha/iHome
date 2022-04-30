@@ -20,7 +20,7 @@ public class PreMainActivity extends AppCompatActivity {
         new View.OnClickListener() {
           @Override
           public void onClick(View view) {
-            startActivity(new Intent(PreMainActivity.this, MainActivity.class));
+            startActivity(new Intent(PreMainActivity.this, LoginActivity.class));
           }
         });
     btnPreRegister.setOnClickListener(

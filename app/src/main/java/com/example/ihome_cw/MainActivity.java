@@ -2,8 +2,6 @@ package com.example.ihome_cw;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -11,7 +9,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.tuya.smart.android.user.api.ILoginCallback;
-import com.tuya.smart.android.user.bean.User;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,12 +22,6 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-
-    initViews();
-    etCountryCode.setVisibility(View.INVISIBLE);
-    etEmail.setVisibility(View.INVISIBLE);
-    etPassword.setVisibility(View.INVISIBLE);
-
     Bundle bundle = getIntent().getExtras();
 
     if (bundle != null) {
@@ -38,36 +29,14 @@ public class MainActivity extends AppCompatActivity {
       password = bundle.getString("Password");
       countryCode = bundle.getString("CountryCode");
       TuyaHomeSdk.getUserInstance().loginWithEmail(countryCode, email, password, loginCallback);
-    } else {
-      etCountryCode.setVisibility(View.VISIBLE);
-      etEmail.setVisibility(View.VISIBLE);
-      etPassword.setVisibility(View.VISIBLE);
     }
-
-    btnLogin.setOnClickListener(
-        new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-            email = etEmail.getText().toString();
-            password = etPassword.getText().toString();
-            countryCode = etCountryCode.getText().toString();
-            TuyaHomeSdk.getUserInstance()
-                .loginWithEmail(countryCode, email, password, loginCallback);
-          }
-        });
   }
-
   private ILoginCallback loginCallback =
       new ILoginCallback() {
+
         @Override
-        public void onSuccess(User user) {
-          Toast.makeText(MainActivity.this, "login Successful", Toast.LENGTH_LONG).show();
-          AppDatabase db = AppDatabase.build(getApplicationContext());
-          com.example.ihome_cw.User user1 = new com.example.ihome_cw.User();
-          user1.setEmail(email);
-          user1.setCountryCode(countryCode);
-          user1.setPassword(password);
-          db.userDao().insertUser(user1);
+        public void onSuccess(com.tuya.smart.android.user.bean.User user) {
+          Toast.makeText(MainActivity.this, "login successful", Toast.LENGTH_LONG).show();
           Bundle bundle = new Bundle();
           bundle.putString("Email", email);
           Intent intent = new Intent(MainActivity.this, WifiLoginActivity.class);
@@ -77,16 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onError(String s, String s1) {
-          Log.d(TAG, "login failed with error: " + s1);
           Toast.makeText(MainActivity.this, "login failed with error: " + s1, Toast.LENGTH_LONG)
               .show();
         }
       };
-
-  private void initViews() {
-    etCountryCode = findViewById(R.id.etCountryCode);
-    etEmail = findViewById(R.id.etEmail);
-    etPassword = findViewById(R.id.etPassword);
-    btnLogin = findViewById(R.id.btnLogin);
-  }
 }
