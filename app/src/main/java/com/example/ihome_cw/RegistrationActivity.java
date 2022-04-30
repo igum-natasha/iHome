@@ -76,7 +76,7 @@ public class RegistrationActivity extends AppCompatActivity {
           Log.d(TAG, "Registration failed with error" + s1);
           Toast.makeText(RegistrationActivity.this, "Registration Failed", Toast.LENGTH_LONG)
               .show();
-            startActivity(new Intent(RegistrationActivity.this, PreMainActivity.class));
+          startActivity(new Intent(RegistrationActivity.this, PreMainActivity.class));
         }
       };
 
@@ -88,7 +88,7 @@ public class RegistrationActivity extends AppCompatActivity {
           Toast.makeText(
                   RegistrationActivity.this, "Failed to sent verification code!", Toast.LENGTH_LONG)
               .show();
-            startActivity(new Intent(RegistrationActivity.this, PreMainActivity.class));
+          startActivity(new Intent(RegistrationActivity.this, PreMainActivity.class));
         }
 
         @Override

@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
       TuyaHomeSdk.getUserInstance().loginWithEmail(countryCode, email, password, loginCallback);
     }
   }
+
   private ILoginCallback loginCallback =
       new ILoginCallback() {
 
