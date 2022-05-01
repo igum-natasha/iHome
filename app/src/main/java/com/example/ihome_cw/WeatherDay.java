@@ -57,7 +57,9 @@ public class WeatherDay {
     return temp.temp.intValue() + "°C";
   }
 
-  public String getRainfall() { return desctiption.get(0).main; }
+  public String getRainfall() {
+    return desctiption.get(0).main;
+  }
 
   public String getCity() {
     return city;

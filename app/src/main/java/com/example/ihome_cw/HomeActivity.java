@@ -229,38 +229,38 @@ public class HomeActivity extends AppCompatActivity {
                 Date dateNow = new Date();
                 SimpleDateFormat formatForDateNow = new SimpleDateFormat("hh");
                 Integer time = Integer.parseInt(formatForDateNow.format(dateNow));
-                  if (time >= 0 && time <= 5 || time >= 21 && time < 24) {
-                      switch (rainfall) {
-                          case "Clouds":
-                              tvImage.setImageResource(R.drawable.cloud_moon);
-                              break;
-                          case "Rain":
-                              tvImage.setImageResource(R.drawable.rain_night);
-                              break;
-                          case "Snow":
-                              tvImage.setImageResource(R.drawable.snow);
-                              break;
-                          case "Clear":
-                              tvImage.setImageResource(R.drawable.moon);
-                              break;
-                      }
-                  } else {
-                      switch (rainfall) {
-                          case "Clouds":
-                              tvImage.setImageResource(R.drawable.cloud_sun);
-                              break;
-                          case "Rain":
-                              tvImage.setImageResource(R.drawable.rain_day);
-                              break;
-                          case "Snow":
-                              tvImage.setImageResource(R.drawable.snow);
-                              break;
-                          case "Clear":
-                              tvImage.setImageResource(R.drawable.sun);
-                              break;
-                      }
+                if (time >= 0 && time <= 5 || time >= 21 && time < 24) {
+                  switch (rainfall) {
+                    case "Clouds":
+                      tvImage.setImageResource(R.drawable.cloud_moon);
+                      break;
+                    case "Rain":
+                      tvImage.setImageResource(R.drawable.rain_night);
+                      break;
+                    case "Snow":
+                      tvImage.setImageResource(R.drawable.snow);
+                      break;
+                    case "Clear":
+                      tvImage.setImageResource(R.drawable.moon);
+                      break;
                   }
-//                tvImage.setImageResource(R.drawable.cloud_sun);
+                } else {
+                  switch (rainfall) {
+                    case "Clouds":
+                      tvImage.setImageResource(R.drawable.cloud_sun);
+                      break;
+                    case "Rain":
+                      tvImage.setImageResource(R.drawable.rain_day);
+                      break;
+                    case "Snow":
+                      tvImage.setImageResource(R.drawable.snow);
+                      break;
+                    case "Clear":
+                      tvImage.setImageResource(R.drawable.sun);
+                      break;
+                  }
+                }
+                //                tvImage.setImageResource(R.drawable.cloud_sun);
                 tvWeatherTemp.setText(data.getTempWithDegree());
                 tvWeatherHumidity.setText(data.getHumidity());
               }
@@ -330,7 +330,7 @@ public class HomeActivity extends AppCompatActivity {
   private void showDevices() {
     rv = findViewById(R.id.rv);
 
-    LinearLayoutManager llm = new LinearLayoutManager(this,  LinearLayoutManager.HORIZONTAL, false);
+    LinearLayoutManager llm = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
     rv.setLayoutManager(llm);
     rv.setHasFixedSize(true);
 
