@@ -13,7 +13,7 @@ public class WeatherDay {
   }
 
   public class WeatherDescription {
-    String icon;
+    String main;
   }
 
   @SerializedName("main")
@@ -57,15 +57,9 @@ public class WeatherDay {
     return temp.temp.intValue() + "°C";
   }
 
+  public String getRainfall() { return desctiption.get(0).main; }
+
   public String getCity() {
     return city;
-  }
-
-  public String getIcon() {
-    return desctiption.get(0).icon;
-  }
-
-  public String getIconUrl() {
-    return "http://openweathermap.org/img/w/" + desctiption.get(0).icon + ".png";
   }
 }

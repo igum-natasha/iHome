@@ -1,41 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<com.loopeer.shadow.ShadowView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:id="@+id/cv"
-    >
-
-    <RelativeLayout
-        android:layout_width="match_parent"
+    android:gravity="center"
+    app:cornerRadius="8dp"
+    app:shadowMargin="6dp"
+    app:shadowRadius="6dp">
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:id="@+id/cv"
         >
 
-<!--        <ImageView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:id="@+id/device_photo"-->
-<!--            android:layout_alignParentLeft="true"-->
-<!--            android:layout_alignParentTop="true"-->
-<!--            android:layout_marginRight="16dp"-->
-<!--            />-->
+        <RelativeLayout
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp"
+            >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/device_name"
-            android:layout_alignParentTop="true"
-            android:textSize="30sp"
-            />
+            <ImageView
+                android:id="@+id/devicePhoto"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                app:tint="@color/primary_900"
+                android:src="@drawable/lightbulb"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/device_id"
-            android:layout_below="@+id/device_name"
-            />
+            <TextView
+                android:id="@+id/deviceName"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/devicePhoto"
+                android:layout_alignParentBottom="@+id/devicePhoto"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/base_900"
+                android:text="Device Name" />
 
-    </RelativeLayout>
+            <Switch
+                android:id="@+id/swOn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:minWidth="36dp"
+                android:minHeight="36dp"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
 
-</androidx.cardview.widget.CardView>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+</com.loopeer.shadow.ShadowView>

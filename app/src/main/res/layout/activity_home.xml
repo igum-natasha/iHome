@@ -10,33 +10,30 @@
         android:id="@+id/include"
         layout="@layout/home_toolbar" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cvWeather"
-        android:layout_width="414dp"
-        android:layout_height="136dp"
-        android:layout_margin="16dp"
+    <com.loopeer.shadow.ShadowView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="16dp"
+        app:cornerRadius="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+
         app:layout_constraintBottom_toTopOf="@+id/rv"
         app:layout_constraintTop_toBottomOf="@+id/include"
+        app:shadowMargin="10dp"
+        app:shadowRadius="10dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvWeather"
+        android:layout_width="wrap_content"
+        android:layout_height="136dp"
         tools:ignore="MissingConstraints">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/ivIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="5dp"
-                android:adjustViewBounds="true"
-                android:maxWidth="300dp"
-                android:maxHeight="300dp"
-                android:scaleType="fitCenter"
-                tools:ignore="ImageContrastCheck"
-                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/tvWeather"
@@ -49,49 +46,76 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="5dp"
-                android:layout_toRightOf="@id/ivIcon"
-                android:text="TextView"
-                android:textColor="@color/alert_600"
+                android:text="Weather"
+                android:textColor="@color/base_900"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 tools:text="Weather" />
 
-            <TextView
-                android:id="@+id/tvWeatherTemp"
+            <LinearLayout
                 android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:id="@+id/WeatherTemp"
+                android:layout_above="@id/WeatherHumidity"
+                >
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/thermometer"
+                    app:tint="@color/base_300" />
 
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvWeather"
-                android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_toRightOf="@id/ivIcon"
-                android:text="Device Id"
-                android:textSize="16sp"
-                tools:text="Weather Temp" />
+                <TextView
+                    android:id="@+id/tvWeatherTemp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    android:text="Temp"
+                    android:textColor="@color/primary_900"
+                    android:textSize="16sp"
+                    tools:text="Weather Temp" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/tvWeatherHumidity"
+            <LinearLayout
+                android:id="@+id/WeatherHumidity"
                 android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="8dp">
 
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvWeatherTemp"
-                android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/water"
+                    app:tint="@color/base_300" />
+
+                <TextView
+                    android:id="@+id/tvWeatherHumidity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    android:text="Humidity"
+                    android:textColor="@color/primary_900"
+                    android:textSize="16sp"
+                    tools:text="Weather Humidity" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/ivIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="5dp"
-                android:layout_toRightOf="@id/ivIcon"
-                android:text="Product Id"
-                android:textSize="16sp"
-                tools:text="Weather Humidity" />
+                android:adjustViewBounds="true"
+                android:maxHeight="300dp"
+                android:maxWidth="300dp"
+                android:layout_alignParentEnd="true"
+                android:scaleType="fitCenter"
+                tools:ignore="ImageContrastCheck"
+                tools:srcCompat="@tools:sample/avatars" />
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
+
+    </com.loopeer.shadow.ShadowView>
 
 
     <Button
@@ -109,8 +133,10 @@
         android:id="@+id/rv"
         android:layout_width="414dp"
         android:layout_height="329dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="160dp"
+        android:padding="8dp"
         app:layout_constraintBottom_toTopOf="@+id/btnSearch"
+        app:layout_constraintTop_toBottomOf="@+id/include"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp" />
 

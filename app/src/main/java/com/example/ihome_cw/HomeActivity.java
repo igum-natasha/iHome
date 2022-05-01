@@ -43,8 +43,10 @@ import com.tuya.smart.sdk.bean.DeviceBean;
 import com.tuya.smart.sdk.enums.ActivatorEZStepCode;
 import com.tuya.smart.sdk.enums.ActivatorModelEnum;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -223,8 +225,42 @@ public class HomeActivity extends AppCompatActivity {
                           @Override
                           public void onError(String errorCode, String errorMessage) {}
                         });
-
-                tvImage.setImageResource(R.drawable.cloud_sun);
+                String rainfall = data.getRainfall();
+                Date dateNow = new Date();
+                SimpleDateFormat formatForDateNow = new SimpleDateFormat("hh");
+                Integer time = Integer.parseInt(formatForDateNow.format(dateNow));
+                  if (time >= 0 && time <= 5 || time >= 21 && time < 24) {
+                      switch (rainfall) {
+                          case "Clouds":
+                              tvImage.setImageResource(R.drawable.cloud_moon);
+                              break;
+                          case "Rain":
+                              tvImage.setImageResource(R.drawable.rain_night);
+                              break;
+                          case "Snow":
+                              tvImage.setImageResource(R.drawable.snow);
+                              break;
+                          case "Clear":
+                              tvImage.setImageResource(R.drawable.moon);
+                              break;
+                      }
+                  } else {
+                      switch (rainfall) {
+                          case "Clouds":
+                              tvImage.setImageResource(R.drawable.cloud_sun);
+                              break;
+                          case "Rain":
+                              tvImage.setImageResource(R.drawable.rain_day);
+                              break;
+                          case "Snow":
+                              tvImage.setImageResource(R.drawable.snow);
+                              break;
+                          case "Clear":
+                              tvImage.setImageResource(R.drawable.sun);
+                              break;
+                      }
+                  }
+//                tvImage.setImageResource(R.drawable.cloud_sun);
                 tvWeatherTemp.setText(data.getTempWithDegree());
                 tvWeatherHumidity.setText(data.getHumidity());
               }
@@ -294,7 +330,7 @@ public class HomeActivity extends AppCompatActivity {
   private void showDevices() {
     rv = findViewById(R.id.rv);
 
-    LinearLayoutManager llm = new LinearLayoutManager(this);
+    LinearLayoutManager llm = new LinearLayoutManager(this,  LinearLayoutManager.HORIZONTAL, false);
     rv.setLayoutManager(llm);
     rv.setHasFixedSize(true);
 

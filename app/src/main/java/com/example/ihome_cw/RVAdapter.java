@@ -3,6 +3,8 @@ package com.example.ihome_cw;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
@@ -18,15 +20,17 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.DeviceViewHolder> 
 
     CardView cv;
     TextView deviceName;
-    TextView deviceId;
+    ImageView devicePhoto;
+    Switch swOn;
 
     DeviceViewHolder(View itemView) {
       super(itemView);
       itemView.setOnClickListener(this);
       itemView.setOnLongClickListener(this);
       cv = itemView.findViewById(R.id.cv);
-      deviceName = itemView.findViewById(R.id.device_name);
-      deviceId = itemView.findViewById(R.id.device_id);
+      deviceName = itemView.findViewById(R.id.deviceName);
+      devicePhoto = itemView.findViewById(R.id.devicePhoto);
+      swOn = itemView.findViewById(R.id.swOn);
     }
 
     @Override
@@ -62,7 +66,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.DeviceViewHolder> 
   @Override
   public void onBindViewHolder(DeviceViewHolder deviceViewHolder, int i) {
     deviceViewHolder.deviceName.setText(devices.get(i).getDeviceName());
-    deviceViewHolder.deviceId.setText(devices.get(i).getDeviceId());
+    deviceViewHolder.devicePhoto.setBackgroundResource(R.drawable.lightbulb);
   }
 
   @Override

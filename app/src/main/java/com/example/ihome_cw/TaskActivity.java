@@ -7,7 +7,6 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
@@ -19,7 +18,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TaskActivity extends AppCompatActivity {
-  Button btnWeather, btnLocation, btnShedule;
+  LinearLayout btnWeather, btnLocation, btnShedule;
   String devId, devName, prodId, category;
   ImageButton btnAdd;
   CircleImageView btnAccount;
