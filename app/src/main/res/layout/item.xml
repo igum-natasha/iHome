@@ -15,9 +15,10 @@
         android:id="@+id/cv"
         >
 
-        <RelativeLayout
-            android:layout_width="130dp"
-            android:layout_height="130dp"
+        <LinearLayout
+            android:layout_width="160dp"
+            android:layout_height="70dp"
+            android:gravity="center"
             android:paddingEnd="10dp"
             android:paddingStart="10dp"
             android:paddingBottom="16dp"
@@ -26,8 +27,8 @@
 
             <ImageView
                 android:id="@+id/devicePhoto"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 app:tint="@color/primary_900"
                 android:src="@drawable/lightbulb"/>
 
@@ -35,23 +36,12 @@
                 android:id="@+id/deviceName"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/devicePhoto"
-                android:layout_alignParentBottom="@+id/devicePhoto"
-                android:layout_marginTop="20dp"
+                android:paddingLeft="16dp"
                 android:textColor="@color/base_900"
                 android:text="Device Name" />
 
-            <Switch
-                android:id="@+id/swOn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:minWidth="36dp"
-                android:minHeight="36dp"
-                tools:ignore="UseSwitchCompatOrMaterialXml" />
 
-
-        </RelativeLayout>
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 </com.loopeer.shadow.ShadowView>

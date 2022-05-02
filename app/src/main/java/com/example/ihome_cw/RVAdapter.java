@@ -4,7 +4,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
@@ -21,7 +20,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.DeviceViewHolder> 
     CardView cv;
     TextView deviceName;
     ImageView devicePhoto;
-    Switch swOn;
 
     DeviceViewHolder(View itemView) {
       super(itemView);
@@ -30,7 +28,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.DeviceViewHolder> 
       cv = itemView.findViewById(R.id.cv);
       deviceName = itemView.findViewById(R.id.deviceName);
       devicePhoto = itemView.findViewById(R.id.devicePhoto);
-      swOn = itemView.findViewById(R.id.swOn);
     }
 
     @Override

@@ -19,16 +19,21 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
+import com.tuya.smart.home.sdk.bean.HomeBean;
 import com.tuya.smart.home.sdk.bean.scene.PreCondition;
 import com.tuya.smart.home.sdk.bean.scene.PreConditionExpr;
 import com.tuya.smart.home.sdk.bean.scene.SceneBean;
 import com.tuya.smart.home.sdk.bean.scene.SceneCondition;
 import com.tuya.smart.home.sdk.bean.scene.SceneTask;
 import com.tuya.smart.home.sdk.bean.scene.condition.rule.TimerRule;
+import com.tuya.smart.home.sdk.callback.ITuyaHomeResultCallback;
 import com.tuya.smart.home.sdk.callback.ITuyaResultCallback;
+import com.tuya.smart.sdk.bean.DeviceBean;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,14 +49,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class SimpleTaskActivity extends AppCompatActivity {
 
   private EditText etName;
-  private Button btnAddTask, btnSetTime, btnSetRepeat;
+  private Button btnAddTask, btnSetTime, btnSetRepeat, btnDevice;
   String devId, devName, prodId, category, time;
   private List<SceneTask> tasks = new ArrayList<>();
   private List<SceneCondition> conditions = new ArrayList<>();
   ImageButton btnAdd;
   CircleImageView btnAccount;
-  Dialog addDialog, repeatDialog;
-  int hour, minute;
+  private List<Device> devices;
+  private RecyclerView rv;
+  Dialog addDialog, repeatDialog, deviceDialog;
+  int hour, minute, pos;
   //    List<String> resultRepeat = new ArrayList<>();
   Map<String, Integer> resultRepeat = new HashMap<String, Integer>();
 
@@ -63,12 +70,17 @@ public class SimpleTaskActivity extends AppCompatActivity {
     initViews();
     defineAddDialog();
     defineRepeatDialog();
+    defineDeviceDialog();
     Bundle bundle = getIntent().getExtras();
     if (bundle != null) {
       devId = bundle.getString("DeviceId");
       devName = bundle.getString("DeviceName");
       prodId = bundle.getString("ProductId");
       category = bundle.getString("Category");
+      if (devName != null) {
+          btnDevice.setText("Device: " + devName);
+          btnDevice.setEnabled(false);
+      }
     }
     btnAdd.setOnClickListener(
         new View.OnClickListener() {
@@ -114,6 +126,12 @@ public class SimpleTaskActivity extends AppCompatActivity {
             return false;
           }
         });
+    btnDevice.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            deviceDialog.show();
+        }
+    });
     btnSetRepeat.setOnClickListener(
         new View.OnClickListener() {
           @Override
@@ -234,6 +252,7 @@ public class SimpleTaskActivity extends AppCompatActivity {
     btnSetRepeat = findViewById(R.id.btnSetRepeat);
     btnAddTask = findViewById(R.id.btnAddTask);
     etName = findViewById(R.id.etName);
+    btnDevice = findViewById(R.id.btnChooseDevice);
   }
 
   public void popTimePicker(View view) {
@@ -245,7 +264,8 @@ public class SimpleTaskActivity extends AppCompatActivity {
             hour = selectedHour;
             minute = selectedMinute;
             time = String.format("%02d:%02d", hour, minute);
-            btnSetTime.setText(time);
+            btnSetTime.setText("Time: "+time);
+            btnSetTime.setEnabled(false);
           }
         };
     TimePickerDialog timePickerDialog =
@@ -277,7 +297,7 @@ public class SimpleTaskActivity extends AppCompatActivity {
     sat = repeatDialog.findViewById(R.id.cbSat);
     sun = repeatDialog.findViewById(R.id.cbSun);
     List<CheckBox> checkBoxes = Arrays.asList(sun, mon, tue, wed, thu, fri, sat);
-
+    List<String> repeates = new ArrayList<>();
     cancel.setOnClickListener(
         new View.OnClickListener() {
           @Override
@@ -293,10 +313,89 @@ public class SimpleTaskActivity extends AppCompatActivity {
               resultRepeat.put(String.valueOf(ch.getText()), 0);
               if (ch.isChecked()) {
                 resultRepeat.put(String.valueOf(ch.getText()), 1);
+                repeates.add(String.valueOf(ch.getText()));
               }
             }
             repeatDialog.dismiss();
+            btnSetRepeat.setText("Repeat: "+Arrays.toString(repeates.toArray()));
+            btnSetRepeat.setEnabled(false);
           }
         });
   }
+
+  private void defineDeviceDialog() {
+      deviceDialog = new Dialog(SimpleTaskActivity.this);
+      deviceDialog.setContentView(R.layout.device_dialog);
+      deviceDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
+      deviceDialog
+              .getWindow()
+              .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+      deviceDialog.getWindow().setGravity(Gravity.CENTER);
+      deviceDialog.setCancelable(false);
+      deviceDialog.setTitle("Select device");
+      showDevices();
+  }
+
+    private void initializeData() {
+        TuyaHomeSdk.newHomeInstance(HomeActivity.getHomeId())
+                .getHomeDetail(
+                        new ITuyaHomeResultCallback() {
+                            @Override
+                            public void onSuccess(HomeBean bean) {
+                                if (bean.getDeviceList().size() > 0) {
+                                    List<DeviceBean> devArr = bean.getDeviceList();
+                                    for (int i = 0; i < devArr.size(); i++) {
+                                        Device dev = new Device();
+                                        dev.setDeviceId(devArr.get(i).getDevId());
+                                        dev.setProductId(devArr.get(i).getProductId());
+                                        dev.setDeviceName(devArr.get(i).getName());
+                                        dev.setUserEmail(HomeActivity.getEmail());
+                                        dev.setCategory(devArr.get(i).getDeviceCategory());
+                                        devices.add(dev);
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onError(String errorCode, String errorMsg) {
+                            }
+                        });
+        AppDatabase db = AppDatabase.build(getApplicationContext());
+        devices = db.deviceDao().getAll();
+    }
+
+    private void initializeAdapter() {
+        RVAdapter adapter = new RVAdapter(devices);
+        rv.setAdapter(adapter);
+        adapter.setOnItemClickListener(
+                new RVAdapter.ClickListener() {
+                    @Override
+                    public void onItemClick(int position, View v) {
+                        pos = position;
+                        deviceDialog.dismiss();
+                        btnDevice.setText("Device: " + devices.get(position).getDeviceName());
+                        devId = devices.get(position).getDeviceId();
+                        devName = devices.get(position).getDeviceName();
+                        prodId = devices.get(position).getProductId();
+                        category = devices.get(position).getCategory();
+                        btnDevice.setEnabled(false);
+                    }
+
+                    @Override
+                    public void onItemLongClick(int position, View v) {
+                    }
+                });
+
+    }
+
+    private void showDevices() {
+        rv = deviceDialog.findViewById(R.id.rvDevice);
+
+        LinearLayoutManager llm = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        rv.setLayoutManager(llm);
+        rv.setHasFixedSize(true);
+
+        initializeData();
+        initializeAdapter();
+    }
 }

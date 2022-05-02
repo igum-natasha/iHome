@@ -11,112 +11,126 @@
         layout="@layout/home_toolbar" />
 
     <com.loopeer.shadow.ShadowView
+        android:id="@+id/shadowView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:gravity="center"
         android:padding="16dp"
         app:cornerRadius="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-
         app:layout_constraintBottom_toTopOf="@+id/rv"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include"
+        app:layout_constraintVertical_bias="0.046"
         app:shadowMargin="10dp"
         app:shadowRadius="10dp">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cvWeather"
-        android:layout_width="wrap_content"
-        android:layout_height="136dp"
-        tools:ignore="MissingConstraints">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvWeather"
+            android:layout_width="wrap_content"
+            android:layout_height="136dp"
+            tools:ignore="MissingConstraints">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tvWeather"
-                android:layout_width="wrap_content"
-
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="5dp"
-                android:text="Weather"
-                android:textColor="@color/base_900"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                tools:text="Weather" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="24dp"
-                android:id="@+id/WeatherTemp"
-                android:layout_above="@id/WeatherHumidity"
-                >
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/thermometer"
-                    app:tint="@color/base_300" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/tvWeatherTemp"
+                    android:id="@+id/tvWeather"
+                    android:layout_width="150dp"
+
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="Weather"
+                    android:textColor="@color/base_900"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    tools:text="Weather" />
+
+                <LinearLayout
+                    android:id="@+id/WeatherTemp"
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
-                    android:text="Temp"
-                    android:textColor="@color/primary_900"
-                    android:textSize="16sp"
-                    tools:text="Weather Temp" />
-            </LinearLayout>
+                    android:layout_above="@id/WeatherHumidity">
 
-            <LinearLayout
-                android:id="@+id/WeatherHumidity"
-                android:layout_width="wrap_content"
-                android:layout_height="22dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="8dp">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/thermometer"
+                        app:tint="@color/base_300" />
+
+                    <TextView
+                        android:id="@+id/tvWeatherTemp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="24dp"
+                        android:text="Temp"
+                        android:textColor="@color/primary_900"
+                        android:textSize="16sp"
+                        tools:text="Weather Temp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/WeatherHumidity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="22dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="8dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/water"
+                        app:tint="@color/base_300" />
+
+                    <TextView
+                        android:id="@+id/tvWeatherHumidity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="24dp"
+                        android:text="Humidity"
+                        android:textColor="@color/primary_900"
+                        android:textSize="16sp"
+                        tools:text="Weather Humidity" />
+                </LinearLayout>
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/water"
-                    app:tint="@color/base_300" />
+                    android:id="@+id/ivIcon"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="5dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    tools:ignore="ImageContrastCheck"
+                    tools:srcCompat="@tools:sample/avatars" />
+            </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/tvWeatherHumidity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="24dp"
-                    android:text="Humidity"
-                    android:textColor="@color/primary_900"
-                    android:textSize="16sp"
-                    tools:text="Weather Humidity" />
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/ivIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="5dp"
-                android:adjustViewBounds="true"
-                android:maxHeight="300dp"
-                android:maxWidth="300dp"
-                android:layout_alignParentEnd="true"
-                android:scaleType="fitCenter"
-                tools:ignore="ImageContrastCheck"
-                tools:srcCompat="@tools:sample/avatars" />
-        </RelativeLayout>
-
-    </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
     </com.loopeer.shadow.ShadowView>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:paddingStart="16dp"
+        android:text="Devices"
+        android:textSize="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/rv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shadowView"
+        app:layout_constraintVertical_bias="0.157" />
 
     <Button
         android:id="@+id/btnSearch"
@@ -129,17 +143,16 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="683dp" />
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv"
         android:layout_width="414dp"
-        android:layout_height="329dp"
-        android:layout_marginTop="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="280dp"
         android:padding="8dp"
         app:layout_constraintBottom_toTopOf="@+id/btnSearch"
-        app:layout_constraintTop_toBottomOf="@+id/include"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp" />
-
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigatin_view"
