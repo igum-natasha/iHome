@@ -66,8 +66,8 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
   public ValueRule tempRule;
   public SceneCondition sceneCondition;
   public String temp;
-    private List<Device> devices;
-    private RecyclerView rv;
+  private List<Device> devices;
+  private RecyclerView rv;
   public PlaceFacadeBean placeFacadeBean = new PlaceFacadeBean();
 
   @Override
@@ -85,10 +85,10 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
       devName = bundle.getString("DeviceName");
       prodId = bundle.getString("ProductId");
       category = bundle.getString("Category");
-        if (devName != null) {
-            btnDevice.setText("Device: " + devName);
-            btnDevice.setEnabled(false);
-        }
+      if (devName != null) {
+        btnDevice.setText("Device: " + devName);
+        btnDevice.setEnabled(false);
+      }
     }
     btnAdd.setOnClickListener(
         new View.OnClickListener() {
@@ -153,12 +153,13 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
             }
           }
         });
-      btnDevice.setOnClickListener(new View.OnClickListener() {
+    btnDevice.setOnClickListener(
+        new View.OnClickListener() {
           @Override
           public void onClick(View view) {
-              devDialog.show();
+            devDialog.show();
           }
-      });
+        });
     seekBar.setOnSeekBarChangeListener(
         new SeekBar.OnSeekBarChangeListener() {
           @Override
@@ -331,78 +332,75 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
     tvProgress = findViewById(R.id.tvProgress);
   }
 
-    private void defineDeviceDialog() {
-        devDialog = new Dialog(TaskWeatherAdditionActivity.this);
-        devDialog.setContentView(R.layout.device_dialog);
-        devDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
-        devDialog
-                .getWindow()
-                .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        devDialog.getWindow().setGravity(Gravity.CENTER);
-        devDialog.setCancelable(false);
-        devDialog.setTitle("Select device");
-        showDevices();
-    }
+  private void defineDeviceDialog() {
+    devDialog = new Dialog(TaskWeatherAdditionActivity.this);
+    devDialog.setContentView(R.layout.device_dialog);
+    devDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
+    devDialog
+        .getWindow()
+        .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    devDialog.getWindow().setGravity(Gravity.CENTER);
+    devDialog.setCancelable(false);
+    devDialog.setTitle("Select device");
+    showDevices();
+  }
 
-    private void initializeData() {
-        TuyaHomeSdk.newHomeInstance(HomeActivity.getHomeId())
-                .getHomeDetail(
-                        new ITuyaHomeResultCallback() {
-                            @Override
-                            public void onSuccess(HomeBean bean) {
-                                if (bean.getDeviceList().size() > 0) {
-                                    List<DeviceBean> devArr = bean.getDeviceList();
-                                    for (int i = 0; i < devArr.size(); i++) {
-                                        Device dev = new Device();
-                                        dev.setDeviceId(devArr.get(i).getDevId());
-                                        dev.setProductId(devArr.get(i).getProductId());
-                                        dev.setDeviceName(devArr.get(i).getName());
-                                        dev.setUserEmail(HomeActivity.getEmail());
-                                        dev.setCategory(devArr.get(i).getDeviceCategory());
-                                        devices.add(dev);
-                                    }
-                                }
-                            }
+  private void initializeData() {
+    TuyaHomeSdk.newHomeInstance(HomeActivity.getHomeId())
+        .getHomeDetail(
+            new ITuyaHomeResultCallback() {
+              @Override
+              public void onSuccess(HomeBean bean) {
+                if (bean.getDeviceList().size() > 0) {
+                  List<DeviceBean> devArr = bean.getDeviceList();
+                  for (int i = 0; i < devArr.size(); i++) {
+                    Device dev = new Device();
+                    dev.setDeviceId(devArr.get(i).getDevId());
+                    dev.setProductId(devArr.get(i).getProductId());
+                    dev.setDeviceName(devArr.get(i).getName());
+                    dev.setUserEmail(HomeActivity.getEmail());
+                    dev.setCategory(devArr.get(i).getDeviceCategory());
+                    devices.add(dev);
+                  }
+                }
+              }
 
-                            @Override
-                            public void onError(String errorCode, String errorMsg) {
-                            }
-                        });
-        AppDatabase db = AppDatabase.build(getApplicationContext());
-        devices = db.deviceDao().getAll();
-    }
+              @Override
+              public void onError(String errorCode, String errorMsg) {}
+            });
+    AppDatabase db = AppDatabase.build(getApplicationContext());
+    devices = db.deviceDao().getAll();
+  }
 
-    private void initializeAdapter() {
-        RVAdapter adapter = new RVAdapter(devices);
-        rv.setAdapter(adapter);
-        adapter.setOnItemClickListener(
-                new RVAdapter.ClickListener() {
-                    @Override
-                    public void onItemClick(int position, View v) {
-                        devDialog.dismiss();
-                        btnDevice.setText("Device: " + devices.get(position).getDeviceName());
-                        devId = devices.get(position).getDeviceId();
-                        devName = devices.get(position).getDeviceName();
-                        prodId = devices.get(position).getProductId();
-                        category = devices.get(position).getCategory();
-                        btnDevice.setEnabled(false);
-                    }
+  private void initializeAdapter() {
+    RVAdapter adapter = new RVAdapter(devices);
+    rv.setAdapter(adapter);
+    adapter.setOnItemClickListener(
+        new RVAdapter.ClickListener() {
+          @Override
+          public void onItemClick(int position, View v) {
+            devDialog.dismiss();
+            btnDevice.setText("Device: " + devices.get(position).getDeviceName());
+            devId = devices.get(position).getDeviceId();
+            devName = devices.get(position).getDeviceName();
+            prodId = devices.get(position).getProductId();
+            category = devices.get(position).getCategory();
+            btnDevice.setEnabled(false);
+          }
 
-                    @Override
-                    public void onItemLongClick(int position, View v) {
-                    }
-                });
+          @Override
+          public void onItemLongClick(int position, View v) {}
+        });
+  }
 
-    }
+  private void showDevices() {
+    rv = devDialog.findViewById(R.id.rvDevice);
 
-    private void showDevices() {
-        rv = devDialog.findViewById(R.id.rvDevice);
+    LinearLayoutManager llm = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+    rv.setLayoutManager(llm);
+    rv.setHasFixedSize(true);
 
-        LinearLayoutManager llm = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        rv.setLayoutManager(llm);
-        rv.setHasFixedSize(true);
-
-        initializeData();
-        initializeAdapter();
-    }
+    initializeData();
+    initializeAdapter();
+  }
 }
