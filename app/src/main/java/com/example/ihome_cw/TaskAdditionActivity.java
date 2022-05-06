@@ -116,8 +116,8 @@ public class TaskAdditionActivity extends AppCompatActivity {
   }
 
   private void initializeData() {
-      AppDatabase db = AppDatabase.build(getApplicationContext());
-      scenes = db.sceneDao().getAll();
+    AppDatabase db = AppDatabase.build(getApplicationContext());
+    scenes = db.sceneDao().getAll();
   }
 
   private void initializeAdapter() {
@@ -127,8 +127,8 @@ public class TaskAdditionActivity extends AppCompatActivity {
         new RVAdapterTasks.ClickListener() {
           @Override
           public void onItemClick(int position, View v) {
-              defineSceneDialog(scenes.get(position).getSceneId());
-              sceneDialog.show();
+            defineSceneDialog(scenes.get(position).getSceneId());
+            sceneDialog.show();
           }
 
           @Override
@@ -179,60 +179,61 @@ public class TaskAdditionActivity extends AppCompatActivity {
         });
   }
 
-    private void defineSceneDialog(String sceneId) {
-        sceneDialog = new Dialog(TaskAdditionActivity.this);
-        sceneDialog.setContentView(R.layout.scene_dialog);
-        sceneDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
-        sceneDialog
-                .getWindow()
-                .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        sceneDialog.getWindow().setGravity(Gravity.CENTER);
-        sceneDialog.setCancelable(false);
-        TextView tvName = sceneDialog.findViewById(R.id.tvSceneName);
-        TextView tvRepeat = sceneDialog.findViewById(R.id.tvSceneRepeat);
-        TextView tvTime = sceneDialog.findViewById(R.id.tvSceneTime);
-        TextView tvCondition = sceneDialog.findViewById(R.id.tvSceneCondition);
-        AppDatabase db = AppDatabase.build(getApplicationContext());
-        Scene sc = db.sceneDao().selectById(sceneId);
-        tvName.setText(sc.getSceneName());
-        tvRepeat.setText(sc.getRepeat());
-        tvTime.setText(sc.getTime());
-        tvCondition.setText(sc.getCondition());
-        Button cancel = sceneDialog.findViewById(R.id.btnCancel);
-        cancel.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        sceneDialog.dismiss();
-                    }
-                });
-        Button delete = sceneDialog.findViewById(R.id.btnDelete);
-        delete.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        sceneDialog.dismiss();
-                        TuyaHomeSdk.newSceneInstance(sceneId).deleteScene(new
-                              IResultCallback() {
-                                  @Override
-                                  public void onSuccess() {
-                                      Toast.makeText(
-                                              TaskAdditionActivity.this,
-                                              "Delete Scene Success",
-                                              Toast.LENGTH_LONG)
-                                              .show();
-                                  }
-                                  @Override
-                                  public void onError(String errorCode, String errorMessage) {
-                                  }
+  private void defineSceneDialog(String sceneId) {
+    sceneDialog = new Dialog(TaskAdditionActivity.this);
+    sceneDialog.setContentView(R.layout.scene_dialog);
+    sceneDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
+    sceneDialog
+        .getWindow()
+        .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    sceneDialog.getWindow().setGravity(Gravity.CENTER);
+    sceneDialog.setCancelable(false);
+    TextView tvName = sceneDialog.findViewById(R.id.tvSceneName);
+    TextView tvRepeat = sceneDialog.findViewById(R.id.tvSceneRepeat);
+    TextView tvTime = sceneDialog.findViewById(R.id.tvSceneTime);
+    TextView tvCondition = sceneDialog.findViewById(R.id.tvSceneCondition);
+    AppDatabase db = AppDatabase.build(getApplicationContext());
+    Scene sc = db.sceneDao().selectById(sceneId);
+    tvName.setText(sc.getSceneName());
+    tvRepeat.setText(sc.getRepeat());
+    tvTime.setText(sc.getTime());
+    tvCondition.setText(sc.getCondition());
+    Button cancel = sceneDialog.findViewById(R.id.btnCancel);
+    cancel.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            sceneDialog.dismiss();
+          }
+        });
+    Button delete = sceneDialog.findViewById(R.id.btnDelete);
+    delete.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            sceneDialog.dismiss();
+            TuyaHomeSdk.newSceneInstance(sceneId)
+                .deleteScene(
+                    new IResultCallback() {
+                      @Override
+                      public void onSuccess() {
+                        Toast.makeText(
+                                TaskAdditionActivity.this,
+                                "Delete Scene Success",
+                                Toast.LENGTH_LONG)
+                            .show();
+                      }
 
-                              });
-                        db.sceneDao().deleteById(sceneId);
-                        Intent intent = new Intent(TaskAdditionActivity.this, TaskAdditionActivity.class);
-                        startActivity(intent);
-                    }
-                });
-    }
+                      @Override
+                      public void onError(String errorCode, String errorMessage) {}
+                    });
+            db.sceneDao().deleteById(sceneId);
+            Intent intent = new Intent(TaskAdditionActivity.this, TaskAdditionActivity.class);
+            startActivity(intent);
+          }
+        });
+  }
+
   private void initViews() {
 
     btnAdd = findViewById(R.id.plus_icon);

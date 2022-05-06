@@ -302,7 +302,7 @@ public class HomeActivity extends AppCompatActivity {
     AppDatabase db = AppDatabase.build(getApplicationContext());
     devices = db.deviceDao().getAll();
     if (devices.isEmpty()) {
-        tvDevices.setVisibility(View.INVISIBLE);
+      tvDevices.setVisibility(View.INVISIBLE);
     }
   }
 

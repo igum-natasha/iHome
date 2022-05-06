@@ -197,11 +197,10 @@ public class SimpleTaskActivity extends AppCompatActivity {
                         sceneBean.setEnabled(true);
                         Toast.makeText(SimpleTaskActivity.this, "successful!", Toast.LENGTH_LONG)
                             .show();
-                          addScene(sceneBean.getId(), Name, time, repeatList, String.valueOf(true));
+                        addScene(sceneBean.getId(), Name, time, repeatList, String.valueOf(true));
                         Intent intent =
                             new Intent(SimpleTaskActivity.this, TaskAdditionActivity.class);
                         startActivity(intent);
-
                       }
 
                       @Override
@@ -383,18 +382,20 @@ public class SimpleTaskActivity extends AppCompatActivity {
           public void onItemLongClick(int position, View v) {}
         });
   }
-    private void addScene(String id, String name, String time, String repeat, String cond) {
-        AppDatabase db = AppDatabase.build(getApplicationContext());
-        Scene scene = new Scene();
-        scene.setUserEmail(HomeActivity.getEmail());
-        scene.setDeviceId(devId);
-        scene.setSceneId(id);
-        scene.setSceneName(name);
-        scene.setTime(time);
-        scene.setRepeat(repeat);
-        scene.setCondition(cond);
-        db.sceneDao().insertScene(scene);
-    }
+
+  private void addScene(String id, String name, String time, String repeat, String cond) {
+    AppDatabase db = AppDatabase.build(getApplicationContext());
+    Scene scene = new Scene();
+    scene.setUserEmail(HomeActivity.getEmail());
+    scene.setDeviceId(devId);
+    scene.setSceneId(id);
+    scene.setSceneName(name);
+    scene.setTime(time);
+    scene.setRepeat(repeat);
+    scene.setCondition(cond);
+    db.sceneDao().insertScene(scene);
+  }
+
   private void showDevices() {
     rv = deviceDialog.findViewById(R.id.rvDevice);
 
