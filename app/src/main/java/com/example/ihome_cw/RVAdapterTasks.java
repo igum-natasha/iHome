@@ -8,8 +8,6 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tuya.smart.home.sdk.bean.scene.SceneBean;
-
 import java.util.List;
 
 public class RVAdapterTasks extends RecyclerView.Adapter<RVAdapterTasks.TaskViewHolder> {
@@ -20,7 +18,7 @@ public class RVAdapterTasks extends RecyclerView.Adapter<RVAdapterTasks.TaskView
 
     CardView cv;
     TextView taskName;
-    TextView deviceId;
+    TextView taskTime;
 
     TaskViewHolder(View itemView) {
       super(itemView);
@@ -28,7 +26,7 @@ public class RVAdapterTasks extends RecyclerView.Adapter<RVAdapterTasks.TaskView
       itemView.setOnLongClickListener(this);
       cv = itemView.findViewById(R.id.cv_tasks);
       taskName = itemView.findViewById(R.id.task_name);
-      deviceId = itemView.findViewById(R.id.device_id_tasks);
+      taskTime = itemView.findViewById(R.id.time_task);
     }
 
     @Override
@@ -43,9 +41,9 @@ public class RVAdapterTasks extends RecyclerView.Adapter<RVAdapterTasks.TaskView
     }
   }
 
-  List<SceneBean> tasks;
+  List<Scene> tasks;
 
-  RVAdapterTasks(List<SceneBean> tasks) {
+  RVAdapterTasks(List<Scene> tasks) {
     this.tasks = tasks;
   }
 
@@ -64,8 +62,8 @@ public class RVAdapterTasks extends RecyclerView.Adapter<RVAdapterTasks.TaskView
 
   @Override
   public void onBindViewHolder(TaskViewHolder taskViewHolder, int i) {
-    taskViewHolder.taskName.setText(tasks.get(i).getName());
-    taskViewHolder.deviceId.setText(tasks.get(i).getId());
+    taskViewHolder.taskName.setText(tasks.get(i).getSceneName());
+    taskViewHolder.taskTime.setText(tasks.get(i).getTime());
   }
 
   @Override

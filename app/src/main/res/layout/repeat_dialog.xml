@@ -81,6 +81,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Cancel"
+            android:background="@drawable/button_border"
+            android:textColor="@color/base_900"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.07"
             app:layout_constraintStart_toStartOf="parent"/>
@@ -90,6 +92,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Submit"
+            android:background="@drawable/button_border"
+            android:textColor="@color/base_900"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnCancel"
             app:layout_constraintEnd_toEndOf="parent" />

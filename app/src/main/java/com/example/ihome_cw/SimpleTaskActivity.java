@@ -59,6 +59,7 @@ public class SimpleTaskActivity extends AppCompatActivity {
   private RecyclerView rv;
   Dialog addDialog, repeatDialog, deviceDialog;
   int hour, minute, pos;
+  String repeatList = "";
   //    List<String> resultRepeat = new ArrayList<>();
   Map<String, Integer> resultRepeat = new HashMap<String, Integer>();
 
@@ -155,12 +156,13 @@ public class SimpleTaskActivity extends AppCompatActivity {
             List<String> week =
                 Arrays.asList(
                     "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
-            String repeatList = "";
+
             for (String key : week) {
               repeatList += resultRepeat.get(key);
             }
+            String task_time = String.valueOf(btnSetTime.getText());
             TimerRule timerRule =
-                TimerRule.newInstance(repeatList, time, formatForDateNow.format(date));
+                TimerRule.newInstance(repeatList, task_time, formatForDateNow.format(date));
             SceneCondition condition =
                 SceneCondition.createTimerCondition(
                     "Saturday, Sunday, Monday, Tuesday, Wednesday, Thursday, Friday",
@@ -195,15 +197,11 @@ public class SimpleTaskActivity extends AppCompatActivity {
                         sceneBean.setEnabled(true);
                         Toast.makeText(SimpleTaskActivity.this, "successful!", Toast.LENGTH_LONG)
                             .show();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("DeviceId", devId);
-                        bundle.putString("DeviceName", devName);
-                        bundle.putString("ProductId", prodId);
-                        bundle.putString("Category", category);
+                          addScene(sceneBean.getId(), Name, time, repeatList, String.valueOf(true));
                         Intent intent =
                             new Intent(SimpleTaskActivity.this, TaskAdditionActivity.class);
-                        intent.putExtras(bundle);
                         startActivity(intent);
+
                       }
 
                       @Override
@@ -385,7 +383,18 @@ public class SimpleTaskActivity extends AppCompatActivity {
           public void onItemLongClick(int position, View v) {}
         });
   }
-
+    private void addScene(String id, String name, String time, String repeat, String cond) {
+        AppDatabase db = AppDatabase.build(getApplicationContext());
+        Scene scene = new Scene();
+        scene.setUserEmail(HomeActivity.getEmail());
+        scene.setDeviceId(devId);
+        scene.setSceneId(id);
+        scene.setSceneName(name);
+        scene.setTime(time);
+        scene.setRepeat(repeat);
+        scene.setCondition(cond);
+        db.sceneDao().insertScene(scene);
+    }
   private void showDevices() {
     rv = deviceDialog.findViewById(R.id.rvDevice);
 

@@ -61,7 +61,7 @@ public class HomeActivity extends AppCompatActivity {
   private Button btnSearch;
   private ImageButton btnAdd;
   private CircleImageView btnAvatar;
-  private TextView tvWeather, tvWeatherTemp, tvWeatherHumidity;
+  private TextView tvWeather, tvWeatherTemp, tvWeatherHumidity, tvDevices;
 
   String API = "a489972de36b54432056bbefac20242b";
   ImageView tvImage;
@@ -227,7 +227,7 @@ public class HomeActivity extends AppCompatActivity {
                         });
                 String rainfall = data.getRainfall();
                 Date dateNow = new Date();
-                SimpleDateFormat formatForDateNow = new SimpleDateFormat("hh");
+                SimpleDateFormat formatForDateNow = new SimpleDateFormat("HH");
                 Integer time = Integer.parseInt(formatForDateNow.format(dateNow));
                 if (time >= 0 && time <= 5 || time >= 21 && time < 24) {
                   switch (rainfall) {
@@ -301,6 +301,9 @@ public class HomeActivity extends AppCompatActivity {
             });
     AppDatabase db = AppDatabase.build(getApplicationContext());
     devices = db.deviceDao().getAll();
+    if (devices.isEmpty()) {
+        tvDevices.setVisibility(View.INVISIBLE);
+    }
   }
 
   private void initializeAdapter() {
@@ -389,7 +392,7 @@ public class HomeActivity extends AppCompatActivity {
                 public void onSuccess(List<HomeBean> homeBeans) {
                   Toast.makeText(HomeActivity.this, "Home found successful!", Toast.LENGTH_LONG)
                       .show();
-                  currentHomeBean = homeBeans.get(0);
+                  currentHomeBean = homeBeans.get(homeBeans.size() - 1);
                   getRegistrationToken();
                   showDevices();
                 }
@@ -437,6 +440,7 @@ public class HomeActivity extends AppCompatActivity {
                                 .show();
                             currentDeviceBean = deviceBean;
                             tuyaActivator.stop();
+                            btnSearch.setText("Search Devices");
                             addDevice(currentDeviceBean);
                             showDevices();
                           }
@@ -496,6 +500,7 @@ public class HomeActivity extends AppCompatActivity {
     tvWeatherTemp = findViewById(R.id.tvWeatherTemp);
     tvWeatherHumidity = findViewById(R.id.tvWeatherHumidity);
     tvImage = findViewById(R.id.ivIcon);
+    tvDevices = findViewById(R.id.tvDevices);
   }
 
   private void defineLocationDialog() {
@@ -540,8 +545,7 @@ public class HomeActivity extends AppCompatActivity {
           @Override
           public void onClick(View view) {
             addDialog.dismiss();
-            Intent intent = new Intent(HomeActivity.this, HomeActivity.class); // ?
-            startActivity(intent);
+            btnSearch.performClick();
           }
         });
     LinearLayout addTask = addDialog.findViewById(R.id.btnAddNewTask);

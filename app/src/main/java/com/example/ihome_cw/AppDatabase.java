@@ -7,8 +7,8 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 @Database(
-    entities = {User.class, Home.class, Device.class},
-    version = 8,
+    entities = {User.class, Home.class, Device.class, Scene.class},
+    version = 12,
     exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
   private static AppDatabase db;
@@ -18,6 +18,8 @@ public abstract class AppDatabase extends RoomDatabase {
   public abstract HomeDao homeDao();
 
   public abstract DeviceDao deviceDao();
+
+  public abstract SceneDao sceneDao();
 
   public static AppDatabase build(Context context) {
     if (db == null) {

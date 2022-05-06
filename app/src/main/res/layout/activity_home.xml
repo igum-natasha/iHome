@@ -102,7 +102,7 @@
 
                 <ImageView
                     android:id="@+id/ivIcon"
-                    android:layout_width="200dp"
+                    android:layout_width="170dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="5dp"
@@ -124,6 +124,7 @@
         android:layout_marginTop="8dp"
         android:paddingStart="16dp"
         android:text="Devices"
+        android:id="@+id/tvDevices"
         android:textSize="12dp"
         app:layout_constraintBottom_toTopOf="@+id/rv"
         app:layout_constraintEnd_toEndOf="parent"

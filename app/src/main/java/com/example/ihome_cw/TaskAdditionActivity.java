@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,8 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
-import com.tuya.smart.home.sdk.bean.scene.SceneBean;
-import com.tuya.smart.home.sdk.callback.ITuyaResultCallback;
+import com.tuya.smart.sdk.api.IResultCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,11 +32,11 @@ public class TaskAdditionActivity extends AppCompatActivity {
   String devId, devName, prodId, category;
 
   private Button btnAddTask;
-  private static List<SceneBean> scenes = new ArrayList<>();
+  private static List<Scene> scenes = new ArrayList<>();
   private RecyclerView rv_tasks;
   ImageButton btnAdd;
   CircleImageView btnAccount;
-  Dialog addDialog;
+  Dialog addDialog, sceneDialog;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -115,18 +116,8 @@ public class TaskAdditionActivity extends AppCompatActivity {
   }
 
   private void initializeData() {
-    TuyaHomeSdk.getSceneManagerInstance()
-        .getSceneList(
-            HomeActivity.getHomeId(),
-            new ITuyaResultCallback<List<SceneBean>>() {
-              @Override
-              public void onSuccess(List<SceneBean> result) {
-                scenes.addAll(result);
-              }
-
-              @Override
-              public void onError(String errorCode, String errorMessage) {}
-            });
+      AppDatabase db = AppDatabase.build(getApplicationContext());
+      scenes = db.sceneDao().getAll();
   }
 
   private void initializeAdapter() {
@@ -136,11 +127,8 @@ public class TaskAdditionActivity extends AppCompatActivity {
         new RVAdapterTasks.ClickListener() {
           @Override
           public void onItemClick(int position, View v) {
-            Bundle bundle = new Bundle();
-            bundle.putString("SceneId", scenes.get(position).getId());
-            Intent intent = new Intent(TaskAdditionActivity.this, SceneInfoActivity.class);
-            intent.putExtras(bundle);
-            startActivity(intent);
+              defineSceneDialog(scenes.get(position).getSceneId());
+              sceneDialog.show();
           }
 
           @Override
@@ -191,6 +179,60 @@ public class TaskAdditionActivity extends AppCompatActivity {
         });
   }
 
+    private void defineSceneDialog(String sceneId) {
+        sceneDialog = new Dialog(TaskAdditionActivity.this);
+        sceneDialog.setContentView(R.layout.scene_dialog);
+        sceneDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
+        sceneDialog
+                .getWindow()
+                .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        sceneDialog.getWindow().setGravity(Gravity.CENTER);
+        sceneDialog.setCancelable(false);
+        TextView tvName = sceneDialog.findViewById(R.id.tvSceneName);
+        TextView tvRepeat = sceneDialog.findViewById(R.id.tvSceneRepeat);
+        TextView tvTime = sceneDialog.findViewById(R.id.tvSceneTime);
+        TextView tvCondition = sceneDialog.findViewById(R.id.tvSceneCondition);
+        AppDatabase db = AppDatabase.build(getApplicationContext());
+        Scene sc = db.sceneDao().selectById(sceneId);
+        tvName.setText(sc.getSceneName());
+        tvRepeat.setText(sc.getRepeat());
+        tvTime.setText(sc.getTime());
+        tvCondition.setText(sc.getCondition());
+        Button cancel = sceneDialog.findViewById(R.id.btnCancel);
+        cancel.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        sceneDialog.dismiss();
+                    }
+                });
+        Button delete = sceneDialog.findViewById(R.id.btnDelete);
+        delete.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        sceneDialog.dismiss();
+                        TuyaHomeSdk.newSceneInstance(sceneId).deleteScene(new
+                              IResultCallback() {
+                                  @Override
+                                  public void onSuccess() {
+                                      Toast.makeText(
+                                              TaskAdditionActivity.this,
+                                              "Delete Scene Success",
+                                              Toast.LENGTH_LONG)
+                                              .show();
+                                  }
+                                  @Override
+                                  public void onError(String errorCode, String errorMessage) {
+                                  }
+
+                              });
+                        db.sceneDao().deleteById(sceneId);
+                        Intent intent = new Intent(TaskAdditionActivity.this, TaskAdditionActivity.class);
+                        startActivity(intent);
+                    }
+                });
+    }
   private void initViews() {
 
     btnAdd = findViewById(R.id.plus_icon);

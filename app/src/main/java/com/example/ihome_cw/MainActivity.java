@@ -29,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
       password = bundle.getString("Password");
       countryCode = bundle.getString("CountryCode");
       TuyaHomeSdk.getUserInstance().loginWithEmail(countryCode, email, password, loginCallback);
+    } else {
+        Intent intent = new Intent(MainActivity.this, PreMainActivity.class);
+        startActivity(intent);
     }
   }
 

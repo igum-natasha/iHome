@@ -15,7 +15,7 @@ public class PreMainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_pre_main);
-
+    initViews();
     btnPreLogin.setOnClickListener(
         new View.OnClickListener() {
           @Override

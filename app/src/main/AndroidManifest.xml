@@ -32,9 +32,6 @@
             android:name=".SimpleTaskActivity"
             android:exported="false" />
         <activity
-            android:name=".SceneInfoActivity"
-            android:exported="false" />
-        <activity
             android:name=".TaskLocationAdditionActivity"
             android:exported="false" />
         <activity
