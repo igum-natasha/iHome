@@ -97,20 +97,20 @@ public class TaskAdditionActivity extends AppCompatActivity {
         });
     showTasks();
 
-//    btnAddTask.setOnClickListener(
-//        new View.OnClickListener() {
-//          @Override
-//          public void onClick(View view) {
-//            Bundle bundle = new Bundle();
-//            bundle.putString("DeviceId", devId);
-//            bundle.putString("DeviceName", devName);
-//            bundle.putString("ProductId", prodId);
-//            bundle.putString("Category", category);
-//            Intent intent = new Intent(TaskAdditionActivity.this, SimpleTaskActivity.class);
-//            intent.putExtras(bundle);
-//            startActivity(intent);
-//          }
-//        });
+    //    btnAddTask.setOnClickListener(
+    //        new View.OnClickListener() {
+    //          @Override
+    //          public void onClick(View view) {
+    //            Bundle bundle = new Bundle();
+    //            bundle.putString("DeviceId", devId);
+    //            bundle.putString("DeviceName", devName);
+    //            bundle.putString("ProductId", prodId);
+    //            bundle.putString("Category", category);
+    //            Intent intent = new Intent(TaskAdditionActivity.this, SimpleTaskActivity.class);
+    //            intent.putExtras(bundle);
+    //            startActivity(intent);
+    //          }
+    //        });
   }
 
   private void initializeData() {
@@ -237,6 +237,6 @@ public class TaskAdditionActivity extends AppCompatActivity {
     btnAdd = findViewById(R.id.plus_icon);
     btnAccount = findViewById(R.id.avatar_icon);
 
-//    btnAddTask = findViewById(R.id.btnAdd);
+    //    btnAddTask = findViewById(R.id.btnAdd);
   }
 }

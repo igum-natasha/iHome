@@ -565,38 +565,40 @@ public class HomeActivity extends AppCompatActivity {
         });
   }
 
-    private void defineTypeDeviceDialog() {
-        typeDeviceDialog = new Dialog(HomeActivity.this);
-        typeDeviceDialog.setContentView(R.layout.type_device_dialog);
-        typeDeviceDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
-        typeDeviceDialog
-                .getWindow()
-                .setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        typeDeviceDialog.getWindow().setGravity(Gravity.CENTER);
-        typeDeviceDialog.setCancelable(false);
-        typeDeviceDialog.setTitle("Device type");
-        LinearLayout light, socket, camera, cond, temp, other;
-        light = typeDeviceDialog.findViewById(R.id.light);
-        socket = typeDeviceDialog.findViewById(R.id.socket);
-        cond = typeDeviceDialog.findViewById(R.id.cond);
-        camera = typeDeviceDialog.findViewById(R.id.camera);
-        temp = typeDeviceDialog.findViewById(R.id.term);
-        other = typeDeviceDialog.findViewById(R.id.other);
-        LinearLayout list[] = {light, socket, camera, cond, temp, other};
-        String images[] = {"lightbulb", "socket", "camera", "snowflake", "thermometer", "help"};
-        for(int i =0; i < list.length; i++) {
-            int finalI = i;
-            list[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Resources resources = getApplicationContext().getResources();
-                    resourceId = resources.getIdentifier(images[finalI], "drawable",
-                            getApplicationContext().getPackageName());
-                    typeDeviceDialog.dismiss();
-                }
-            });
-        }
+  private void defineTypeDeviceDialog() {
+    typeDeviceDialog = new Dialog(HomeActivity.this);
+    typeDeviceDialog.setContentView(R.layout.type_device_dialog);
+    typeDeviceDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
+    typeDeviceDialog
+        .getWindow()
+        .setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    typeDeviceDialog.getWindow().setGravity(Gravity.CENTER);
+    typeDeviceDialog.setCancelable(false);
+    typeDeviceDialog.setTitle("Device type");
+    LinearLayout light, socket, camera, cond, temp, other;
+    light = typeDeviceDialog.findViewById(R.id.light);
+    socket = typeDeviceDialog.findViewById(R.id.socket);
+    cond = typeDeviceDialog.findViewById(R.id.cond);
+    camera = typeDeviceDialog.findViewById(R.id.camera);
+    temp = typeDeviceDialog.findViewById(R.id.term);
+    other = typeDeviceDialog.findViewById(R.id.other);
+    LinearLayout list[] = {light, socket, camera, cond, temp, other};
+    String images[] = {"lightbulb", "socket", "camera", "snowflake", "thermometer", "help"};
+    for (int i = 0; i < list.length; i++) {
+      int finalI = i;
+      list[i].setOnClickListener(
+          new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+              Resources resources = getApplicationContext().getResources();
+              resourceId =
+                  resources.getIdentifier(
+                      images[finalI], "drawable", getApplicationContext().getPackageName());
+              typeDeviceDialog.dismiss();
+            }
+          });
     }
+  }
 
   public static long getHomeId() {
     return homeId;
