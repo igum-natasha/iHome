@@ -91,7 +91,7 @@ public class AccountActivity extends AppCompatActivity {
                 overridePendingTransition(0, 0);
                 return true;
               case R.id.control:
-                startActivity(new Intent(AccountActivity.this, TaskActivity.class));
+                startActivity(new Intent(AccountActivity.this, TaskAdditionActivity.class));
                 overridePendingTransition(0, 0);
                 return true;
               case R.id.account:

@@ -68,6 +68,7 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
   public String temp;
   private List<Device> devices;
   private RecyclerView rv;
+    String repeatList = "1111111";
   public PlaceFacadeBean placeFacadeBean = new PlaceFacadeBean();
 
   @Override
@@ -123,7 +124,7 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
               case R.id.control:
-                startActivity(new Intent(TaskWeatherAdditionActivity.this, TaskActivity.class));
+                startActivity(new Intent(TaskWeatherAdditionActivity.this, TaskAdditionActivity.class));
                 overridePendingTransition(0, 0);
                 return true;
               case R.id.account:
@@ -182,7 +183,6 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
             String name = String.valueOf(etName.getText());
             temp = tvProgress.getText().toString();
             temp = temp.substring(0, temp.indexOf(" "));
-            ;
             Toast.makeText(
                     TaskWeatherAdditionActivity.this, name + temp + condition, Toast.LENGTH_LONG)
                 .show();
@@ -210,15 +210,15 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
 
             PreCondition preCondition = new PreCondition();
             PreConditionExpr expr = new PreConditionExpr();
-            expr.setStart("00:00");
-            expr.setEnd("23:59");
+//            expr.setStart("00:00");
+//            expr.setEnd("23:59");
             expr.setTimeInterval(PreCondition.TIMEINTERVAL_ALLDAY);
             preCondition.setCondType(PreCondition.TYPE_TIME_CHECK);
             expr.setTimeZoneId(TimeZone.getDefault().getID());
             preCondition.setExpr(expr);
             List<PreCondition> preConditions = new ArrayList<>();
             preConditions.add(preCondition);
-
+            String time = String.format("Where temp %s %s",  condition, temp);
             TuyaHomeSdk.getSceneManagerInstance()
                 .createScene(
                     HomeActivity.getHomeId(),
@@ -235,14 +235,9 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
                         Toast.makeText(
                                 TaskWeatherAdditionActivity.this, "successful!", Toast.LENGTH_LONG)
                             .show();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("DeviceId", devId);
-                        bundle.putString("DeviceName", devName);
-                        bundle.putString("ProductId", prodId);
-                        bundle.putString("Category", category);
+                        addScene(sceneBean.getId(), name, time, repeatList, String.valueOf(true));
                         Intent intent =
-                            new Intent(TaskWeatherAdditionActivity.this, TaskActivity.class);
-                        intent.putExtras(bundle);
+                            new Intent(TaskWeatherAdditionActivity.this, TaskAdditionActivity.class);
                         startActivity(intent);
                       }
 
@@ -403,4 +398,17 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
     initializeData();
     initializeAdapter();
   }
+
+    private void addScene(String id, String name, String time, String repeat, String cond) {
+        AppDatabase db = AppDatabase.build(getApplicationContext());
+        Scene scene = new Scene();
+        scene.setUserEmail(HomeActivity.getEmail());
+        scene.setDeviceId(devId);
+        scene.setSceneId(id);
+        scene.setSceneName(name);
+        scene.setTime(time);
+        scene.setRepeat(repeat);
+        scene.setCondition(cond);
+        db.sceneDao().insertScene(scene);
+    }
 }

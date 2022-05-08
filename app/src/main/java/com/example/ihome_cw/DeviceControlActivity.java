@@ -94,7 +94,7 @@ public class DeviceControlActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
               case R.id.control:
-                startActivity(new Intent(DeviceControlActivity.this, TaskActivity.class));
+                startActivity(new Intent(DeviceControlActivity.this, TaskAdditionActivity.class));
                 overridePendingTransition(0, 0);
                 return true;
               case R.id.account:

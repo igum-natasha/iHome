@@ -26,6 +26,9 @@ public class Device {
   @ColumnInfo(name = "Category")
   public String category;
 
+  @ColumnInfo(name = "Image")
+  public int image;
+
   @NonNull
   public String getUserEmail() {
     return userEmail;
@@ -51,6 +54,10 @@ public class Device {
     return productId;
   }
 
+  public int getImage() {
+    return image;
+  }
+
   public void setUserEmail(@NonNull String email) {
     this.userEmail = email;
   }
@@ -69,5 +76,9 @@ public class Device {
 
   public void setProductId(@NonNull String productId) {
     this.productId = productId;
+  }
+
+  public void setImage(int image) {
+    this.image = image;
   }
 }

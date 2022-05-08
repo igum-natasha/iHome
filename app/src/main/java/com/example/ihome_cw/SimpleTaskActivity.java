@@ -116,7 +116,7 @@ public class SimpleTaskActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
               case R.id.control:
-                startActivity(new Intent(SimpleTaskActivity.this, TaskActivity.class));
+                startActivity(new Intent(SimpleTaskActivity.this, TaskAdditionActivity.class));
                 overridePendingTransition(0, 0);
                 return true;
               case R.id.account:

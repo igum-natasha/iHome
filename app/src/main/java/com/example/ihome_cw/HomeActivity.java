@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -83,7 +84,8 @@ public class HomeActivity extends AppCompatActivity {
   ITuyaActivator tuyaActivator;
   private List<Device> devices;
   private RecyclerView rv;
-  Dialog locationDialog, addDialog;
+  int resourceId;
+  Dialog locationDialog, addDialog, typeDeviceDialog;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +101,7 @@ public class HomeActivity extends AppCompatActivity {
     initViews();
     defineLocationDialog();
     defineAddDialog();
+    defineTypeDeviceDialog();
     btnAdd.setOnClickListener(
         new View.OnClickListener() {
           @Override
@@ -126,7 +129,7 @@ public class HomeActivity extends AppCompatActivity {
               case R.id.home:
                 return true;
               case R.id.control:
-                Intent intent = new Intent(HomeActivity.this, TaskActivity.class);
+                Intent intent = new Intent(HomeActivity.this, TaskAdditionActivity.class);
                 startActivity(intent);
                 overridePendingTransition(0, 0);
                 return true;
@@ -153,6 +156,7 @@ public class HomeActivity extends AppCompatActivity {
                   .show();
             } else {
               if (currentText.equalsIgnoreCase("Search Devices")) {
+                typeDeviceDialog.show();
                 tuyaActivator.start();
                 btnSearch.setText("Stop Search");
               } else {
@@ -349,6 +353,7 @@ public class HomeActivity extends AppCompatActivity {
     device.setDeviceName(bean.getName());
     device.setProductId(bean.getProductId());
     device.setCategory(bean.getDeviceCategory());
+    device.setImage(resourceId);
     db.deviceDao().insertDevice(device);
   }
 
@@ -559,6 +564,39 @@ public class HomeActivity extends AppCompatActivity {
           }
         });
   }
+
+    private void defineTypeDeviceDialog() {
+        typeDeviceDialog = new Dialog(HomeActivity.this);
+        typeDeviceDialog.setContentView(R.layout.type_device_dialog);
+        typeDeviceDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
+        typeDeviceDialog
+                .getWindow()
+                .setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        typeDeviceDialog.getWindow().setGravity(Gravity.CENTER);
+        typeDeviceDialog.setCancelable(false);
+        typeDeviceDialog.setTitle("Device type");
+        LinearLayout light, socket, camera, cond, temp, other;
+        light = typeDeviceDialog.findViewById(R.id.light);
+        socket = typeDeviceDialog.findViewById(R.id.socket);
+        cond = typeDeviceDialog.findViewById(R.id.cond);
+        camera = typeDeviceDialog.findViewById(R.id.camera);
+        temp = typeDeviceDialog.findViewById(R.id.term);
+        other = typeDeviceDialog.findViewById(R.id.other);
+        LinearLayout list[] = {light, socket, camera, cond, temp, other};
+        String images[] = {"lightbulb", "socket", "camera", "snowflake", "thermometer", "help"};
+        for(int i =0; i < list.length; i++) {
+            int finalI = i;
+            list[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Resources resources = getApplicationContext().getResources();
+                    resourceId = resources.getIdentifier(images[finalI], "drawable",
+                            getApplicationContext().getPackageName());
+                    typeDeviceDialog.dismiss();
+                }
+            });
+        }
+    }
 
   public static long getHomeId() {
     return homeId;

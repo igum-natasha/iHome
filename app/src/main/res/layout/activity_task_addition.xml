@@ -13,23 +13,22 @@
         android:id="@+id/rv_tasks"
         android:layout_width="409dp"
         android:layout_height="512dp"
-        app:layout_constraintBottom_toBottomOf="@id/include"
-        app:layout_constraintBottom_toTopOf="@+id/btnAdd"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigatin_view"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="1dp" />
 
 
-    <Button
-        android:id="@+id/btnAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="36dp"
-        android:text="Add task"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigatin_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints" />
+<!--    <Button-->
+<!--        android:id="@+id/btnAdd"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="36dp"-->
+<!--        android:text="Add task"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/bottom_navigatin_view"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.498"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        tools:ignore="MissingConstraints" />-->
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigatin_view"

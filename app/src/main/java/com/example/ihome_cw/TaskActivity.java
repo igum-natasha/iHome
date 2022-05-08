@@ -67,6 +67,8 @@ public class TaskActivity extends AppCompatActivity {
                 overridePendingTransition(0, 0);
                 return true;
               case R.id.control:
+                  startActivity(new Intent(TaskActivity.this, TaskAdditionActivity.class));
+                  overridePendingTransition(0, 0);
                 return true;
               case R.id.account:
                 startActivity(new Intent(TaskActivity.this, AccountActivity.class));
@@ -98,7 +100,7 @@ public class TaskActivity extends AppCompatActivity {
         new View.OnClickListener() {
           @Override
           public void onClick(View view) {
-            Intent intent = new Intent(TaskActivity.this, TaskAdditionActivity.class);
+            Intent intent = new Intent(TaskActivity.this, SimpleTaskActivity.class);
             start(intent);
           }
         });

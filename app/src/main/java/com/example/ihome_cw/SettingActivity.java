@@ -29,7 +29,7 @@ public class SettingActivity extends AppCompatActivity {
                 overridePendingTransition(0, 0);
                 return true;
               case R.id.control:
-                startActivity(new Intent(SettingActivity.this, TaskActivity.class));
+                startActivity(new Intent(SettingActivity.this, TaskAdditionActivity.class));
                 overridePendingTransition(0, 0);
                 return true;
               case R.id.account:

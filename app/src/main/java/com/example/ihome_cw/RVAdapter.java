@@ -62,8 +62,9 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.DeviceViewHolder> 
 
   @Override
   public void onBindViewHolder(DeviceViewHolder deviceViewHolder, int i) {
+    int img = devices.get(i).getImage();
     deviceViewHolder.deviceName.setText(devices.get(i).getDeviceName());
-    deviceViewHolder.devicePhoto.setBackgroundResource(R.drawable.lightbulb);
+    deviceViewHolder.devicePhoto.setBackgroundResource(img);
   }
 
   @Override
