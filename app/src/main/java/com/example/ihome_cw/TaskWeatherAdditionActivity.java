@@ -380,18 +380,31 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
     initializeAdapter();
   }
 
-    private int getResourceId(String image) {
-        Resources resources = getApplicationContext().getResources();
-        return resources.getIdentifier(
-                image, "drawable", getApplicationContext().getPackageName());
-    }
+  private int getResourceId(String image) {
+    Resources resources = getApplicationContext().getResources();
+    return resources.getIdentifier(image, "drawable", getApplicationContext().getPackageName());
+  }
 
   private void addScene(String id, String name, String time, String repeat, String cond) {
-      List<String> images = Arrays.asList("bomb", "brain", "bullseye", "cake", "controller", "cookie",
-              "emoticon", "flower", "flower2", "food", "football", "fruit", "gift", "party");
-      Random rand = new Random();
-      String randomElement = images.get(rand.nextInt(images.size()));
-      int resId = getResourceId(randomElement);
+    List<String> images =
+        Arrays.asList(
+            "bomb",
+            "brain",
+            "bullseye",
+            "cake",
+            "controller",
+            "cookie",
+            "emoticon",
+            "flower",
+            "flower2",
+            "food",
+            "football",
+            "fruit",
+            "gift",
+            "party");
+    Random rand = new Random();
+    String randomElement = images.get(rand.nextInt(images.size()));
+    int resId = getResourceId(randomElement);
     AppDatabase db = AppDatabase.build(getApplicationContext());
     Scene scene = new Scene();
     scene.setUserEmail(HomeActivity.getEmail());
@@ -401,7 +414,7 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
     scene.setTime(time);
     scene.setRepeat(repeat);
     scene.setCondition(cond);
-      scene.setImage(resId);
+    scene.setImage(resId);
     db.sceneDao().insertScene(scene);
   }
 }

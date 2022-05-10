@@ -139,7 +139,7 @@ public class TaskAdditionActivity extends AppCompatActivity {
 
     GridLayoutManager llm = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
     rv_tasks.setLayoutManager(llm);
-//    rv_tasks.setHasFixedSize(true);
+    //    rv_tasks.setHasFixedSize(true);
 
     initializeData();
     initializeAdapter();

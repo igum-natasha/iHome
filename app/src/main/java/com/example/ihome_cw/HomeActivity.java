@@ -84,8 +84,8 @@ public class HomeActivity extends AppCompatActivity {
   ITuyaActivator tuyaActivator;
   private List<Device> devices;
   private RecyclerView rv;
-    private static List<Scene> scenes = new ArrayList<>();
-    private RecyclerView rv_tasks;
+  private static List<Scene> scenes = new ArrayList<>();
+  private RecyclerView rv_tasks;
   int resourceId;
   Dialog locationDialog, addDialog, typeDeviceDialog;
 
@@ -347,35 +347,35 @@ public class HomeActivity extends AppCompatActivity {
     initializeAdapter();
   }
 
-    private void initializeDataTask() {
-        AppDatabase db = AppDatabase.build(getApplicationContext());
-        scenes = db.sceneDao().getAll();
-    }
+  private void initializeDataTask() {
+    AppDatabase db = AppDatabase.build(getApplicationContext());
+    scenes = db.sceneDao().getAll();
+  }
 
-    private void initializeAdapterTask() {
-        RVAdapterTasks adapter = new RVAdapterTasks(scenes);
-        rv_tasks.setAdapter(adapter);
-        adapter.setOnItemClickListener(
-                new RVAdapterTasks.ClickListener() {
-                    @Override
-                    public void onItemClick(int position, View v) {
-                    }
+  private void initializeAdapterTask() {
+    RVAdapterTasks adapter = new RVAdapterTasks(scenes);
+    rv_tasks.setAdapter(adapter);
+    adapter.setOnItemClickListener(
+        new RVAdapterTasks.ClickListener() {
+          @Override
+          public void onItemClick(int position, View v) {}
 
-                    @Override
-                    public void onItemLongClick(int position, View v) {}
-                });
-    }
+          @Override
+          public void onItemLongClick(int position, View v) {}
+        });
+  }
 
-    private void showTasks() {
-        rv_tasks = findViewById(R.id.rv_tasks);
+  private void showTasks() {
+    rv_tasks = findViewById(R.id.rv_tasks);
 
-        GridLayoutManager llm = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
-        rv_tasks.setLayoutManager(llm);
-//    rv_tasks.setHasFixedSize(true);
+    GridLayoutManager llm = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
+    rv_tasks.setLayoutManager(llm);
+    //    rv_tasks.setHasFixedSize(true);
 
-        initializeDataTask();
-        initializeAdapterTask();
-    }
+    initializeDataTask();
+    initializeAdapterTask();
+  }
+
   private void addDevice(DeviceBean bean) {
     AppDatabase db = AppDatabase.build(this.getApplicationContext());
     Device device = new Device();

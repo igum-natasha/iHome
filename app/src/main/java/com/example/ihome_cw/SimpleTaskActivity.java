@@ -180,35 +180,35 @@ public class SimpleTaskActivity extends AppCompatActivity {
             List<PreCondition> preConditions = new ArrayList<>();
             preConditions.add(preCondition);
             addTask(Name, preConditions);
-  }
+          }
 
-  private void addTask(String Name, List<PreCondition> preConditions ) {
-      TuyaHomeSdk.getSceneManagerInstance()
-              .createScene(
-                      HomeActivity.getHomeId(),
-                      Name, // The name of the scene.
-                      false,
-                      "", // Indicates whether the scene is displayed on the homepage.
-                      conditions, // The conditions.
-                      tasks, // The tasks.
-                      preConditions, // The effective period. This parameter is optional.
-                      SceneBean.MATCH_TYPE_AND, // The type of trigger conditions to match.
-                      new ITuyaResultCallback<SceneBean>() {
-                          @Override
-                          public void onSuccess(SceneBean sceneBean) {
-                              sceneBean.setEnabled(true);
-                              Toast.makeText(SimpleTaskActivity.this, "successful!", Toast.LENGTH_LONG)
-                                      .show();
-                              addScene(sceneBean.getId(), Name, time, repeatList, String.valueOf(true));
-                              Intent intent =
-                                      new Intent(SimpleTaskActivity.this, TaskAdditionActivity.class);
-                              startActivity(intent);
-                          }
+          private void addTask(String Name, List<PreCondition> preConditions) {
+            TuyaHomeSdk.getSceneManagerInstance()
+                .createScene(
+                    HomeActivity.getHomeId(),
+                    Name, // The name of the scene.
+                    false,
+                    "", // Indicates whether the scene is displayed on the homepage.
+                    conditions, // The conditions.
+                    tasks, // The tasks.
+                    preConditions, // The effective period. This parameter is optional.
+                    SceneBean.MATCH_TYPE_AND, // The type of trigger conditions to match.
+                    new ITuyaResultCallback<SceneBean>() {
+                      @Override
+                      public void onSuccess(SceneBean sceneBean) {
+                        sceneBean.setEnabled(true);
+                        Toast.makeText(SimpleTaskActivity.this, "successful!", Toast.LENGTH_LONG)
+                            .show();
+                        addScene(sceneBean.getId(), Name, time, repeatList, String.valueOf(true));
+                        Intent intent =
+                            new Intent(SimpleTaskActivity.this, TaskAdditionActivity.class);
+                        startActivity(intent);
+                      }
 
-                          @Override
-                          public void onError(String errorCode, String errorMessage) {}
-                      });
-  }
+                      @Override
+                      public void onError(String errorCode, String errorMessage) {}
+                    });
+          }
         });
   }
 
@@ -324,9 +324,8 @@ public class SimpleTaskActivity extends AppCompatActivity {
   }
 
   private int getResourceId(String image) {
-      Resources resources = getApplicationContext().getResources();
-      return resources.getIdentifier(
-                      image, "drawable", getApplicationContext().getPackageName());
+    Resources resources = getApplicationContext().getResources();
+    return resources.getIdentifier(image, "drawable", getApplicationContext().getPackageName());
   }
 
   private void defineDeviceDialog() {
@@ -370,8 +369,22 @@ public class SimpleTaskActivity extends AppCompatActivity {
   }
 
   private void addScene(String id, String name, String time, String repeat, String cond) {
-    List<String> images = Arrays.asList("bomb", "brain", "bullseye", "cake", "controller", "cookie",
-              "emoticon", "flower", "flower2", "food", "football", "fruit", "gift", "party");
+    List<String> images =
+        Arrays.asList(
+            "bomb",
+            "brain",
+            "bullseye",
+            "cake",
+            "controller",
+            "cookie",
+            "emoticon",
+            "flower",
+            "flower2",
+            "food",
+            "football",
+            "fruit",
+            "gift",
+            "party");
     Random rand = new Random();
     String randomElement = images.get(rand.nextInt(images.size()));
     int resId = getResourceId(randomElement);

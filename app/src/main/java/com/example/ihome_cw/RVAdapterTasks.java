@@ -74,41 +74,46 @@ public class RVAdapterTasks extends RecyclerView.Adapter<RVAdapterTasks.TaskView
   public void onBindViewHolder(TaskViewHolder taskViewHolder, @SuppressLint("RecyclerView") int i) {
     taskViewHolder.taskName.setText(tasks.get(i).getSceneName());
     taskViewHolder.image.setBackgroundResource(tasks.get(i).getImage());
-    taskViewHolder.sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-      @Override
-      public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        String id = tasks.get(i).sceneId;
-        if (b) {
-          TuyaHomeSdk.newSceneInstance(id).enableScene(id, new IResultCallback() {
-            @Override
-            public void onError(String code, String error) {
+    taskViewHolder.sw.setOnCheckedChangeListener(
+        new CompoundButton.OnCheckedChangeListener() {
+          @Override
+          public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+            String id = tasks.get(i).sceneId;
+            if (b) {
+              TuyaHomeSdk.newSceneInstance(id)
+                  .enableScene(
+                      id,
+                      new IResultCallback() {
+                        @Override
+                        public void onError(String code, String error) {}
 
-            }
+                        @Override
+                        public void onSuccess() {
+                          Toast.makeText(
+                                  compoundButton.getContext(), "Task is enabled", Toast.LENGTH_LONG)
+                              .show();
+                        }
+                      });
+            } else {
+              TuyaHomeSdk.newSceneInstance(id)
+                  .disableScene(
+                      id,
+                      new IResultCallback() {
+                        @Override
+                        public void onError(String code, String error) {}
 
-            @Override
-            public void onSuccess() {
-              Toast.makeText(
-                      compoundButton.getContext(), "Task is enabled", Toast.LENGTH_LONG)
-                      .show();
+                        @Override
+                        public void onSuccess() {
+                          Toast.makeText(
+                                  compoundButton.getContext(),
+                                  "Task is disabled",
+                                  Toast.LENGTH_LONG)
+                              .show();
+                        }
+                      });
             }
-          });
-        } else {
-          TuyaHomeSdk.newSceneInstance(id).disableScene(id, new IResultCallback() {
-            @Override
-            public void onError(String code, String error) {
-
-            }
-
-            @Override
-            public void onSuccess() {
-              Toast.makeText(
-                      compoundButton.getContext(), "Task is disabled", Toast.LENGTH_LONG)
-                      .show();
-            }
-          });
-        }
-      }
-    });
+          }
+        });
   }
 
   @Override
