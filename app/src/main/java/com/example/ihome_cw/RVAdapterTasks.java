@@ -1,12 +1,20 @@
 package com.example.ihome_cw;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.tuya.smart.home.sdk.TuyaHomeSdk;
+import com.tuya.smart.sdk.api.IResultCallback;
 
 import java.util.List;
 
@@ -18,7 +26,8 @@ public class RVAdapterTasks extends RecyclerView.Adapter<RVAdapterTasks.TaskView
 
     CardView cv;
     TextView taskName;
-    TextView taskTime;
+    ImageView image;
+    Switch sw;
 
     TaskViewHolder(View itemView) {
       super(itemView);
@@ -26,7 +35,8 @@ public class RVAdapterTasks extends RecyclerView.Adapter<RVAdapterTasks.TaskView
       itemView.setOnLongClickListener(this);
       cv = itemView.findViewById(R.id.cv_tasks);
       taskName = itemView.findViewById(R.id.task_name);
-      taskTime = itemView.findViewById(R.id.time_task);
+      image = itemView.findViewById(R.id.task_photo);
+      sw = itemView.findViewById(R.id.sw);
     }
 
     @Override
@@ -61,9 +71,44 @@ public class RVAdapterTasks extends RecyclerView.Adapter<RVAdapterTasks.TaskView
   }
 
   @Override
-  public void onBindViewHolder(TaskViewHolder taskViewHolder, int i) {
+  public void onBindViewHolder(TaskViewHolder taskViewHolder, @SuppressLint("RecyclerView") int i) {
     taskViewHolder.taskName.setText(tasks.get(i).getSceneName());
-    taskViewHolder.taskTime.setText(tasks.get(i).getTime());
+    taskViewHolder.image.setBackgroundResource(tasks.get(i).getImage());
+    taskViewHolder.sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+      @Override
+      public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        String id = tasks.get(i).sceneId;
+        if (b) {
+          TuyaHomeSdk.newSceneInstance(id).enableScene(id, new IResultCallback() {
+            @Override
+            public void onError(String code, String error) {
+
+            }
+
+            @Override
+            public void onSuccess() {
+              Toast.makeText(
+                      compoundButton.getContext(), "Task is enabled", Toast.LENGTH_LONG)
+                      .show();
+            }
+          });
+        } else {
+          TuyaHomeSdk.newSceneInstance(id).disableScene(id, new IResultCallback() {
+            @Override
+            public void onError(String code, String error) {
+
+            }
+
+            @Override
+            public void onSuccess() {
+              Toast.makeText(
+                      compoundButton.getContext(), "Task is disabled", Toast.LENGTH_LONG)
+                      .show();
+            }
+          });
+        }
+      }
+    });
   }
 
   @Override

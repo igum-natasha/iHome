@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -137,9 +137,9 @@ public class TaskAdditionActivity extends AppCompatActivity {
   private void showTasks() {
     rv_tasks = findViewById(R.id.rv_tasks);
 
-    LinearLayoutManager llm = new LinearLayoutManager(this);
+    GridLayoutManager llm = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
     rv_tasks.setLayoutManager(llm);
-    rv_tasks.setHasFixedSize(true);
+//    rv_tasks.setHasFixedSize(true);
 
     initializeData();
     initializeAdapter();

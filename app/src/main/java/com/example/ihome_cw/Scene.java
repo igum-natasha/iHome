@@ -34,6 +34,9 @@ public class Scene {
   @ColumnInfo(name = "Conditions")
   public String condition;
 
+  @ColumnInfo(name = "Image")
+  public int image;
+
   @NonNull
   public String getUserEmail() {
     return userEmail;
@@ -64,6 +67,10 @@ public class Scene {
     return time;
   }
 
+  public int getImage() {
+    return image;
+  }
+
   public void setDeviceId(@NonNull String deviceId) {
     this.deviceId = deviceId;
   }
@@ -91,6 +98,10 @@ public class Scene {
   @NonNull
   public String getDeviceId() {
     return deviceId;
+  }
+
+  public void setImage(int image) {
+    this.image = image;
   }
 
   public void setUserEmail(@NonNull String userEmail) {

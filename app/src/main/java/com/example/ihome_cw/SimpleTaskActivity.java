@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -24,16 +25,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
-import com.tuya.smart.home.sdk.bean.HomeBean;
 import com.tuya.smart.home.sdk.bean.scene.PreCondition;
 import com.tuya.smart.home.sdk.bean.scene.PreConditionExpr;
 import com.tuya.smart.home.sdk.bean.scene.SceneBean;
 import com.tuya.smart.home.sdk.bean.scene.SceneCondition;
 import com.tuya.smart.home.sdk.bean.scene.SceneTask;
 import com.tuya.smart.home.sdk.bean.scene.condition.rule.TimerRule;
-import com.tuya.smart.home.sdk.callback.ITuyaHomeResultCallback;
 import com.tuya.smart.home.sdk.callback.ITuyaResultCallback;
-import com.tuya.smart.sdk.bean.DeviceBean;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,6 +40,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.TimeZone;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -180,33 +179,36 @@ public class SimpleTaskActivity extends AppCompatActivity {
             preCondition.setExpr(expr);
             List<PreCondition> preConditions = new ArrayList<>();
             preConditions.add(preCondition);
+            addTask(Name, preConditions);
+  }
 
-            TuyaHomeSdk.getSceneManagerInstance()
-                .createScene(
-                    HomeActivity.getHomeId(),
-                    Name, // The name of the scene.
-                    false,
-                    "", // Indicates whether the scene is displayed on the homepage.
-                    conditions, // The conditions.
-                    tasks, // The tasks.
-                    preConditions, // The effective period. This parameter is optional.
-                    SceneBean.MATCH_TYPE_AND, // The type of trigger conditions to match.
-                    new ITuyaResultCallback<SceneBean>() {
-                      @Override
-                      public void onSuccess(SceneBean sceneBean) {
-                        sceneBean.setEnabled(true);
-                        Toast.makeText(SimpleTaskActivity.this, "successful!", Toast.LENGTH_LONG)
-                            .show();
-                        addScene(sceneBean.getId(), Name, time, repeatList, String.valueOf(true));
-                        Intent intent =
-                            new Intent(SimpleTaskActivity.this, TaskAdditionActivity.class);
-                        startActivity(intent);
-                      }
+  private void addTask(String Name, List<PreCondition> preConditions ) {
+      TuyaHomeSdk.getSceneManagerInstance()
+              .createScene(
+                      HomeActivity.getHomeId(),
+                      Name, // The name of the scene.
+                      false,
+                      "", // Indicates whether the scene is displayed on the homepage.
+                      conditions, // The conditions.
+                      tasks, // The tasks.
+                      preConditions, // The effective period. This parameter is optional.
+                      SceneBean.MATCH_TYPE_AND, // The type of trigger conditions to match.
+                      new ITuyaResultCallback<SceneBean>() {
+                          @Override
+                          public void onSuccess(SceneBean sceneBean) {
+                              sceneBean.setEnabled(true);
+                              Toast.makeText(SimpleTaskActivity.this, "successful!", Toast.LENGTH_LONG)
+                                      .show();
+                              addScene(sceneBean.getId(), Name, time, repeatList, String.valueOf(true));
+                              Intent intent =
+                                      new Intent(SimpleTaskActivity.this, TaskAdditionActivity.class);
+                              startActivity(intent);
+                          }
 
-                      @Override
-                      public void onError(String errorCode, String errorMessage) {}
-                    });
-          }
+                          @Override
+                          public void onError(String errorCode, String errorMessage) {}
+                      });
+  }
         });
   }
 
@@ -321,6 +323,12 @@ public class SimpleTaskActivity extends AppCompatActivity {
         });
   }
 
+  private int getResourceId(String image) {
+      Resources resources = getApplicationContext().getResources();
+      return resources.getIdentifier(
+                      image, "drawable", getApplicationContext().getPackageName());
+  }
+
   private void defineDeviceDialog() {
     deviceDialog = new Dialog(SimpleTaskActivity.this);
     deviceDialog.setContentView(R.layout.device_dialog);
@@ -335,28 +343,6 @@ public class SimpleTaskActivity extends AppCompatActivity {
   }
 
   private void initializeData() {
-    TuyaHomeSdk.newHomeInstance(HomeActivity.getHomeId())
-        .getHomeDetail(
-            new ITuyaHomeResultCallback() {
-              @Override
-              public void onSuccess(HomeBean bean) {
-                if (bean.getDeviceList().size() > 0) {
-                  List<DeviceBean> devArr = bean.getDeviceList();
-                  for (int i = 0; i < devArr.size(); i++) {
-                    Device dev = new Device();
-                    dev.setDeviceId(devArr.get(i).getDevId());
-                    dev.setProductId(devArr.get(i).getProductId());
-                    dev.setDeviceName(devArr.get(i).getName());
-                    dev.setUserEmail(HomeActivity.getEmail());
-                    dev.setCategory(devArr.get(i).getDeviceCategory());
-                    devices.add(dev);
-                  }
-                }
-              }
-
-              @Override
-              public void onError(String errorCode, String errorMsg) {}
-            });
     AppDatabase db = AppDatabase.build(getApplicationContext());
     devices = db.deviceDao().getAll();
   }
@@ -384,6 +370,11 @@ public class SimpleTaskActivity extends AppCompatActivity {
   }
 
   private void addScene(String id, String name, String time, String repeat, String cond) {
+    List<String> images = Arrays.asList("bomb", "brain", "bullseye", "cake", "controller", "cookie",
+              "emoticon", "flower", "flower2", "food", "football", "fruit", "gift", "party");
+    Random rand = new Random();
+    String randomElement = images.get(rand.nextInt(images.size()));
+    int resId = getResourceId(randomElement);
     AppDatabase db = AppDatabase.build(getApplicationContext());
     Scene scene = new Scene();
     scene.setUserEmail(HomeActivity.getEmail());
@@ -393,6 +384,7 @@ public class SimpleTaskActivity extends AppCompatActivity {
     scene.setTime(time);
     scene.setRepeat(repeat);
     scene.setCondition(cond);
+    scene.setImage(resId);
     db.sceneDao().insertScene(scene);
   }
 

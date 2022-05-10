@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -29,7 +30,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
-import com.tuya.smart.home.sdk.bean.HomeBean;
 import com.tuya.smart.home.sdk.bean.scene.PlaceFacadeBean;
 import com.tuya.smart.home.sdk.bean.scene.PreCondition;
 import com.tuya.smart.home.sdk.bean.scene.PreConditionExpr;
@@ -37,13 +37,13 @@ import com.tuya.smart.home.sdk.bean.scene.SceneBean;
 import com.tuya.smart.home.sdk.bean.scene.SceneCondition;
 import com.tuya.smart.home.sdk.bean.scene.SceneTask;
 import com.tuya.smart.home.sdk.bean.scene.condition.rule.ValueRule;
-import com.tuya.smart.home.sdk.callback.ITuyaHomeResultCallback;
 import com.tuya.smart.home.sdk.callback.ITuyaResultCallback;
-import com.tuya.smart.sdk.bean.DeviceBean;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.TimeZone;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -233,6 +233,7 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
                     new ITuyaResultCallback<SceneBean>() {
                       @Override
                       public void onSuccess(SceneBean sceneBean) {
+                        sceneBean.setEnabled(true);
                         Toast.makeText(
                                 TaskWeatherAdditionActivity.this, "successful!", Toast.LENGTH_LONG)
                             .show();
@@ -343,28 +344,6 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
   }
 
   private void initializeData() {
-    TuyaHomeSdk.newHomeInstance(HomeActivity.getHomeId())
-        .getHomeDetail(
-            new ITuyaHomeResultCallback() {
-              @Override
-              public void onSuccess(HomeBean bean) {
-                if (bean.getDeviceList().size() > 0) {
-                  List<DeviceBean> devArr = bean.getDeviceList();
-                  for (int i = 0; i < devArr.size(); i++) {
-                    Device dev = new Device();
-                    dev.setDeviceId(devArr.get(i).getDevId());
-                    dev.setProductId(devArr.get(i).getProductId());
-                    dev.setDeviceName(devArr.get(i).getName());
-                    dev.setUserEmail(HomeActivity.getEmail());
-                    dev.setCategory(devArr.get(i).getDeviceCategory());
-                    devices.add(dev);
-                  }
-                }
-              }
-
-              @Override
-              public void onError(String errorCode, String errorMsg) {}
-            });
     AppDatabase db = AppDatabase.build(getApplicationContext());
     devices = db.deviceDao().getAll();
   }
@@ -401,7 +380,18 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
     initializeAdapter();
   }
 
+    private int getResourceId(String image) {
+        Resources resources = getApplicationContext().getResources();
+        return resources.getIdentifier(
+                image, "drawable", getApplicationContext().getPackageName());
+    }
+
   private void addScene(String id, String name, String time, String repeat, String cond) {
+      List<String> images = Arrays.asList("bomb", "brain", "bullseye", "cake", "controller", "cookie",
+              "emoticon", "flower", "flower2", "food", "football", "fruit", "gift", "party");
+      Random rand = new Random();
+      String randomElement = images.get(rand.nextInt(images.size()));
+      int resId = getResourceId(randomElement);
     AppDatabase db = AppDatabase.build(getApplicationContext());
     Scene scene = new Scene();
     scene.setUserEmail(HomeActivity.getEmail());
@@ -411,6 +401,7 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
     scene.setTime(time);
     scene.setRepeat(repeat);
     scene.setCondition(cond);
+      scene.setImage(resId);
     db.sceneDao().insertScene(scene);
   }
 }
