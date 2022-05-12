@@ -152,7 +152,7 @@ public class DeviceControlActivity extends AppCompatActivity {
 
             @Override
             public void onStatusChanged(boolean b) {
-                swStatus.setChecked(b);
+              swStatus.setChecked(b);
             }
 
             @Override
@@ -170,8 +170,8 @@ public class DeviceControlActivity extends AppCompatActivity {
                   new IResultCallback() {
                     @Override
                     public void onError(String code, String error) {
-                        defineStatusDialog(devName);
-                        statusDialog.show();
+                      defineStatusDialog(devName);
+                      statusDialog.show();
                     }
 
                     @Override
@@ -323,15 +323,14 @@ public class DeviceControlActivity extends AppCompatActivity {
       conDevice.registerDevListener(
           new IDevListener() {
             @Override
-            public void onDpUpdate(String devId, String dpStr) {
-            }
+            public void onDpUpdate(String devId, String dpStr) {}
 
             @Override
             public void onRemoved(String devId) {}
 
             @Override
             public void onStatusChanged(String devId, boolean online) {
-                swStatus.setChecked(online);
+              swStatus.setChecked(online);
             }
 
             @Override
@@ -352,17 +351,17 @@ public class DeviceControlActivity extends AppCompatActivity {
                   new IResultCallback() {
                     @Override
                     public void onError(String code, String error) {
-                        defineStatusDialog(devName);
+                      defineStatusDialog(devName);
                       statusDialog.show();
                     }
 
                     @Override
                     public void onSuccess() {
-                        Toast.makeText(
-                                DeviceControlActivity.this,
-                                "Socket status change successful!",
-                                Toast.LENGTH_LONG)
-                                .show();
+                      Toast.makeText(
+                              DeviceControlActivity.this,
+                              "Socket status change successful!",
+                              Toast.LENGTH_LONG)
+                          .show();
                     }
                   });
             }
@@ -403,49 +402,50 @@ public class DeviceControlActivity extends AppCompatActivity {
         });
   }
 
+  private void defineStatusDialog(String name) {
+    statusDialog = new Dialog(DeviceControlActivity.this);
+    statusDialog.setContentView(R.layout.status_dev_dialog);
+    statusDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
+    statusDialog
+        .getWindow()
+        .setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    statusDialog.setCancelable(false);
 
-    private void defineStatusDialog(String name) {
-        statusDialog = new Dialog(DeviceControlActivity.this);
-        statusDialog.setContentView(R.layout.status_dev_dialog);
-        statusDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
-        statusDialog
-                .getWindow()
-                .setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        statusDialog.setCancelable(false);
-
-        TextView info = statusDialog.findViewById(R.id.info);
-        info.setText(String.format("Please check %s device connection and try again!", name));
-        Button ok = statusDialog.findViewById(R.id.btn_retry);
-        ok.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        statusDialog.dismiss();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("DeviceId", devId);
-                        bundle.putString("DeviceName", devName);
-                        bundle.putString("ProductId", prodId);
-                        bundle.putString("Category", category);
-                        Intent intent = new Intent(DeviceControlActivity.this, DeviceControlActivity.class);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                    }
-                });
-        Button cancel = statusDialog.findViewById(R.id.btn_сancel);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                statusDialog.dismiss();
-                Bundle bundle = new Bundle();
-                bundle.putString("Email", HomeActivity.getEmail());
-                bundle.putString("WifiLogin", HomeActivity.getSsid());
-                bundle.putString("WifiPassword", HomeActivity.getPassword());
-                Intent intent = new Intent(DeviceControlActivity.this, HomeActivity.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
+    TextView info = statusDialog.findViewById(R.id.info);
+    info.setText(String.format("Please check %s device connection and try again!", name));
+    Button ok = statusDialog.findViewById(R.id.btn_retry);
+    ok.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            statusDialog.dismiss();
+            Bundle bundle = new Bundle();
+            bundle.putString("DeviceId", devId);
+            bundle.putString("DeviceName", devName);
+            bundle.putString("ProductId", prodId);
+            bundle.putString("Category", category);
+            Intent intent = new Intent(DeviceControlActivity.this, DeviceControlActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+          }
         });
-    }
+    Button cancel = statusDialog.findViewById(R.id.btn_сancel);
+    cancel.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            statusDialog.dismiss();
+            Bundle bundle = new Bundle();
+            bundle.putString("Email", HomeActivity.getEmail());
+            bundle.putString("WifiLogin", HomeActivity.getSsid());
+            bundle.putString("WifiPassword", HomeActivity.getPassword());
+            Intent intent = new Intent(DeviceControlActivity.this, HomeActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+          }
+        });
+  }
+
   private void initViews() {
     btnAdd = findViewById(R.id.plus_icon);
     btnAccount = findViewById(R.id.avatar_icon);

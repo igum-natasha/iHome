@@ -75,19 +75,21 @@ public class RVAdapterTasks extends RecyclerView.Adapter<RVAdapterTasks.TaskView
   public void onBindViewHolder(TaskViewHolder taskViewHolder, @SuppressLint("RecyclerView") int i) {
     taskViewHolder.taskName.setText(tasks.get(i).getSceneName());
     taskViewHolder.image.setBackgroundResource(tasks.get(i).getImage());
-    TuyaHomeSdk.getSceneManagerInstance().getSceneDetail(HomeActivity.getHomeId(), tasks.get(i).sceneId, new ITuyaResultCallback<SceneBean>() {
-      @Override
-      public void onSuccess(SceneBean result) {
-        if (result.isEnabled()) {
-          taskViewHolder.sw.setChecked(result.isEnabled());
-        }
-      }
+    TuyaHomeSdk.getSceneManagerInstance()
+        .getSceneDetail(
+            HomeActivity.getHomeId(),
+            tasks.get(i).sceneId,
+            new ITuyaResultCallback<SceneBean>() {
+              @Override
+              public void onSuccess(SceneBean result) {
+                if (result.isEnabled()) {
+                  taskViewHolder.sw.setChecked(result.isEnabled());
+                }
+              }
 
-      @Override
-      public void onError(String errorCode, String errorMessage) {
-
-      }
-    });
+              @Override
+              public void onError(String errorCode, String errorMessage) {}
+            });
     taskViewHolder.sw.setOnCheckedChangeListener(
         new CompoundButton.OnCheckedChangeListener() {
           @Override
@@ -100,10 +102,12 @@ public class RVAdapterTasks extends RecyclerView.Adapter<RVAdapterTasks.TaskView
                       new IResultCallback() {
                         @Override
                         public void onError(String code, String error) {}
+
                         @SuppressLint("NewApi")
                         @Override
                         public void onSuccess() {
-                          taskViewHolder.cv.setBackgroundColor(compoundButton.getContext().getColor(R.color.primary_50));
+                          taskViewHolder.cv.setBackgroundColor(
+                              compoundButton.getContext().getColor(R.color.primary_50));
                         }
                       });
             } else {
@@ -117,7 +121,8 @@ public class RVAdapterTasks extends RecyclerView.Adapter<RVAdapterTasks.TaskView
                         @SuppressLint("NewApi")
                         @Override
                         public void onSuccess() {
-                          taskViewHolder.cv.setBackgroundColor(compoundButton.getContext().getColor(R.color.base_50));
+                          taskViewHolder.cv.setBackgroundColor(
+                              compoundButton.getContext().getColor(R.color.base_50));
                         }
                       });
             }
