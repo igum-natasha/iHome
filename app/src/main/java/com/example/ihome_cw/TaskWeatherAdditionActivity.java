@@ -147,7 +147,7 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
                 condition = String.valueOf(btnLess.getText());
                 break;
               case R.id.button2:
-                condition = String.valueOf(btnEqual.getText());
+                condition = "" + btnEqual.getText() + btnEqual.getText();
                 break;
               case R.id.button3:
                 condition = String.valueOf(btnMore.getText());

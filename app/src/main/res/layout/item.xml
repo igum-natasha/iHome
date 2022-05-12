@@ -25,8 +25,7 @@
             <ImageView
                 android:id="@+id/devicePhoto"
                 android:layout_width="24dp"
-                android:layout_height="24dp"
-                app:tint="@color/primary_900"/>
+                android:layout_height="24dp"/>
 
             <TextView
                 android:id="@+id/deviceName"

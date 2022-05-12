@@ -145,7 +145,7 @@ public class SimpleTaskActivity extends AppCompatActivity {
           @Override
           public void onClick(View view) {
             String Name = etName.getText().toString();
-            HashMap taskMap = new HashMap();
+            HashMap<String, Object> taskMap = new HashMap<>();
             taskMap.put("1", true);
             SceneTask task = TuyaHomeSdk.getSceneManagerInstance().createDpTask(devId, taskMap);
             tasks.add(task);

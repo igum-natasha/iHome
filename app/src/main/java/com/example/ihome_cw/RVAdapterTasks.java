@@ -8,12 +8,13 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
+import com.tuya.smart.home.sdk.bean.scene.SceneBean;
+import com.tuya.smart.home.sdk.callback.ITuyaResultCallback;
 import com.tuya.smart.sdk.api.IResultCallback;
 
 import java.util.List;
@@ -74,6 +75,19 @@ public class RVAdapterTasks extends RecyclerView.Adapter<RVAdapterTasks.TaskView
   public void onBindViewHolder(TaskViewHolder taskViewHolder, @SuppressLint("RecyclerView") int i) {
     taskViewHolder.taskName.setText(tasks.get(i).getSceneName());
     taskViewHolder.image.setBackgroundResource(tasks.get(i).getImage());
+    TuyaHomeSdk.getSceneManagerInstance().getSceneDetail(HomeActivity.getHomeId(), tasks.get(i).sceneId, new ITuyaResultCallback<SceneBean>() {
+      @Override
+      public void onSuccess(SceneBean result) {
+        if (result.isEnabled()) {
+          taskViewHolder.sw.setChecked(result.isEnabled());
+        }
+      }
+
+      @Override
+      public void onError(String errorCode, String errorMessage) {
+
+      }
+    });
     taskViewHolder.sw.setOnCheckedChangeListener(
         new CompoundButton.OnCheckedChangeListener() {
           @Override
@@ -86,12 +100,10 @@ public class RVAdapterTasks extends RecyclerView.Adapter<RVAdapterTasks.TaskView
                       new IResultCallback() {
                         @Override
                         public void onError(String code, String error) {}
-
+                        @SuppressLint("NewApi")
                         @Override
                         public void onSuccess() {
-                          Toast.makeText(
-                                  compoundButton.getContext(), "Task is enabled", Toast.LENGTH_LONG)
-                              .show();
+                          taskViewHolder.cv.setBackgroundColor(compoundButton.getContext().getColor(R.color.primary_50));
                         }
                       });
             } else {
@@ -102,13 +114,10 @@ public class RVAdapterTasks extends RecyclerView.Adapter<RVAdapterTasks.TaskView
                         @Override
                         public void onError(String code, String error) {}
 
+                        @SuppressLint("NewApi")
                         @Override
                         public void onSuccess() {
-                          Toast.makeText(
-                                  compoundButton.getContext(),
-                                  "Task is disabled",
-                                  Toast.LENGTH_LONG)
-                              .show();
+                          taskViewHolder.cv.setBackgroundColor(compoundButton.getContext().getColor(R.color.base_50));
                         }
                       });
             }
