@@ -109,7 +109,7 @@ public class TaskAdditionActivity extends AppCompatActivity {
     AppDatabase db = AppDatabase.build(getApplicationContext());
     scenes = db.sceneDao().getWithoutRec();
     if (scenes.isEmpty()) {
-        tvInfoTask.setVisibility(View.VISIBLE);
+      tvInfoTask.setVisibility(View.VISIBLE);
     }
   }
 
@@ -140,39 +140,39 @@ public class TaskAdditionActivity extends AppCompatActivity {
     initializeAdapter();
   }
 
-    private void initializeRec() {
-        AppDatabase db = AppDatabase.build(getApplicationContext());
-        rec = db.sceneDao().getRec();
-        if (rec.isEmpty()) {
-            tvInfoRec.setVisibility(View.VISIBLE);
-        }
+  private void initializeRec() {
+    AppDatabase db = AppDatabase.build(getApplicationContext());
+    rec = db.sceneDao().getRec();
+    if (rec.isEmpty()) {
+      tvInfoRec.setVisibility(View.VISIBLE);
     }
+  }
 
-    private void initializeAdapterRec() {
-        RVAdapterRecommend adapter = new RVAdapterRecommend(rec);
-        rv_rec.setAdapter(adapter);
-        adapter.setOnItemClickListener(
-                new RVAdapterRecommend.ClickListener() {
-                    @Override
-                    public void onItemClick(int position, View v) {
-                        defineSceneDialog(rec.get(position).getSceneId());
-                        sceneDialog.show();
-                    }
+  private void initializeAdapterRec() {
+    RVAdapterRecommend adapter = new RVAdapterRecommend(rec);
+    rv_rec.setAdapter(adapter);
+    adapter.setOnItemClickListener(
+        new RVAdapterRecommend.ClickListener() {
+          @Override
+          public void onItemClick(int position, View v) {
+            defineSceneDialog(rec.get(position).getSceneId());
+            sceneDialog.show();
+          }
 
-                    @Override
-                    public void onItemLongClick(int position, View v) {}
-                });
-    }
+          @Override
+          public void onItemLongClick(int position, View v) {}
+        });
+  }
 
-    private void showRec() {
-        rv_rec = findViewById(R.id.rv_rec);
+  private void showRec() {
+    rv_rec = findViewById(R.id.rv_rec);
 
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        rv_rec.setLayoutManager(llm);
+    LinearLayoutManager llm = new LinearLayoutManager(this);
+    rv_rec.setLayoutManager(llm);
 
-        initializeRec();
-        initializeAdapterRec();
-    }
+    initializeRec();
+    initializeAdapterRec();
+  }
 
   private void defineAddDialog() {
     addDialog = new Dialog(TaskAdditionActivity.this);

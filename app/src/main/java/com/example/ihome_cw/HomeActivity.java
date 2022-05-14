@@ -352,9 +352,9 @@ public class HomeActivity extends AppCompatActivity {
   private void initializeDataTask() {
     AppDatabase db = AppDatabase.build(getApplicationContext());
     scenes = db.sceneDao().getWithoutRec();
-      if (scenes.isEmpty()) {
-          tvInfoFav.setVisibility(View.VISIBLE);
-      }
+    if (scenes.isEmpty()) {
+      tvInfoFav.setVisibility(View.VISIBLE);
+    }
   }
 
   private void initializeAdapterTask() {
@@ -508,15 +508,15 @@ public class HomeActivity extends AppCompatActivity {
                         }));
   }
 
-  private  void addRec(DeviceBean dev) {
-      Bundle bundle = new Bundle();
-      bundle.putString("DeviceId", dev.getDevId());
-      bundle.putString("DeviceName", dev.getName());
-      bundle.putString("ProductId", dev.getProductId());
-      bundle.putString("Category", dev.getCategory());
-      Intent intent = new Intent(HomeActivity.this, PrepareDeviceActivity.class);
-      intent.putExtras(bundle);
-      startActivity(intent);
+  private void addRec(DeviceBean dev) {
+    Bundle bundle = new Bundle();
+    bundle.putString("DeviceId", dev.getDevId());
+    bundle.putString("DeviceName", dev.getName());
+    bundle.putString("ProductId", dev.getProductId());
+    bundle.putString("Category", dev.getCategory());
+    Intent intent = new Intent(HomeActivity.this, PrepareDeviceActivity.class);
+    intent.putExtras(bundle);
+    startActivity(intent);
   }
 
   private void addHome() {

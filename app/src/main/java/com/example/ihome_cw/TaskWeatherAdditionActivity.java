@@ -224,36 +224,37 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
           }
         });
   }
-    private void addTask(String Name, List<PreCondition> preConditions) {
-        TuyaHomeSdk.getSceneManagerInstance()
-                .createScene(
-                        HomeActivity.getHomeId(),
-                        Name, // The name of the scene.
-                        false,
-                        "", // Indicates whether the scene is displayed on the homepage.
-                        conditions, // The conditions.
-                        tasks, // The tasks.
-                        preConditions, // The effective period. This parameter is optional.
-                        SceneBean.MATCH_TYPE_AND, // The type of trigger conditions to match.
-                        new ITuyaResultCallback<SceneBean>() {
-                            @Override
-                            public void onSuccess(SceneBean sceneBean) {
-                                sceneBean.setEnabled(true);
-                                Toast.makeText(TaskWeatherAdditionActivity.this, "successful!", Toast.LENGTH_LONG)
-                                        .show();
-                                addScene(sceneBean.getId(), Name, time, repeatList, String.valueOf(true));
-                                Intent intent =
-                                        new Intent(TaskWeatherAdditionActivity.this, TaskAdditionActivity.class);
-                                startActivity(intent);
-                            }
 
-                            @Override
-                            public void onError(String errorCode, String errorMessage) {
-                                Toast.makeText(TaskWeatherAdditionActivity.this, "fail!", Toast.LENGTH_LONG)
-                                        .show();
-                            }
-                        });
-    }
+  private void addTask(String Name, List<PreCondition> preConditions) {
+    TuyaHomeSdk.getSceneManagerInstance()
+        .createScene(
+            HomeActivity.getHomeId(),
+            Name, // The name of the scene.
+            false,
+            "", // Indicates whether the scene is displayed on the homepage.
+            conditions, // The conditions.
+            tasks, // The tasks.
+            preConditions, // The effective period. This parameter is optional.
+            SceneBean.MATCH_TYPE_AND, // The type of trigger conditions to match.
+            new ITuyaResultCallback<SceneBean>() {
+              @Override
+              public void onSuccess(SceneBean sceneBean) {
+                sceneBean.setEnabled(true);
+                Toast.makeText(TaskWeatherAdditionActivity.this, "successful!", Toast.LENGTH_LONG)
+                    .show();
+                addScene(sceneBean.getId(), Name, time, repeatList, String.valueOf(true));
+                Intent intent =
+                    new Intent(TaskWeatherAdditionActivity.this, TaskAdditionActivity.class);
+                startActivity(intent);
+              }
+
+              @Override
+              public void onError(String errorCode, String errorMessage) {
+                Toast.makeText(TaskWeatherAdditionActivity.this, "fail!", Toast.LENGTH_LONG).show();
+              }
+            });
+  }
+
   public Location getLocation() {
     Location bestLocation = null;
     LocationManager locationManager;
