@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -33,8 +34,11 @@ public class TaskAdditionActivity extends AppCompatActivity {
 
   private Button btnAddTask;
   private static List<Scene> scenes = new ArrayList<>();
-  private RecyclerView rv_tasks;
+  private static List<Device> devices = new ArrayList<>();
+  private static List<Scene> rec = new ArrayList<>();
+  private RecyclerView rv_tasks, rv_rec;
   ImageButton btnAdd;
+  TextView tvInfoRec, tvInfoTask;
   CircleImageView btnAccount;
   Dialog addDialog, sceneDialog;
 
@@ -46,6 +50,8 @@ public class TaskAdditionActivity extends AppCompatActivity {
     Bundle bundle = getIntent().getExtras();
     defineAddDialog();
     initViews();
+    tvInfoTask.setVisibility(View.INVISIBLE);
+    tvInfoRec.setVisibility(View.INVISIBLE);
     if (bundle != null) {
       devId = bundle.getString("DeviceId");
       devName = bundle.getString("DeviceName");
@@ -96,26 +102,15 @@ public class TaskAdditionActivity extends AppCompatActivity {
           }
         });
     showTasks();
-
-    //    btnAddTask.setOnClickListener(
-    //        new View.OnClickListener() {
-    //          @Override
-    //          public void onClick(View view) {
-    //            Bundle bundle = new Bundle();
-    //            bundle.putString("DeviceId", devId);
-    //            bundle.putString("DeviceName", devName);
-    //            bundle.putString("ProductId", prodId);
-    //            bundle.putString("Category", category);
-    //            Intent intent = new Intent(TaskAdditionActivity.this, SimpleTaskActivity.class);
-    //            intent.putExtras(bundle);
-    //            startActivity(intent);
-    //          }
-    //        });
+    showRec();
   }
 
   private void initializeData() {
     AppDatabase db = AppDatabase.build(getApplicationContext());
-    scenes = db.sceneDao().getAll();
+    scenes = db.sceneDao().getWithoutRec();
+    if (scenes.isEmpty()) {
+        tvInfoTask.setVisibility(View.VISIBLE);
+    }
   }
 
   private void initializeAdapter() {
@@ -144,6 +139,40 @@ public class TaskAdditionActivity extends AppCompatActivity {
     initializeData();
     initializeAdapter();
   }
+
+    private void initializeRec() {
+        AppDatabase db = AppDatabase.build(getApplicationContext());
+        rec = db.sceneDao().getRec();
+        if (rec.isEmpty()) {
+            tvInfoRec.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void initializeAdapterRec() {
+        RVAdapterRecommend adapter = new RVAdapterRecommend(rec);
+        rv_rec.setAdapter(adapter);
+        adapter.setOnItemClickListener(
+                new RVAdapterRecommend.ClickListener() {
+                    @Override
+                    public void onItemClick(int position, View v) {
+                        defineSceneDialog(rec.get(position).getSceneId());
+                        sceneDialog.show();
+                    }
+
+                    @Override
+                    public void onItemLongClick(int position, View v) {}
+                });
+    }
+
+    private void showRec() {
+        rv_rec = findViewById(R.id.rv_rec);
+
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        rv_rec.setLayoutManager(llm);
+
+        initializeRec();
+        initializeAdapterRec();
+    }
 
   private void defineAddDialog() {
     addDialog = new Dialog(TaskAdditionActivity.this);
@@ -187,12 +216,15 @@ public class TaskAdditionActivity extends AppCompatActivity {
     sceneDialog.getWindow().setGravity(Gravity.CENTER);
     sceneDialog.setCancelable(false);
     TextView tvName = sceneDialog.findViewById(R.id.tvSceneName);
+    TextView tvDevName = sceneDialog.findViewById(R.id.tvDeviceName);
     TextView tvRepeat = sceneDialog.findViewById(R.id.tvSceneRepeat);
     TextView tvTime = sceneDialog.findViewById(R.id.tvSceneTime);
     TextView tvCondition = sceneDialog.findViewById(R.id.tvSceneCondition);
     AppDatabase db = AppDatabase.build(getApplicationContext());
     Scene sc = db.sceneDao().selectById(sceneId);
+    Device dev = db.deviceDao().selectById(sc.getDeviceId());
     tvName.setText(sc.getSceneName());
+    tvDevName.setText(dev.getDeviceName());
     tvRepeat.setText(sc.getRepeat());
     tvTime.setText(sc.getTime());
     tvCondition.setText(sc.getCondition());
@@ -236,7 +268,7 @@ public class TaskAdditionActivity extends AppCompatActivity {
 
     btnAdd = findViewById(R.id.plus_icon);
     btnAccount = findViewById(R.id.avatar_icon);
-
-    //    btnAddTask = findViewById(R.id.btnAdd);
+    tvInfoRec = findViewById(R.id.tvInfoRec);
+    tvInfoTask = findViewById(R.id.tvInfoTasks);
   }
 }

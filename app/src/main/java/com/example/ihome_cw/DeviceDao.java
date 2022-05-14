@@ -16,6 +16,9 @@ public interface DeviceDao {
   @Query("SELECT * FROM devices")
   List<Device> getAll();
 
+  @Query("SELECT * FROM devices WHERE DeviceId LIKE :id")
+  Device selectById(String id);
+
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   void insertDevice(Device device);
 }

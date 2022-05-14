@@ -62,7 +62,7 @@ public class HomeActivity extends AppCompatActivity {
   private Button btnSearch;
   private ImageButton btnAdd;
   private CircleImageView btnAvatar;
-  private TextView tvWeather, tvWeatherTemp, tvWeatherHumidity, tvDevices;
+  private TextView tvWeather, tvWeatherTemp, tvWeatherHumidity, tvInfoDev, tvInfoFav;
 
   String API = "a489972de36b54432056bbefac20242b";
   ImageView tvImage;
@@ -101,6 +101,8 @@ public class HomeActivity extends AppCompatActivity {
       password = bundle.getString("WifiPassword");
     }
     initViews();
+    tvInfoFav.setVisibility(View.INVISIBLE);
+    tvInfoDev.setVisibility(View.INVISIBLE);
     defineLocationDialog();
     defineAddDialog();
     defineTypeDeviceDialog();
@@ -308,7 +310,7 @@ public class HomeActivity extends AppCompatActivity {
     AppDatabase db = AppDatabase.build(getApplicationContext());
     devices = db.deviceDao().getAll();
     if (devices.isEmpty()) {
-      tvDevices.setVisibility(View.INVISIBLE);
+      tvInfoDev.setVisibility(View.VISIBLE);
     }
   }
 
@@ -349,7 +351,10 @@ public class HomeActivity extends AppCompatActivity {
 
   private void initializeDataTask() {
     AppDatabase db = AppDatabase.build(getApplicationContext());
-    scenes = db.sceneDao().getAll();
+    scenes = db.sceneDao().getWithoutRec();
+      if (scenes.isEmpty()) {
+          tvInfoFav.setVisibility(View.VISIBLE);
+      }
   }
 
   private void initializeAdapterTask() {
@@ -480,6 +485,7 @@ public class HomeActivity extends AppCompatActivity {
                             btnSearch.setText("Search Devices");
                             addDevice(currentDeviceBean);
                             showDevices();
+                            addRec(currentDeviceBean);
                           }
 
                           @Override
@@ -500,6 +506,17 @@ public class HomeActivity extends AppCompatActivity {
                             }
                           }
                         }));
+  }
+
+  private  void addRec(DeviceBean dev) {
+      Bundle bundle = new Bundle();
+      bundle.putString("DeviceId", dev.getDevId());
+      bundle.putString("DeviceName", dev.getName());
+      bundle.putString("ProductId", dev.getProductId());
+      bundle.putString("Category", dev.getCategory());
+      Intent intent = new Intent(HomeActivity.this, PrepareDeviceActivity.class);
+      intent.putExtras(bundle);
+      startActivity(intent);
   }
 
   private void addHome() {
@@ -537,7 +554,8 @@ public class HomeActivity extends AppCompatActivity {
     tvWeatherTemp = findViewById(R.id.tvWeatherTemp);
     tvWeatherHumidity = findViewById(R.id.tvWeatherHumidity);
     tvImage = findViewById(R.id.ivIcon);
-    tvDevices = findViewById(R.id.tvDevices);
+    tvInfoDev = findViewById(R.id.tvInfoDev);
+    tvInfoFav = findViewById(R.id.tvInfoFav);
   }
 
   private void defineLocationDialog() {

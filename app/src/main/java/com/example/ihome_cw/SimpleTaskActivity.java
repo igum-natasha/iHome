@@ -159,9 +159,8 @@ public class SimpleTaskActivity extends AppCompatActivity {
             for (String key : week) {
               repeatList += resultRepeat.get(key);
             }
-            String task_time = String.valueOf(btnSetTime.getText());
             TimerRule timerRule =
-                TimerRule.newInstance(repeatList, task_time, formatForDateNow.format(date));
+                TimerRule.newInstance(repeatList, time, formatForDateNow.format(date));
             SceneCondition condition =
                 SceneCondition.createTimerCondition(
                     "Saturday, Sunday, Monday, Tuesday, Wednesday, Thursday, Friday",

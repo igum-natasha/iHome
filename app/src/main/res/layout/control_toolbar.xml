@@ -36,7 +36,7 @@
             android:background="@color/primary_600"
             android:scaleType="fitCenter"
             android:src="@drawable/plus"
-            app:tint="@color/base_50"/>
+            app:tint="@color/base_50" />
 
     </RelativeLayout>
 

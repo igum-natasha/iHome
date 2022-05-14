@@ -22,6 +22,12 @@ public interface SceneDao {
   @Query("SELECT * FROM scenes")
   List<Scene> getAll();
 
+  @Query("SELECT * FROM scenes WHERE SceneName NOT LIKE 'Rec%'")
+  List<Scene> getWithoutRec();
+
+  @Query("SELECT * FROM scenes WHERE SceneName LIKE 'Rec%'")
+  List<Scene> getRec();
+
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   void insertScene(Scene scene);
 }
