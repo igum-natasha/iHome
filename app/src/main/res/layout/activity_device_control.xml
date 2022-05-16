@@ -9,130 +9,155 @@
     <include
         android:id="@+id/include"
         layout="@layout/control_toolbar" />
+
+    <ImageView
+        android:id="@+id/backImg"
+        android:layout_width="wrap_content"
+        android:layout_height="640dp"
+        android:alpha="0.4"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigatin_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
+
     <TextView
         android:id="@+id/labelDeviceName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:text="Device Name:"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.139"
+        app:layout_constraintHorizontal_bias="0.044"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.177" />
+        app:layout_constraintVertical_bias="0.176" />
 
     <TextView
         android:id="@+id/labelScene"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="8dp"
         android:text="Set Scene:"
         android:textColor="@color/info_600"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.16"
+        app:layout_constraintHorizontal_bias="0.009"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sbBrightness"
-        app:layout_constraintVertical_bias="0.316" />
+        app:layout_constraintVertical_bias="0.0" />
+
 
     <TextView
         android:id="@+id/labelWorkMode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Set Work Mode:"
         android:textColor="@color/info_500"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.713"
+        app:layout_constraintHorizontal_bias="0.659"
         app:layout_constraintStart_toEndOf="@+id/labelScene"
         app:layout_constraintTop_toBottomOf="@+id/sbBrightness"
-        app:layout_constraintVertical_bias="0.316" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/tvDeviceControlName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:text="Device Name"
         android:textColor="@color/info_600"
         android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.189"
+        app:layout_constraintHorizontal_bias="0.061"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/labelDeviceName"
-        app:layout_constraintVertical_bias="0.04" />
+        app:layout_constraintVertical_bias="0.041" />
 
     <Switch
         android:id="@+id/swStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minHeight="48dp"
-        android:text="Status"
-        android:textColor="@color/info_600"
-        android:textSize="16sp"
+        android:scaleX="2"
+        android:scaleY="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.141"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDeviceControlName"
-        app:layout_constraintVertical_bias="0.063"
+        app:layout_constraintTop_toTopOf="@+id/include"
+        app:layout_constraintVertical_bias="0.443"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
 
-    <SeekBar
+    <com.akaita.android.circularseekbar.CircularSeekBar
         android:id="@+id/sbBrightness"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:max="1000"
-        android:progress="10"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigatin_view"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="12dp"
+        app:enabled="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/swStatus"
-        app:layout_constraintVertical_bias="0.069" />
+        app:layout_constraintTop_toBottomOf="@+id/tvDeviceControlName"
+        app:max="1000"
+        app:min="0"
+        app:progress="10"
+        app:innerCircleColor="@color/base_300"
+        app:progressTextColor="@color/base_900"
+        app:progressTextSize="16"
+        app:ringColor="@color/primary_600"
+        app:ringWidth="0.1"
+        app:showIndicator="true"
+        app:showInnerCircle="true"
+        app:showProgressText="false"
+        app:speedMultiplier="2" />
 
     <Spinner
         android:id="@+id/spScene"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="28dp"
         android:minHeight="48dp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigatin_view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/labelScene"
-        app:layout_constraintVertical_bias="0.102"
+        app:layout_constraintVertical_bias="0.137"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <Spinner
         android:id="@+id/spWorkMode"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="28dp"
         android:minHeight="48dp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigatin_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.705"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/spScene"
         app:layout_constraintTop_toBottomOf="@+id/labelWorkMode"
-        app:layout_constraintVertical_bias="0.102"
+        app:layout_constraintVertical_bias="0.137"
         tools:ignore="MissingConstraints,SpeakableTextPresentCheck" />
 
     <Button
         android:id="@+id/btnAddTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="248dp"
+        android:layout_marginTop="24dp"
         android:text="Add task"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigatin_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sbBrightness" />
+        app:layout_constraintTop_toBottomOf="@+id/spWorkMode" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigatin_view"
