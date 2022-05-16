@@ -164,15 +164,16 @@ public class DeviceControlActivity extends AppCompatActivity {
             @SuppressLint("NewApi")
             @Override
             public void onStatusChanged(boolean b) {
-//              swStatus.setChecked(b);
-                if (b) {
-                    sbBrightness.setInnerCircleColor(getApplicationContext().getColor(R.color.primary_600));
-                    sbBrightness.setProgressText("ON");
-                } else {
-                    sbBrightness.setInnerCircleColor(getApplicationContext().getColor(R.color.base_300));
-                    sbBrightness.setProgressText("OFF");
-
-                }
+              //              swStatus.setChecked(b);
+              if (b) {
+                sbBrightness.setInnerCircleColor(
+                    getApplicationContext().getColor(R.color.primary_600));
+                sbBrightness.setProgressText("ON");
+              } else {
+                sbBrightness.setInnerCircleColor(
+                    getApplicationContext().getColor(R.color.base_300));
+                sbBrightness.setProgressText("OFF");
+              }
             }
 
             @Override
@@ -206,46 +207,51 @@ public class DeviceControlActivity extends AppCompatActivity {
             }
           });
 
-        sbBrightness.setOnCenterClickedListener(new CircularSeekBar.OnCenterClickedListener() {
+      sbBrightness.setOnCenterClickedListener(
+          new CircularSeekBar.OnCenterClickedListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onCenterClicked(CircularSeekBar seekBar, float progress) {
-                boolean state;
-                if (sbBrightness.getInnerCircleColor() == getApplicationContext().getColor(R.color.base_300)) {
-                   state = true;
-                    sbBrightness.setInnerCircleColor(getApplicationContext().getColor(R.color.primary_600));
-                    sbBrightness.setProgressText("ON");
-                } else {
-                    state = false;
-                    sbBrightness.setInnerCircleColor(getApplicationContext().getColor(R.color.base_300));
-                    sbBrightness.setProgressText("OFF");
+              boolean state;
+              if (sbBrightness.getInnerCircleColor()
+                  == getApplicationContext().getColor(R.color.base_300)) {
+                state = true;
+                sbBrightness.setInnerCircleColor(
+                    getApplicationContext().getColor(R.color.primary_600));
+                sbBrightness.setProgressText("ON");
+              } else {
+                state = false;
+                sbBrightness.setInnerCircleColor(
+                    getApplicationContext().getColor(R.color.base_300));
+                sbBrightness.setProgressText("OFF");
+              }
+              controlDevice.powerSwitch(
+                  state,
+                  new IResultCallback() {
+                    @Override
+                    public void onError(String code, String error) {
+                      defineStatusDialog(devName);
+                      statusDialog.show();
+                    }
 
-                }
-                controlDevice.powerSwitch(
-                        state,
-                        new IResultCallback() {
-                            @Override
-                            public void onError(String code, String error) {
-                                defineStatusDialog(devName);
-                                statusDialog.show();
-                            }
-
-                            @Override
-                            public void onSuccess() {
-                                Toast.makeText(
-                                        DeviceControlActivity.this,
-                                        "Light change successful!",
-                                        Toast.LENGTH_LONG)
-                                        .show();
-                            }
-                        });
+                    @Override
+                    public void onSuccess() {
+                      Toast.makeText(
+                              DeviceControlActivity.this,
+                              "Light change successful!",
+                              Toast.LENGTH_LONG)
+                          .show();
+                    }
+                  });
             }
-        });
-      sbBrightness.setOnCircularSeekBarChangeListener(new CircularSeekBar.OnCircularSeekBarChangeListener() {
-          @Override
-          public void onProgressChanged(CircularSeekBar seekBar, float progress, boolean fromUser) {
+          });
+      sbBrightness.setOnCircularSeekBarChangeListener(
+          new CircularSeekBar.OnCircularSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(
+                CircularSeekBar seekBar, float progress, boolean fromUser) {
               controlDevice.brightness(
-                  (int)progress,
+                  (int) progress,
                   new IResultCallback() {
                     @Override
                     public void onError(String code, String error) {
@@ -265,18 +271,14 @@ public class DeviceControlActivity extends AppCompatActivity {
                           .show();
                     }
                   });
-          }
+            }
 
-          @Override
-          public void onStartTrackingTouch(CircularSeekBar seekBar) {
+            @Override
+            public void onStartTrackingTouch(CircularSeekBar seekBar) {}
 
-          }
-
-          @Override
-          public void onStopTrackingTouch(CircularSeekBar seekBar) {
-
-          }
-      });
+            @Override
+            public void onStopTrackingTouch(CircularSeekBar seekBar) {}
+          });
 
       spWorkMode.setOnItemSelectedListener(
           new AdapterView.OnItemSelectedListener() {
@@ -374,7 +376,7 @@ public class DeviceControlActivity extends AppCompatActivity {
           });
     } else {
       ITuyaDevice conDevice = TuyaHomeSdk.newDeviceInstance(devId);
-//      sbBrightness.setVisibility(View.INVISIBLE);
+      //      sbBrightness.setVisibility(View.INVISIBLE);
       spWorkMode.setVisibility(View.INVISIBLE);
       spScene.setVisibility(View.INVISIBLE);
       labelScene.setVisibility(View.INVISIBLE);
@@ -390,15 +392,16 @@ public class DeviceControlActivity extends AppCompatActivity {
             @SuppressLint("NewApi")
             @Override
             public void onStatusChanged(String devId, boolean online) {
-//              swStatus.setChecked(online);
-                if (online) {
-                    sbBrightness.setInnerCircleColor(getApplicationContext().getColor(R.color.primary_600));
-                    sbBrightness.setProgressText("ON");
-                } else {
-                    sbBrightness.setInnerCircleColor(getApplicationContext().getColor(R.color.base_300));
-                    sbBrightness.setProgressText("OFF");
-
-                }
+              //              swStatus.setChecked(online);
+              if (online) {
+                sbBrightness.setInnerCircleColor(
+                    getApplicationContext().getColor(R.color.primary_600));
+                sbBrightness.setProgressText("ON");
+              } else {
+                sbBrightness.setInnerCircleColor(
+                    getApplicationContext().getColor(R.color.base_300));
+                sbBrightness.setProgressText("OFF");
+              }
             }
 
             @Override
@@ -408,43 +411,46 @@ public class DeviceControlActivity extends AppCompatActivity {
             public void onDevInfoUpdate(String devId) {}
           });
 
-        sbBrightness.setOnCenterClickedListener(new CircularSeekBar.OnCenterClickedListener() {
+      sbBrightness.setOnCenterClickedListener(
+          new CircularSeekBar.OnCenterClickedListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onCenterClicked(CircularSeekBar seekBar, float progress) {
-                boolean state;
-                if (sbBrightness.getInnerCircleColor() == getApplicationContext().getColor(R.color.base_300)) {
-                    state = true;
-                    sbBrightness.setInnerCircleColor(getApplicationContext().getColor(R.color.primary_600));
-                    sbBrightness.setProgressText("ON");
-                } else {
-                    state = false;
-                    sbBrightness.setInnerCircleColor(getApplicationContext().getColor(R.color.base_300));
-                    sbBrightness.setProgressText("OFF");
+              boolean state;
+              if (sbBrightness.getInnerCircleColor()
+                  == getApplicationContext().getColor(R.color.base_300)) {
+                state = true;
+                sbBrightness.setInnerCircleColor(
+                    getApplicationContext().getColor(R.color.primary_600));
+                sbBrightness.setProgressText("ON");
+              } else {
+                state = false;
+                sbBrightness.setInnerCircleColor(
+                    getApplicationContext().getColor(R.color.base_300));
+                sbBrightness.setProgressText("OFF");
+              }
+              HashMap<String, Object> hashMap = new HashMap<>();
+              hashMap.put(STHEME_DPID_101, state);
+              conDevice.publishDps(
+                  JSONObject.toJSONString(hashMap),
+                  new IResultCallback() {
+                    @Override
+                    public void onError(String code, String error) {
+                      defineStatusDialog(devName);
+                      statusDialog.show();
+                    }
 
-                }
-                HashMap<String, Object> hashMap = new HashMap<>();
-                hashMap.put(STHEME_DPID_101, state);
-                conDevice.publishDps(
-                        JSONObject.toJSONString(hashMap),
-                        new IResultCallback() {
-                            @Override
-                            public void onError(String code, String error) {
-                                defineStatusDialog(devName);
-                                statusDialog.show();
-                            }
-
-                            @Override
-                            public void onSuccess() {
-                                Toast.makeText(
-                                        DeviceControlActivity.this,
-                                        "Socket status change successful!",
-                                        Toast.LENGTH_LONG)
-                                        .show();
-                            }
-                        });
+                    @Override
+                    public void onSuccess() {
+                      Toast.makeText(
+                              DeviceControlActivity.this,
+                              "Socket status change successful!",
+                              Toast.LENGTH_LONG)
+                          .show();
+                    }
+                  });
             }
-        });
+          });
       swStatus.setOnCheckedChangeListener(
           new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -476,14 +482,16 @@ public class DeviceControlActivity extends AppCompatActivity {
   }
 
   private void setBackImg() {
-      List<String> images =
-              Arrays.asList("img1", "img2", "img3", "img4", "img5", "img6");
-      Random rand = new Random();
-      String randomElement = images.get(rand.nextInt(images.size()));
-      Resources resources = getApplicationContext().getResources();
-      int resId = resources.getIdentifier(randomElement, "drawable", getApplicationContext().getPackageName());
-      backImg.setBackgroundResource(resId);
+    List<String> images = Arrays.asList("img1", "img2", "img3", "img4", "img5", "img6");
+    Random rand = new Random();
+    String randomElement = images.get(rand.nextInt(images.size()));
+    Resources resources = getApplicationContext().getResources();
+    int resId =
+        resources.getIdentifier(
+            randomElement, "drawable", getApplicationContext().getPackageName());
+    backImg.setBackgroundResource(resId);
   }
+
   private void defineAddDialog() {
     addDialog = new Dialog(DeviceControlActivity.this);
     addDialog.setContentView(R.layout.add_dialog);
@@ -561,7 +569,7 @@ public class DeviceControlActivity extends AppCompatActivity {
   }
 
   private void initViews() {
-      backImg = findViewById(R.id.backImg);
+    backImg = findViewById(R.id.backImg);
     btnAdd = findViewById(R.id.plus_icon);
     btnAccount = findViewById(R.id.avatar_icon);
     tvDeviceName = findViewById(R.id.tvDeviceControlName);
