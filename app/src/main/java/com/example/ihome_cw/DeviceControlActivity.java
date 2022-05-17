@@ -167,12 +167,14 @@ public class DeviceControlActivity extends AppCompatActivity {
                 sbBrightness.setInnerCircleColor(
                     getApplicationContext().getColor(R.color.primary_600));
                 sbBrightness.setProgressText("ON");
-                sbBrightness.setProgressTextColor(getApplicationContext().getColor(R.color.base_50));
+                sbBrightness.setProgressTextColor(
+                    getApplicationContext().getColor(R.color.base_50));
               } else {
                 sbBrightness.setInnerCircleColor(
                     getApplicationContext().getColor(R.color.base_300));
                 sbBrightness.setProgressText("OFF");
-                  sbBrightness.setProgressTextColor(getApplicationContext().getColor(R.color.base_900));
+                sbBrightness.setProgressTextColor(
+                    getApplicationContext().getColor(R.color.base_900));
               }
             }
 
@@ -195,13 +197,15 @@ public class DeviceControlActivity extends AppCompatActivity {
                 sbBrightness.setInnerCircleColor(
                     getApplicationContext().getColor(R.color.primary_600));
                 sbBrightness.setProgressText("ON");
-                  sbBrightness.setProgressTextColor(getApplicationContext().getColor(R.color.base_50));
+                sbBrightness.setProgressTextColor(
+                    getApplicationContext().getColor(R.color.base_50));
               } else {
                 state = false;
                 sbBrightness.setInnerCircleColor(
                     getApplicationContext().getColor(R.color.base_300));
                 sbBrightness.setProgressText("OFF");
-                  sbBrightness.setProgressTextColor(getApplicationContext().getColor(R.color.base_900));
+                sbBrightness.setProgressTextColor(
+                    getApplicationContext().getColor(R.color.base_900));
               }
               controlDevice.powerSwitch(
                   state,
@@ -233,8 +237,8 @@ public class DeviceControlActivity extends AppCompatActivity {
                   new IResultCallback() {
                     @Override
                     public void onError(String code, String error) {
-                        defineStatusDialog(devName);
-                        statusDialog.show();
+                      defineStatusDialog(devName);
+                      statusDialog.show();
                     }
 
                     @Override
@@ -280,8 +284,8 @@ public class DeviceControlActivity extends AppCompatActivity {
                   new IResultCallback() {
                     @Override
                     public void onError(String code, String error) {
-                        defineStatusDialog(devName);
-                        statusDialog.show();
+                      defineStatusDialog(devName);
+                      statusDialog.show();
                     }
 
                     @Override
@@ -327,8 +331,8 @@ public class DeviceControlActivity extends AppCompatActivity {
                   new IResultCallback() {
                     @Override
                     public void onError(String code, String error) {
-                        defineStatusDialog(devName);
-                        statusDialog.show();
+                      defineStatusDialog(devName);
+                      statusDialog.show();
                     }
 
                     @Override
@@ -366,12 +370,14 @@ public class DeviceControlActivity extends AppCompatActivity {
                 sbBrightness.setInnerCircleColor(
                     getApplicationContext().getColor(R.color.primary_600));
                 sbBrightness.setProgressText("ON");
-                sbBrightness.setProgressTextColor(getApplicationContext().getColor(R.color.base_50));
+                sbBrightness.setProgressTextColor(
+                    getApplicationContext().getColor(R.color.base_50));
               } else {
                 sbBrightness.setInnerCircleColor(
                     getApplicationContext().getColor(R.color.base_300));
                 sbBrightness.setProgressText("OFF");
-                sbBrightness.setProgressTextColor(getApplicationContext().getColor(R.color.base_900));
+                sbBrightness.setProgressTextColor(
+                    getApplicationContext().getColor(R.color.base_900));
               }
             }
 
@@ -394,13 +400,15 @@ public class DeviceControlActivity extends AppCompatActivity {
                 sbBrightness.setInnerCircleColor(
                     getApplicationContext().getColor(R.color.primary_600));
                 sbBrightness.setProgressText("ON");
-                  sbBrightness.setProgressTextColor(getApplicationContext().getColor(R.color.base_50));
+                sbBrightness.setProgressTextColor(
+                    getApplicationContext().getColor(R.color.base_50));
               } else {
                 state = false;
                 sbBrightness.setInnerCircleColor(
                     getApplicationContext().getColor(R.color.base_300));
                 sbBrightness.setProgressText("OFF");
-                  sbBrightness.setProgressTextColor(getApplicationContext().getColor(R.color.base_900));
+                sbBrightness.setProgressTextColor(
+                    getApplicationContext().getColor(R.color.base_900));
               }
               HashMap<String, Object> hashMap = new HashMap<>();
               hashMap.put(STHEME_DPID_101, state);

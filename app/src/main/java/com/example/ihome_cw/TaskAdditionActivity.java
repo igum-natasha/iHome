@@ -231,12 +231,12 @@ public class TaskAdditionActivity extends AppCompatActivity {
     String repeat = sc.getRepeat();
     List<String> week = Arrays.asList("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
     String res = "";
-      for (char ch : repeat.toCharArray()) {
-          if (ch == '1') {
-              res = res + week.get(repeat.indexOf(ch)) + " "; // ?
-          }
+    for (char ch : repeat.toCharArray()) {
+      if (ch == '1') {
+        res = res + week.get(repeat.indexOf(ch)) + " "; // ?
       }
-      tvRepeat.setText(res);
+    }
+    tvRepeat.setText(res);
     tvTime.setText(sc.getTime());
     tvCondition.setText(sc.getCondition());
     Button cancel = sceneDialog.findViewById(R.id.btnCancel);

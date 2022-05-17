@@ -49,7 +49,7 @@ public class AccountActivity extends AppCompatActivity {
         new View.OnClickListener() {
           @Override
           public void onClick(View view) {
-              infoDialog.show();
+            infoDialog.show();
           }
         });
     messageCenter.setOnClickListener(
@@ -109,33 +109,34 @@ public class AccountActivity extends AppCompatActivity {
         });
   }
 
-    private void defineInfoDialog() {
-        infoDialog = new Dialog(AccountActivity.this);
-        infoDialog.setContentView(R.layout.info_user_dialog);
-        infoDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
-        infoDialog
-                .getWindow()
-                .setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        infoDialog.setCancelable(false);
-        TextView tvEmail, tvCity, tvTime;
-        tvEmail = infoDialog.findViewById(R.id.tvEmail);
-        tvCity = infoDialog.findViewById(R.id.tvCityName);
-        tvTime = infoDialog.findViewById(R.id.tvTimeZone);
-        tvEmail.setText(HomeActivity.getEmail());
-        tvCity.setText(HomeActivity.getCity());
-        Date date = new Date();
-        @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm:ss z");
-        tvTime.setText(formatForDateNow.format(date));
-        Button ok = infoDialog.findViewById(R.id.btn_okay);
-        ok.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        infoDialog.dismiss();
-                    }
-                });
-    }
+  private void defineInfoDialog() {
+    infoDialog = new Dialog(AccountActivity.this);
+    infoDialog.setContentView(R.layout.info_user_dialog);
+    infoDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
+    infoDialog
+        .getWindow()
+        .setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    infoDialog.setCancelable(false);
+    TextView tvEmail, tvCity, tvTime;
+    tvEmail = infoDialog.findViewById(R.id.tvEmail);
+    tvCity = infoDialog.findViewById(R.id.tvCityName);
+    tvTime = infoDialog.findViewById(R.id.tvTimeZone);
+    tvEmail.setText(HomeActivity.getEmail());
+    tvCity.setText(HomeActivity.getCity());
+    Date date = new Date();
+    @SuppressLint("SimpleDateFormat")
+    SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm:ss z");
+    tvTime.setText(formatForDateNow.format(date));
+    Button ok = infoDialog.findViewById(R.id.btn_okay);
+    ok.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            infoDialog.dismiss();
+          }
+        });
+  }
+
   private void initViews() {
     btnSetting = findViewById(R.id.setting_icon);
     btnBack = findViewById(R.id.left_icon);

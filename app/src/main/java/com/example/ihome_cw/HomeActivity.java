@@ -109,13 +109,13 @@ public class HomeActivity extends AppCompatActivity {
     defineLocationDialog();
     defineAddDialog();
     defineTypeDeviceDialog();
-      String regex = "^([A-Za-z0-9+_.-]+)(@.+$)";
-      Pattern pattern = Pattern.compile(regex);
+    String regex = "^([A-Za-z0-9+_.-]+)(@.+$)";
+    Pattern pattern = Pattern.compile(regex);
 
-      Matcher matcher = pattern.matcher(email);
-      if (matcher.find()) {
-          tvUser.setText(String.format("Hi, %s", matcher.group(1)));
-      }
+    Matcher matcher = pattern.matcher(email);
+    if (matcher.find()) {
+      tvUser.setText(String.format("Hi, %s", matcher.group(1)));
+    }
     btnAdd.setOnClickListener(
         new View.OnClickListener() {
           @Override
@@ -670,9 +670,10 @@ public class HomeActivity extends AppCompatActivity {
   }
 
   public static String getEmail() {
-    return email; }
+    return email;
+  }
 
   public static String getCity() {
-        return city;
-    }
+    return city;
+  }
 }
