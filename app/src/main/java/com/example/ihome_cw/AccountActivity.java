@@ -1,10 +1,14 @@
 package com.example.ihome_cw;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,19 +18,23 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AccountActivity extends AppCompatActivity {
   ImageButton btnSetting, btnBack;
   TextView tvName, tvEmail;
-  LinearLayout timeZone, messageCenter, questions;
+  LinearLayout aboutUser, messageCenter, questions;
+  Dialog infoDialog;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_account);
     initViews();
+    defineInfoDialog();
     tvEmail.setText(HomeActivity.getEmail());
     String mail = HomeActivity.getEmail();
     String regex = "^([A-Za-z0-9+_.-]+)(@.+$)";
@@ -37,12 +45,11 @@ public class AccountActivity extends AppCompatActivity {
       tvName.setText(matcher.group(1));
     }
 
-    timeZone.setOnClickListener(
+    aboutUser.setOnClickListener(
         new View.OnClickListener() {
           @Override
           public void onClick(View view) {
-            Intent intent = new Intent(AccountActivity.this, SettingActivity.class); // ?
-            startActivity(intent);
+              infoDialog.show();
           }
         });
     messageCenter.setOnClickListener(
@@ -102,13 +109,40 @@ public class AccountActivity extends AppCompatActivity {
         });
   }
 
+    private void defineInfoDialog() {
+        infoDialog = new Dialog(AccountActivity.this);
+        infoDialog.setContentView(R.layout.info_user_dialog);
+        infoDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
+        infoDialog
+                .getWindow()
+                .setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        infoDialog.setCancelable(false);
+        TextView tvEmail, tvCity, tvTime;
+        tvEmail = infoDialog.findViewById(R.id.tvEmail);
+        tvCity = infoDialog.findViewById(R.id.tvCityName);
+        tvTime = infoDialog.findViewById(R.id.tvTimeZone);
+        tvEmail.setText(HomeActivity.getEmail());
+        tvCity.setText(HomeActivity.getCity());
+        Date date = new Date();
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm:ss z");
+        tvTime.setText(formatForDateNow.format(date));
+        Button ok = infoDialog.findViewById(R.id.btn_okay);
+        ok.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        infoDialog.dismiss();
+                    }
+                });
+    }
   private void initViews() {
     btnSetting = findViewById(R.id.setting_icon);
     btnBack = findViewById(R.id.left_icon);
     tvName = findViewById(R.id.userName);
     tvEmail = findViewById(R.id.userEmail);
 
-    timeZone = findViewById(R.id.timeZone);
+    aboutUser = findViewById(R.id.aboutUser);
     messageCenter = findViewById(R.id.messageCenter);
     questions = findViewById(R.id.questions);
   }

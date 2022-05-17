@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="300dp"
     android:layout_height="wrap_content">
-
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -14,20 +13,21 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/labelSceneName"
+            android:id="@+id/labelEmail"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:src="@drawable/cake"
+            android:src="@drawable/message"
             tools:ignore="MissingConstraints"
             app:tint="@color/primary_900" />
 
         <TextView
-            android:id="@+id/tvSceneName"
+            android:id="@+id/tvEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="16dp"
             android:textColor="@color/base_900"
-            android:text="Scene name"
+            android:textAlignment="center"
+            android:text="Email"
             tools:ignore="MissingConstraints" />
     </LinearLayout>
 
@@ -41,20 +41,20 @@
         tools:layout_editor_absoluteX="0dp">
 
         <ImageView
-            android:id="@+id/labelDeviceName"
+            android:id="@+id/labelCityName"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:src="@drawable/lightbulb"
+            android:src="@drawable/map"
             tools:ignore="MissingConstraints"
             app:tint="@color/primary_900" />
 
         <TextView
-            android:id="@+id/tvDeviceName"
+            android:id="@+id/tvCityName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="16dp"
             android:textColor="@color/base_900"
-            android:text="Device name"
+            android:text="City"
             tools:ignore="MissingConstraints" />
     </LinearLayout>
 
@@ -68,34 +68,7 @@
         tools:layout_editor_absoluteX="0dp">
 
         <ImageView
-            android:id="@+id/labelSceneRepeat"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:src="@drawable/control"
-            tools:ignore="MissingConstraints"
-            app:tint="@color/primary_900" />
-
-        <TextView
-            android:id="@+id/tvSceneRepeat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="16dp"
-            android:textColor="@color/base_900"
-            android:text="Repeat"
-            tools:ignore="MissingConstraints" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:gravity="center_vertical"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        tools:layout_editor_absoluteX="0dp">
-
-        <ImageView
-            android:id="@+id/labelSceneTime"
+            android:id="@+id/labelTimeZone"
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:src="@drawable/time"
@@ -103,69 +76,29 @@
             app:tint="@color/primary_900" />
 
         <TextView
-            android:id="@+id/tvSceneTime"
+            android:id="@+id/tvTimeZone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="16dp"
             android:textColor="@color/base_900"
-            android:text="Time"
-            tools:ignore="MissingConstraints" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:gravity="center_vertical"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-        tools:layout_editor_absoluteX="0dp">
-
-        <ImageView
-            android:id="@+id/labelSceneCondition"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:src="@drawable/setting"
-            tools:ignore="MissingConstraints"
-            app:tint="@color/primary_900" />
-
-        <TextView
-            android:id="@+id/tvSceneCondition"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="16dp"
-            android:textColor="@color/base_900"
-            android:text="Condition"
+            android:textAlignment="center"
+            android:text="Time Zone"
             tools:ignore="MissingConstraints" />
     </LinearLayout>
 
     <Button
-        android:id="@+id/btnCancel"
-        android:layout_width="130dp"
+        android:id="@+id/btn_okay"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/button_border"
-        android:text="Cancel"
-        android:textColor="@color/base_900"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
-
-    <Button
-        android:id="@+id/btnDelete"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/button_border"
-        android:text="Delete"
+        android:text="Ok"
         android:textColor="@color/base_900"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

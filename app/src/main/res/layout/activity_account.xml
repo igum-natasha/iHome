@@ -97,7 +97,7 @@
 
 
             <LinearLayout
-                android:id="@+id/timeZone"
+                android:id="@+id/aboutUser"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:clickable="true"
@@ -109,7 +109,7 @@
                     android:layout_height="24dp"
                     android:layout_weight="1"
                     android:background="#00FFFFFF"
-                    android:contentDescription="TimeZone"
+                    android:contentDescription="Info"
                     android:src="@drawable/time"
                     app:tint="@color/base_900" />
 
@@ -118,7 +118,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_weight="40"
-                    android:text="Time Zone"
+                    android:text="About user"
                     android:textColor="@color/base_900"
                     android:textSize="16sp" />
 
@@ -126,7 +126,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_weight="1"
-                    android:contentDescription="TimeZone"
+                    android:contentDescription="About user"
                     android:src="@drawable/right"
                     app:tint="#7B7B7B" />
             </LinearLayout>

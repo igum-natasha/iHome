@@ -1,5 +1,6 @@
 package com.example.ihome_cw;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.sdk.api.IResultCallback;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -206,13 +208,14 @@ public class TaskAdditionActivity extends AppCompatActivity {
         });
   }
 
+  @SuppressLint("NewApi")
   private void defineSceneDialog(String sceneId) {
     sceneDialog = new Dialog(TaskAdditionActivity.this);
     sceneDialog.setContentView(R.layout.scene_dialog);
     sceneDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
     sceneDialog
         .getWindow()
-        .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        .setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     sceneDialog.getWindow().setGravity(Gravity.CENTER);
     sceneDialog.setCancelable(false);
     TextView tvName = sceneDialog.findViewById(R.id.tvSceneName);
@@ -225,7 +228,15 @@ public class TaskAdditionActivity extends AppCompatActivity {
     Device dev = db.deviceDao().selectById(sc.getDeviceId());
     tvName.setText(sc.getSceneName());
     tvDevName.setText(dev.getDeviceName());
-    tvRepeat.setText(sc.getRepeat());
+    String repeat = sc.getRepeat();
+    List<String> week = Arrays.asList("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
+    String res = "";
+      for (char ch : repeat.toCharArray()) {
+          if (ch == '1') {
+              res = res + week.get(repeat.indexOf(ch)) + " "; // ?
+          }
+      }
+      tvRepeat.setText(res);
     tvTime.setText(sc.getTime());
     tvCondition.setText(sc.getCondition());
     Button cancel = sceneDialog.findViewById(R.id.btnCancel);

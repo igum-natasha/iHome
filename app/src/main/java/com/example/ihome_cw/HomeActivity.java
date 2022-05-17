@@ -49,6 +49,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -62,7 +64,7 @@ public class HomeActivity extends AppCompatActivity {
   private Button btnSearch;
   private ImageButton btnAdd;
   private CircleImageView btnAvatar;
-  private TextView tvWeather, tvWeatherTemp, tvWeatherHumidity, tvInfoDev, tvInfoFav;
+  private TextView tvUser, tvWeather, tvWeatherTemp, tvWeatherHumidity, tvInfoDev, tvInfoFav;
 
   String API = "a489972de36b54432056bbefac20242b";
   ImageView tvImage;
@@ -76,6 +78,7 @@ public class HomeActivity extends AppCompatActivity {
 
   public static String ssid, email;
   public static String password;
+  public static String city;
   private HomeBean currentHomeBean;
   public static long homeId;
   private DeviceBean currentDeviceBean;
@@ -106,6 +109,13 @@ public class HomeActivity extends AppCompatActivity {
     defineLocationDialog();
     defineAddDialog();
     defineTypeDeviceDialog();
+      String regex = "^([A-Za-z0-9+_.-]+)(@.+$)";
+      Pattern pattern = Pattern.compile(regex);
+
+      Matcher matcher = pattern.matcher(email);
+      if (matcher.find()) {
+          tvUser.setText(String.format("Hi, %s", matcher.group(1)));
+      }
     btnAdd.setOnClickListener(
         new View.OnClickListener() {
           @Override
@@ -195,9 +205,6 @@ public class HomeActivity extends AppCompatActivity {
           bestLocation = l;
         }
       }
-      if (bestLocation == null) {
-        Toast.makeText(HomeActivity.this, "Error! Turn on GPS", Toast.LENGTH_LONG).show();
-      }
     }
     return bestLocation;
   }
@@ -219,7 +226,6 @@ public class HomeActivity extends AppCompatActivity {
             public void onResponse(Call<WeatherDay> call, Response<WeatherDay> response) {
               WeatherDay data = response.body();
               if (response.isSuccessful()) {
-                //                            tvTemp.setText(data.getTempInteger());
                 TuyaHomeSdk.getSceneManagerInstance()
                     .getCityByLatLng(
                         String.valueOf(bestLocation.getLongitude()),
@@ -228,6 +234,7 @@ public class HomeActivity extends AppCompatActivity {
                           @Override
                           public void onSuccess(PlaceFacadeBean result) {
                             tvWeather.setText(result.getCity());
+                            city = result.getCity();
                           }
 
                           @Override
@@ -268,7 +275,6 @@ public class HomeActivity extends AppCompatActivity {
                       break;
                   }
                 }
-                //                tvImage.setImageResource(R.drawable.cloud_sun);
                 tvWeatherTemp.setText(data.getTempWithDegree());
                 tvWeatherHumidity.setText(data.getHumidity());
               }
@@ -547,6 +553,7 @@ public class HomeActivity extends AppCompatActivity {
   private void initViews() {
     btnAvatar = findViewById(R.id.avatar_icon);
     btnAdd = findViewById(R.id.plus_icon);
+    tvUser = findViewById(R.id.user_name);
 
     btnSearch = findViewById(R.id.btnSearch);
     rv = findViewById(R.id.rv);
@@ -663,6 +670,9 @@ public class HomeActivity extends AppCompatActivity {
   }
 
   public static String getEmail() {
-    return email;
-  }
+    return email; }
+
+  public static String getCity() {
+        return city;
+    }
 }

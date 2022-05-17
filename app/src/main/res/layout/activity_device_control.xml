@@ -14,7 +14,7 @@
         android:id="@+id/backImg"
         android:layout_width="wrap_content"
         android:layout_height="640dp"
-        android:alpha="0.4"
+        android:alpha="0.2"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigatin_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,12 +35,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.176" />
 
+
     <TextView
         android:id="@+id/labelScene"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:text="Set Scene:"
         android:textColor="@color/info_600"
         android:textSize="16sp"
@@ -49,14 +50,13 @@
         app:layout_constraintHorizontal_bias="0.009"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sbBrightness"
-        app:layout_constraintVertical_bias="0.0" />
-
+        app:layout_constraintVertical_bias="0.039" />
 
     <TextView
         android:id="@+id/labelWorkMode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:text="Set Work Mode:"
         android:textColor="@color/info_500"
         android:textSize="16sp"
@@ -65,13 +65,14 @@
         app:layout_constraintHorizontal_bias="0.659"
         app:layout_constraintStart_toEndOf="@+id/labelScene"
         app:layout_constraintTop_toBottomOf="@+id/sbBrightness"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.039" />
 
     <TextView
         android:id="@+id/tvDeviceControlName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:text="Device Name"
         android:textColor="@color/info_600"
         android:textSize="34sp"
@@ -83,42 +84,28 @@
         app:layout_constraintTop_toBottomOf="@+id/labelDeviceName"
         app:layout_constraintVertical_bias="0.041" />
 
-    <Switch
-        android:id="@+id/swStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        android:scaleX="2"
-        android:scaleY="2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/include"
-        app:layout_constraintVertical_bias="0.443"
-        tools:ignore="UseSwitchCompatOrMaterialXml" />
-
     <com.akaita.android.circularseekbar.CircularSeekBar
         android:id="@+id/sbBrightness"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_marginTop="12dp"
         app:enabled="true"
+        app:innerCircleColor="@color/base_300"
+        app:layout_constraintBottom_toBottomOf="@+id/bottom_navigatin_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDeviceControlName"
+        app:layout_constraintTop_toTopOf="parent"
         app:max="1000"
         app:min="0"
         app:progress="10"
-        app:innerCircleColor="@color/base_300"
+        app:progressText="OFF"
         app:progressTextColor="@color/base_900"
-        app:progressTextSize="16"
+        app:progressTextSize="48"
         app:ringColor="@color/primary_600"
-        app:ringWidth="0.1"
+        app:ringWidth="0.15"
         app:showIndicator="true"
         app:showInnerCircle="true"
-        app:showProgressText="false"
+        app:showProgressText="true"
         app:speedMultiplier="2" />
 
     <Spinner
