@@ -171,12 +171,13 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
           public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
-    swOn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+    swOn.setOnCheckedChangeListener(
+        new CompoundButton.OnCheckedChangeListener() {
+          @Override
+          public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
             state = b;
-        }
-    });
+          }
+        });
     btnAddWtask.setOnClickListener(
         new View.OnClickListener() {
           @Override
@@ -184,9 +185,9 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
             String name = String.valueOf(etName.getText());
             temp = tvProgress.getText().toString();
             temp = temp.substring(0, temp.indexOf(" "));
-              tempRule = ValueRule.newInstance("temp", condition, Integer.parseInt(temp));
-              sceneCondition =
-                      SceneCondition.createWeatherCondition(HomeActivity.getCity(), "temp", tempRule);
+            tempRule = ValueRule.newInstance("temp", condition, Integer.parseInt(temp));
+            sceneCondition =
+                SceneCondition.createWeatherCondition(HomeActivity.getCity(), "temp", tempRule);
             HashMap<String, Object> taskMap = new HashMap<>();
             taskMap.put("1", state);
             SceneTask task = TuyaHomeSdk.getSceneManagerInstance().createDpTask(devId, taskMap);
@@ -207,7 +208,7 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
             "", // Indicates whether the scene is displayed on the homepage.
             conditions, // The conditions.
             tasks, // The tasks.
-//            preConditions, // The effective period. This parameter is optional.
+            //            preConditions, // The effective period. This parameter is optional.
             SceneBean.MATCH_TYPE_OR, // The type of trigger conditions to match.
             new ITuyaResultCallback<SceneBean>() {
               @Override
@@ -215,7 +216,7 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
                 sceneBean.setEnabled(true);
                 Toast.makeText(TaskWeatherAdditionActivity.this, "successful!", Toast.LENGTH_LONG)
                     .show();
-                  String info =  ((state) ? "ON" : "OFF");
+                String info = ((state) ? "ON" : "OFF");
                 addScene(sceneBean.getId(), Name, time, repeatList, info);
                 Intent intent =
                     new Intent(TaskWeatherAdditionActivity.this, TaskAdditionActivity.class);

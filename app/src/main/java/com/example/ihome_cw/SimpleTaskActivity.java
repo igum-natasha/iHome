@@ -54,7 +54,7 @@ public class SimpleTaskActivity extends AppCompatActivity {
   String devId, devName, prodId, category, time;
   private List<SceneTask> tasks = new ArrayList<>();
   private List<SceneCondition> conditions = new ArrayList<>();
-  private  boolean state = false;
+  private boolean state = false;
   ImageButton btnAdd;
   CircleImageView btnAccount;
   private List<Device> devices;
@@ -144,12 +144,13 @@ public class SimpleTaskActivity extends AppCompatActivity {
             repeatDialog.show();
           }
         });
-    swOn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+    swOn.setOnCheckedChangeListener(
+        new CompoundButton.OnCheckedChangeListener() {
+          @Override
+          public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
             state = b;
-        }
-    });
+          }
+        });
     btnAddTask.setOnClickListener(
         new View.OnClickListener() {
           @Override
@@ -170,7 +171,8 @@ public class SimpleTaskActivity extends AppCompatActivity {
               repeatList += resultRepeat.get(key);
             }
             TimerRule timerRule =
-                TimerRule.newInstance(TimeZone.getDefault().getID(), repeatList, time, formatForDateNow.format(date));
+                TimerRule.newInstance(
+                    TimeZone.getDefault().getID(), repeatList, time, formatForDateNow.format(date));
             SceneCondition condition =
                 SceneCondition.createTimerCondition(
                     "Saturday, Sunday, Monday, Tuesday, Wednesday, Thursday, Friday",
@@ -182,33 +184,32 @@ public class SimpleTaskActivity extends AppCompatActivity {
           }
         });
   }
-    private void addTask(String Name) {
-        TuyaHomeSdk.getSceneManagerInstance()
-                .createScene(
-                        HomeActivity.getHomeId(),
-                        Name, // The name of the scene.
-                        true,
-                        "", // Indicates whether the scene is displayed on the homepage.
-                        conditions, // The conditions.
-                        tasks, // The tasks.
-                        SceneBean.MATCH_TYPE_AND, // The type of trigger conditions to match.
-                        new ITuyaResultCallback<SceneBean>() {
-                            @Override
-                            public void onSuccess(SceneBean sceneBean) {
-                                sceneBean.setEnabled(true);
-                                Toast.makeText(SimpleTaskActivity.this, "successful!", Toast.LENGTH_LONG)
-                                        .show();
-                                String info =  ((state) ? "ON" : "OFF");
-                                addScene(sceneBean.getId(), Name, time, repeatList, info);
-                                Intent intent =
-                                        new Intent(SimpleTaskActivity.this, TaskAdditionActivity.class);
-                                startActivity(intent);
-                            }
 
-                            @Override
-                            public void onError(String errorCode, String errorMessage) {}
-                        });
-    }
+  private void addTask(String Name) {
+    TuyaHomeSdk.getSceneManagerInstance()
+        .createScene(
+            HomeActivity.getHomeId(),
+            Name, // The name of the scene.
+            true,
+            "", // Indicates whether the scene is displayed on the homepage.
+            conditions, // The conditions.
+            tasks, // The tasks.
+            SceneBean.MATCH_TYPE_AND, // The type of trigger conditions to match.
+            new ITuyaResultCallback<SceneBean>() {
+              @Override
+              public void onSuccess(SceneBean sceneBean) {
+                sceneBean.setEnabled(true);
+                Toast.makeText(SimpleTaskActivity.this, "successful!", Toast.LENGTH_LONG).show();
+                String info = ((state) ? "ON" : "OFF");
+                addScene(sceneBean.getId(), Name, time, repeatList, info);
+                Intent intent = new Intent(SimpleTaskActivity.this, TaskAdditionActivity.class);
+                startActivity(intent);
+              }
+
+              @Override
+              public void onError(String errorCode, String errorMessage) {}
+            });
+  }
 
   private void defineAddDialog() {
     addDialog = new Dialog(SimpleTaskActivity.this);

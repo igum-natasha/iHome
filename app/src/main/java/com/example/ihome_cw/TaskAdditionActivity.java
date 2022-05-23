@@ -232,7 +232,7 @@ public class TaskAdditionActivity extends AppCompatActivity {
     List<String> week = Arrays.asList("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
     String res = "";
     char[] list = repeat.toCharArray();
-    for (int i = 0; i<list.length; i++) {
+    for (int i = 0; i < list.length; i++) {
       if (list[i] == '1') {
         res = res + week.get(i) + " ";
       }

@@ -74,10 +74,7 @@ public class PrepareDeviceActivity extends AppCompatActivity {
     addTask(Name, tasks, conditions);
   }
 
-  public void addTask(
-      String Name,
-      List<SceneTask> tasks,
-      List<SceneCondition> conditions) {
+  public void addTask(String Name, List<SceneTask> tasks, List<SceneCondition> conditions) {
     TuyaHomeSdk.getSceneManagerInstance()
         .createScene(
             HomeActivity.getHomeId(),
