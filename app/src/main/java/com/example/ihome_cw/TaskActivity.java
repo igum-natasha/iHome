@@ -18,7 +18,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TaskActivity extends AppCompatActivity {
-  LinearLayout btnWeather, btnLocation, btnShedule;
+  LinearLayout btnWeather, btnSchedule;
   String devId, devName, prodId, category;
   ImageButton btnAdd;
   CircleImageView btnAccount;
@@ -87,16 +87,7 @@ public class TaskActivity extends AppCompatActivity {
           }
         });
 
-    btnLocation.setOnClickListener(
-        new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-            Intent intent = new Intent(TaskActivity.this, TaskLocationAdditionActivity.class);
-            start(intent);
-          }
-        });
-
-    btnShedule.setOnClickListener(
+    btnSchedule.setOnClickListener(
         new View.OnClickListener() {
           @Override
           public void onClick(View view) {
@@ -152,8 +143,7 @@ public class TaskActivity extends AppCompatActivity {
     btnAdd = findViewById(R.id.plus_icon);
     btnAccount = findViewById(R.id.avatar_icon);
 
-    btnShedule = findViewById(R.id.btnSheduledTask);
-    btnLocation = findViewById(R.id.btnLocationTask);
+    btnSchedule = findViewById(R.id.btnSheduledTask);
     btnWeather = findViewById(R.id.btnWeatherTask);
   }
 }

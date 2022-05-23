@@ -36,9 +36,6 @@
             android:name=".SimpleTaskActivity"
             android:exported="false" />
         <activity
-            android:name=".TaskLocationAdditionActivity"
-            android:exported="false" />
-        <activity
             android:name=".TaskWeatherAdditionActivity"
             android:exported="false" />
         <activity

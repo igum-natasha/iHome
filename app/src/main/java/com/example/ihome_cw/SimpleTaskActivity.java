@@ -12,9 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -25,8 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
-import com.tuya.smart.home.sdk.bean.scene.PreCondition;
-import com.tuya.smart.home.sdk.bean.scene.PreConditionExpr;
+import com.tuya.smart.home.sdk.bean.scene.PlaceFacadeBean;
 import com.tuya.smart.home.sdk.bean.scene.SceneBean;
 import com.tuya.smart.home.sdk.bean.scene.SceneCondition;
 import com.tuya.smart.home.sdk.bean.scene.SceneTask;
@@ -49,9 +50,11 @@ public class SimpleTaskActivity extends AppCompatActivity {
 
   private EditText etName;
   private Button btnAddTask, btnSetTime, btnSetRepeat, btnDevice;
+  private Switch swOn;
   String devId, devName, prodId, category, time;
   private List<SceneTask> tasks = new ArrayList<>();
   private List<SceneCondition> conditions = new ArrayList<>();
+  private  boolean state = false;
   ImageButton btnAdd;
   CircleImageView btnAccount;
   private List<Device> devices;
@@ -59,6 +62,7 @@ public class SimpleTaskActivity extends AppCompatActivity {
   Dialog addDialog, repeatDialog, deviceDialog;
   int hour, minute, pos;
   String repeatList = "";
+  PlaceFacadeBean place;
   //    List<String> resultRepeat = new ArrayList<>();
   Map<String, Integer> resultRepeat = new HashMap<String, Integer>();
 
@@ -140,18 +144,24 @@ public class SimpleTaskActivity extends AppCompatActivity {
             repeatDialog.show();
           }
         });
+    swOn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+            state = b;
+        }
+    });
     btnAddTask.setOnClickListener(
         new View.OnClickListener() {
           @Override
           public void onClick(View view) {
             String Name = etName.getText().toString();
             HashMap<String, Object> taskMap = new HashMap<>();
-            taskMap.put("1", true);
+            taskMap.put("1", state);
             SceneTask task = TuyaHomeSdk.getSceneManagerInstance().createDpTask(devId, taskMap);
             tasks.add(task);
             Date date = new Date();
             @SuppressLint("SimpleDateFormat")
-            SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy.MM.dd");
+            SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyyMMdd");
             List<String> week =
                 Arrays.asList(
                     "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
@@ -160,7 +170,7 @@ public class SimpleTaskActivity extends AppCompatActivity {
               repeatList += resultRepeat.get(key);
             }
             TimerRule timerRule =
-                TimerRule.newInstance(repeatList, time, formatForDateNow.format(date));
+                TimerRule.newInstance(TimeZone.getDefault().getID(), repeatList, time, formatForDateNow.format(date));
             SceneCondition condition =
                 SceneCondition.createTimerCondition(
                     "Saturday, Sunday, Monday, Tuesday, Wednesday, Thursday, Friday",
@@ -168,48 +178,37 @@ public class SimpleTaskActivity extends AppCompatActivity {
                     "timer",
                     timerRule);
             conditions.add(condition);
-            PreCondition preCondition = new PreCondition();
-            PreConditionExpr expr = new PreConditionExpr();
-            //            expr.setStart(Time);
-            //            expr.setEnd("23:59");
-            expr.setTimeInterval(PreCondition.TIMEINTERVAL_ALLDAY);
-            preCondition.setCondType(PreCondition.TYPE_TIME_CHECK);
-            expr.setTimeZoneId(TimeZone.getDefault().getID());
-            preCondition.setExpr(expr);
-            List<PreCondition> preConditions = new ArrayList<>();
-            preConditions.add(preCondition);
-            addTask(Name, preConditions);
-          }
-
-          private void addTask(String Name, List<PreCondition> preConditions) {
-            TuyaHomeSdk.getSceneManagerInstance()
-                .createScene(
-                    HomeActivity.getHomeId(),
-                    Name, // The name of the scene.
-                    false,
-                    "", // Indicates whether the scene is displayed on the homepage.
-                    conditions, // The conditions.
-                    tasks, // The tasks.
-                    preConditions, // The effective period. This parameter is optional.
-                    SceneBean.MATCH_TYPE_AND, // The type of trigger conditions to match.
-                    new ITuyaResultCallback<SceneBean>() {
-                      @Override
-                      public void onSuccess(SceneBean sceneBean) {
-                        sceneBean.setEnabled(true);
-                        Toast.makeText(SimpleTaskActivity.this, "successful!", Toast.LENGTH_LONG)
-                            .show();
-                        addScene(sceneBean.getId(), Name, time, repeatList, String.valueOf(true));
-                        Intent intent =
-                            new Intent(SimpleTaskActivity.this, TaskAdditionActivity.class);
-                        startActivity(intent);
-                      }
-
-                      @Override
-                      public void onError(String errorCode, String errorMessage) {}
-                    });
+            addTask(Name);
           }
         });
   }
+    private void addTask(String Name) {
+        TuyaHomeSdk.getSceneManagerInstance()
+                .createScene(
+                        HomeActivity.getHomeId(),
+                        Name, // The name of the scene.
+                        true,
+                        "", // Indicates whether the scene is displayed on the homepage.
+                        conditions, // The conditions.
+                        tasks, // The tasks.
+                        SceneBean.MATCH_TYPE_AND, // The type of trigger conditions to match.
+                        new ITuyaResultCallback<SceneBean>() {
+                            @Override
+                            public void onSuccess(SceneBean sceneBean) {
+                                sceneBean.setEnabled(true);
+                                Toast.makeText(SimpleTaskActivity.this, "successful!", Toast.LENGTH_LONG)
+                                        .show();
+                                String info =  ((state) ? "ON" : "OFF");
+                                addScene(sceneBean.getId(), Name, time, repeatList, info);
+                                Intent intent =
+                                        new Intent(SimpleTaskActivity.this, TaskAdditionActivity.class);
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onError(String errorCode, String errorMessage) {}
+                        });
+    }
 
   private void defineAddDialog() {
     addDialog = new Dialog(SimpleTaskActivity.this);
@@ -217,7 +216,7 @@ public class SimpleTaskActivity extends AppCompatActivity {
     addDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
     addDialog
         .getWindow()
-        .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        .setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     addDialog.getWindow().setGravity(Gravity.CENTER);
     addDialog.setCancelable(false);
 
@@ -252,6 +251,8 @@ public class SimpleTaskActivity extends AppCompatActivity {
     btnAddTask = findViewById(R.id.btnAddTask);
     etName = findViewById(R.id.etName);
     btnDevice = findViewById(R.id.btnChooseDevice);
+    swOn = findViewById(R.id.switchOn);
+    swOn.setChecked(state);
   }
 
   public void popTimePicker(View view) {

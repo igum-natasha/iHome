@@ -51,16 +51,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/button_menu" />
 
-    <Button
-        android:id="@+id/btnChooseDevice"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:text="Device"
-        app:layout_constraintBottom_toTopOf="@+id/btnSetTime"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnSetTime"
@@ -85,4 +75,28 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
+
+    <LinearLayout
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnSetTime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/btnChooseDevice"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Device" />
+
+        <Switch
+            android:id="@+id/switchOn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:paddingStart="16dp"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

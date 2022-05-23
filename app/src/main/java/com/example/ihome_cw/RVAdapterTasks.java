@@ -80,10 +80,13 @@ public class RVAdapterTasks extends RecyclerView.Adapter<RVAdapterTasks.TaskView
             HomeActivity.getHomeId(),
             tasks.get(i).sceneId,
             new ITuyaResultCallback<SceneBean>() {
+              @SuppressLint("NewApi")
               @Override
               public void onSuccess(SceneBean result) {
                 if (result.isEnabled()) {
                   taskViewHolder.sw.setChecked(result.isEnabled());
+                  taskViewHolder.cv.setBackgroundColor(
+                            taskViewHolder.cv.getContext().getColor(R.color.primary_50));
                 }
               }
 

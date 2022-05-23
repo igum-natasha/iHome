@@ -453,7 +453,7 @@ public class DeviceControlActivity extends AppCompatActivity {
     addDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
     addDialog
         .getWindow()
-        .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        .setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     addDialog.getWindow().setGravity(Gravity.CENTER);
     addDialog.setCancelable(false);
 

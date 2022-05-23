@@ -78,7 +78,7 @@ public class HomeActivity extends AppCompatActivity {
 
   public static String ssid, email;
   public static String password;
-  public static String city;
+  public static PlaceFacadeBean city;
   private HomeBean currentHomeBean;
   public static long homeId;
   private DeviceBean currentDeviceBean;
@@ -234,7 +234,7 @@ public class HomeActivity extends AppCompatActivity {
                           @Override
                           public void onSuccess(PlaceFacadeBean result) {
                             tvWeather.setText(result.getCity());
-                            city = result.getCity();
+                            city = result;
                           }
 
                           @Override
@@ -597,7 +597,7 @@ public class HomeActivity extends AppCompatActivity {
     addDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
     addDialog
         .getWindow()
-        .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        .setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     addDialog.getWindow().setGravity(Gravity.CENTER);
     addDialog.setCancelable(false);
 
@@ -673,7 +673,7 @@ public class HomeActivity extends AppCompatActivity {
     return email;
   }
 
-  public static String getCity() {
+  public static PlaceFacadeBean getCity() {
     return city;
   }
 }

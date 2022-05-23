@@ -182,7 +182,7 @@ public class TaskAdditionActivity extends AppCompatActivity {
     addDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
     addDialog
         .getWindow()
-        .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        .setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     addDialog.getWindow().setGravity(Gravity.CENTER);
     addDialog.setCancelable(false);
 
@@ -231,9 +231,10 @@ public class TaskAdditionActivity extends AppCompatActivity {
     String repeat = sc.getRepeat();
     List<String> week = Arrays.asList("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
     String res = "";
-    for (char ch : repeat.toCharArray()) {
-      if (ch == '1') {
-        res = res + week.get(repeat.indexOf(ch)) + " "; // ?
+    char[] list = repeat.toCharArray();
+    for (int i = 0; i<list.length; i++) {
+      if (list[i] == '1') {
+        res = res + week.get(i) + " ";
       }
     }
     tvRepeat.setText(res);

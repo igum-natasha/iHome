@@ -1,29 +1,25 @@
 package com.example.ihome_cw;
 
-import android.Manifest;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,8 +27,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.home.sdk.bean.scene.PlaceFacadeBean;
-import com.tuya.smart.home.sdk.bean.scene.PreCondition;
-import com.tuya.smart.home.sdk.bean.scene.PreConditionExpr;
 import com.tuya.smart.home.sdk.bean.scene.SceneBean;
 import com.tuya.smart.home.sdk.bean.scene.SceneCondition;
 import com.tuya.smart.home.sdk.bean.scene.SceneTask;
@@ -44,7 +38,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
-import java.util.TimeZone;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -52,6 +45,7 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
   String devId, devName, prodId, category;
   String condition;
   Button btnLess, btnMore, btnEqual;
+  Switch swOn;
   Button btnAddWtask, btnDevice;
   EditText etName;
   ImageButton btnAdd;
@@ -67,6 +61,7 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
   public String temp;
   private List<Device> devices;
   private RecyclerView rv;
+  private boolean state = false;
   String repeatList = "1111111";
   String time;
   public PlaceFacadeBean placeFacadeBean = new PlaceFacadeBean();
@@ -166,7 +161,7 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
         new SeekBar.OnSeekBarChangeListener() {
           @Override
           public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
-            tvProgress.setText(String.valueOf(progress + " °C"));
+            tvProgress.setText(progress + " °C");
           }
 
           @Override
@@ -176,73 +171,52 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
           public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
+    swOn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+            state = b;
+        }
+    });
     btnAddWtask.setOnClickListener(
         new View.OnClickListener() {
           @Override
           public void onClick(View view) {
-            Location bestLocation = getLocation();
             String name = String.valueOf(etName.getText());
             temp = tvProgress.getText().toString();
             temp = temp.substring(0, temp.indexOf(" "));
-            Toast.makeText(
-                    TaskWeatherAdditionActivity.this, name + temp + condition, Toast.LENGTH_LONG)
-                .show();
-            TuyaHomeSdk.getSceneManagerInstance()
-                .getCityByLatLng(
-                    String.valueOf(bestLocation.getLongitude()),
-                    String.valueOf(bestLocation.getLatitude()),
-                    new ITuyaResultCallback<PlaceFacadeBean>() {
-                      @Override
-                      public void onSuccess(PlaceFacadeBean result) {
-                        placeFacadeBean = result;
-                      }
-
-                      @Override
-                      public void onError(String errorCode, String errorMessage) {}
-                    });
-            tempRule = ValueRule.newInstance("temp", condition, Integer.parseInt(temp));
-            sceneCondition =
-                SceneCondition.createWeatherCondition(placeFacadeBean, "temp", tempRule);
-            HashMap taskMap = new HashMap();
-            taskMap.put("1", true);
+              tempRule = ValueRule.newInstance("temp", condition, Integer.parseInt(temp));
+              sceneCondition =
+                      SceneCondition.createWeatherCondition(HomeActivity.getCity(), "temp", tempRule);
+            HashMap<String, Object> taskMap = new HashMap<>();
+            taskMap.put("1", state);
             SceneTask task = TuyaHomeSdk.getSceneManagerInstance().createDpTask(devId, taskMap);
             tasks.add(task);
             conditions.add(sceneCondition);
-
-            PreCondition preCondition = new PreCondition();
-            PreConditionExpr expr = new PreConditionExpr();
-            //            expr.setStart("00:00");
-            //            expr.setEnd("23:59");
-            expr.setTimeInterval(PreCondition.TIMEINTERVAL_ALLDAY);
-            preCondition.setCondType(PreCondition.TYPE_TIME_CHECK);
-            expr.setTimeZoneId(TimeZone.getDefault().getID());
-            preCondition.setExpr(expr);
-            List<PreCondition> preConditions = new ArrayList<>();
-            preConditions.add(preCondition);
-            time = String.format("Where temp %s %s", condition, temp);
-            addTask(name, preConditions);
+            time = String.format("When temp %s %s°C", condition, temp);
+            addTask(name);
           }
         });
   }
 
-  private void addTask(String Name, List<PreCondition> preConditions) {
+  private void addTask(String Name) {
     TuyaHomeSdk.getSceneManagerInstance()
         .createScene(
             HomeActivity.getHomeId(),
             Name, // The name of the scene.
-            false,
+            true,
             "", // Indicates whether the scene is displayed on the homepage.
             conditions, // The conditions.
             tasks, // The tasks.
-            preConditions, // The effective period. This parameter is optional.
-            SceneBean.MATCH_TYPE_AND, // The type of trigger conditions to match.
+//            preConditions, // The effective period. This parameter is optional.
+            SceneBean.MATCH_TYPE_OR, // The type of trigger conditions to match.
             new ITuyaResultCallback<SceneBean>() {
               @Override
               public void onSuccess(SceneBean sceneBean) {
                 sceneBean.setEnabled(true);
                 Toast.makeText(TaskWeatherAdditionActivity.this, "successful!", Toast.LENGTH_LONG)
                     .show();
-                addScene(sceneBean.getId(), Name, time, repeatList, String.valueOf(true));
+                  String info =  ((state) ? "ON" : "OFF");
+                addScene(sceneBean.getId(), Name, time, repeatList, info);
                 Intent intent =
                     new Intent(TaskWeatherAdditionActivity.this, TaskAdditionActivity.class);
                 startActivity(intent);
@@ -255,41 +229,13 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
             });
   }
 
-  public Location getLocation() {
-    Location bestLocation = null;
-    LocationManager locationManager;
-    locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED
-        && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED) {
-      ActivityCompat.requestPermissions(
-          this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-      return bestLocation;
-    } else {
-      List<String> providers = locationManager.getProviders(true);
-      for (String provider : providers) {
-        Location l = locationManager.getLastKnownLocation(provider);
-        if (l == null) {
-          continue;
-        }
-        if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
-          // Found best last known location: %s", l);
-          bestLocation = l;
-        }
-      }
-    }
-    return bestLocation;
-  }
-
   private void defineAddDialog() {
     addDialog = new Dialog(TaskWeatherAdditionActivity.this);
     addDialog.setContentView(R.layout.add_dialog);
     addDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
     addDialog
         .getWindow()
-        .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        .setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     addDialog.getWindow().setGravity(Gravity.CENTER);
     addDialog.setCancelable(false);
 
@@ -323,6 +269,8 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
     btnEqual = findViewById(R.id.button2);
     etName = findViewById(R.id.etName);
     btnDevice = findViewById(R.id.btnChooseDev);
+    swOn = findViewById(R.id.switchOn);
+    swOn.setChecked(state);
     btnAddWtask = findViewById(R.id.btnAddWtask);
     seekBar = findViewById(R.id.seekBar);
     tvProgress = findViewById(R.id.tvProgress);

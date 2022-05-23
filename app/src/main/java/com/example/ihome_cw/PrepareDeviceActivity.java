@@ -10,8 +10,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
-import com.tuya.smart.home.sdk.bean.scene.PreCondition;
-import com.tuya.smart.home.sdk.bean.scene.PreConditionExpr;
 import com.tuya.smart.home.sdk.bean.scene.SceneBean;
 import com.tuya.smart.home.sdk.bean.scene.SceneCondition;
 import com.tuya.smart.home.sdk.bean.scene.SceneTask;
@@ -25,7 +23,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
-import java.util.TimeZone;
 
 public class PrepareDeviceActivity extends AppCompatActivity {
 
@@ -42,7 +39,6 @@ public class PrepareDeviceActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_prepare_device);
     Bundle bundle = getIntent().getExtras();
-    //        loading = findViewById(R.id.loading);
     if (bundle != null) {
       devId = bundle.getString("DeviceId");
       devName = bundle.getString("DeviceName");
@@ -75,24 +71,13 @@ public class PrepareDeviceActivity extends AppCompatActivity {
             "timer",
             timerRule);
     conditions.add(condition);
-    PreCondition preCondition = new PreCondition();
-    PreConditionExpr expr = new PreConditionExpr();
-    expr.setTimeInterval(PreCondition.TIMEINTERVAL_ALLDAY);
-    preCondition.setCondType(PreCondition.TYPE_TIME_CHECK);
-    expr.setTimeZoneId(TimeZone.getDefault().getID());
-    preCondition.setExpr(expr);
-    List<PreCondition> preConditions = new ArrayList<>();
-    preConditions.add(preCondition);
-    addTask(Name, preConditions, tasks, conditions);
+    addTask(Name, tasks, conditions);
   }
 
   public void addTask(
       String Name,
-      List<PreCondition> preConditions,
       List<SceneTask> tasks,
       List<SceneCondition> conditions) {
-    //        Toast.makeText(PrepareDeviceActivity.this, ""+conditions+tasks, Toast.LENGTH_LONG)
-    //                .show();
     TuyaHomeSdk.getSceneManagerInstance()
         .createScene(
             HomeActivity.getHomeId(),
@@ -101,7 +86,6 @@ public class PrepareDeviceActivity extends AppCompatActivity {
             "", // Indicates whether the scene is displayed on the homepage.
             conditions, // The conditions.
             tasks, // The tasks.
-            preConditions, // The effective period. This parameter is optional.
             SceneBean.MATCH_TYPE_AND, // The type of trigger conditions to match.
             new ITuyaResultCallback<SceneBean>() {
               @Override

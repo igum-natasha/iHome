@@ -122,7 +122,7 @@ public class AccountActivity extends AppCompatActivity {
     tvCity = infoDialog.findViewById(R.id.tvCityName);
     tvTime = infoDialog.findViewById(R.id.tvTimeZone);
     tvEmail.setText(HomeActivity.getEmail());
-    tvCity.setText(HomeActivity.getCity());
+    tvCity.setText(HomeActivity.getCity().getCity());
     Date date = new Date();
     @SuppressLint("SimpleDateFormat")
     SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm:ss z");
