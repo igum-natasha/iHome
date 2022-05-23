@@ -33,8 +33,7 @@
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/lightbulb"
                 tools:layout_editor_absoluteX="29dp"
-                tools:layout_editor_absoluteY="20dp"
-                />
+                tools:layout_editor_absoluteY="20dp" />
 
             <TextView
                 android:layout_width="wrap_content"

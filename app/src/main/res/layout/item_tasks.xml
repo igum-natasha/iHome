@@ -49,6 +49,5 @@
                 android:textColor="@color/base_900"
                 />
         </LinearLayout>
-
     </androidx.cardview.widget.CardView>
 </com.loopeer.shadow.ShadowView>

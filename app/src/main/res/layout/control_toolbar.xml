@@ -39,5 +39,4 @@
             app:tint="@color/base_50" />
 
     </RelativeLayout>
-
 </RelativeLayout>

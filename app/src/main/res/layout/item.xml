@@ -12,15 +12,13 @@
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/cv"
-        >
+        android:id="@+id/cv">
 
         <LinearLayout
             android:layout_width="160dp"
             android:layout_height="70dp"
             android:gravity="center"
-            android:padding="10dp"
-            >
+            android:padding="10dp">
 
             <ImageView
                 android:id="@+id/devicePhoto"
@@ -35,8 +33,6 @@
                 android:textColor="@color/base_900"
                 android:text="Device Name"
                 android:textSize="16sp"/>
-
-
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
