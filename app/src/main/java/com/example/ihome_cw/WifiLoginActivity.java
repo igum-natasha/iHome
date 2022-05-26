@@ -3,6 +3,7 @@ package com.example.ihome_cw;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
+import android.net.wifi.SupplicantState;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -10,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -37,50 +37,61 @@ public class WifiLoginActivity extends AppCompatActivity {
         new View.OnClickListener() {
           @Override
           public void onClick(View view) {
+            btnWifiVerify.setText(getResources().getString(R.string.check));
             String WifiLogin = etWifiLogin.getText().toString();
             String WifiPassword = etWifiPassword.getText().toString();
-
-            //                try {
-            //                  if (!checkWifiConnection(WifiLogin, WifiPassword)) {
-            //                    wifiDialog.show();
-            //                  } else {
-            Bundle bundle = new Bundle();
-            bundle.putString("Email", email);
-            bundle.putString("WifiLogin", WifiLogin);
-            bundle.putString("WifiPassword", WifiPassword);
-            Toast.makeText(WifiLoginActivity.this, WifiLogin + WifiPassword, Toast.LENGTH_LONG)
-                .show();
-            Intent intent = new Intent(WifiLoginActivity.this, HomeActivity.class);
-            intent.putExtras(bundle);
-            startActivity(intent);
-            //                  }
-            //                } catch (InterruptedException e) {
-            //                  e.printStackTrace();
-            //                }
+            if (!checkWifiConnection(WifiLogin, WifiPassword)) {
+                wifiDialog.show();
+              } else {
+                  Bundle bundle = new Bundle();
+                  bundle.putString("Email", email);
+                  bundle.putString("WifiLogin", WifiLogin);
+                  bundle.putString("WifiPassword", WifiPassword);
+                  Intent intent = new Intent(WifiLoginActivity.this, HomeActivity.class);
+                  intent.putExtras(bundle);
+                  startActivity(intent);
+              }
           }
         });
   }
 
   @SuppressLint("NewApi")
-  private boolean checkWifiConnection(String ssid, String password) throws InterruptedException {
-    boolean state = false;
+  private boolean checkWifiConnection(String ssid, String password) {
+    boolean state;
+      btnWifiVerify.setText(getResources().getString(R.string.check));
     WifiConfiguration wifiConfig = new WifiConfiguration();
     wifiConfig.SSID = String.format("\"%s\"", ssid);
     wifiConfig.preSharedKey = String.format("\"%s\"", password);
 
     wifiConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
-    wifiConfig.status = WifiConfiguration.Status.ENABLED;
 
     WifiManager wifiManager =
         (WifiManager) this.getApplicationContext().getSystemService(WIFI_SERVICE);
-
-    //    int netId = wifiManager.addNetwork(wifiConfig);
     wifiManager.disconnect();
-    //    wifiManager.enableNetwork(netId, true);
-    boolean isConnected = wifiManager.reconnect();
-    state = wifiManager.enableNetwork(wifiConfig.networkId, true);
-    return state;
+
+    boolean recon = wifiManager.reconnect();
+    state = checkWifiNegotiation(wifiManager, wifiConfig.networkId);
+    return recon && state;
   }
+
+    private static boolean checkWifiNegotiation(WifiManager wifiManager, int netId) {
+        boolean successful = false;
+        for (int i = 0; i < 30; i++) {
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            successful = wifiManager.enableNetwork(netId, true);
+        }
+        // no matter what happened above, if COMPLETED then we have the correct pw
+        if (!successful && wifiManager.getConnectionInfo().getSupplicantState().equals(SupplicantState.COMPLETED)) {
+            successful = true;
+        }
+
+        return successful;
+    }
 
   private void defineWifiDialog() {
     wifiDialog = new Dialog(WifiLoginActivity.this);
@@ -88,7 +99,7 @@ public class WifiLoginActivity extends AppCompatActivity {
     wifiDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
     wifiDialog
         .getWindow()
-        .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        .setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     wifiDialog.setCancelable(false);
 
     Button ok = wifiDialog.findViewById(R.id.btn_retry);

@@ -26,8 +26,8 @@
             android:layout_toEndOf="@+id/plus_icon"
             android:scaleType="fitCenter"
             android:textColor="@color/base_50"
-            android:text="Control Center"
-            android:textSize="18dp" />
+            android:text="@string/cont_cen"
+            android:textSize="18sp" />
 
         <ImageButton
             android:id="@+id/plus_icon"

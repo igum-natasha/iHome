@@ -9,7 +9,6 @@ import android.content.res.Resources;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -114,7 +113,8 @@ public class HomeActivity extends AppCompatActivity {
 
     Matcher matcher = pattern.matcher(email);
     if (matcher.find()) {
-      tvUser.setText(String.format("Hi, %s", matcher.group(1)));
+      String oldUser = tvUser.getText().toString();
+      tvUser.setText(String.format("%s %s", oldUser.substring(0, oldUser.indexOf(" ")), matcher.group(1)));
     }
     btnAdd.setOnClickListener(
         new View.OnClickListener() {
@@ -166,10 +166,10 @@ public class HomeActivity extends AppCompatActivity {
             String currentText = btnSearch.getText().toString();
 
             if (tuyaActivator == null) {
-              Toast.makeText(HomeActivity.this, "Wifi config in progress", Toast.LENGTH_LONG)
+              Toast.makeText(HomeActivity.this, getResources().getString(R.string.wifi_config), Toast.LENGTH_LONG)
                   .show();
             } else {
-              if (currentText.equalsIgnoreCase("Search Devices")) {
+              if (currentText.equalsIgnoreCase(getResources().getString(R.string.search_dev))) {
                 typeDeviceDialog.show();
                 tuyaActivator.start();
                 btnSearch.setText("Stop Search");
@@ -282,7 +282,7 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<WeatherDay> call, Throwable t) {
-              Toast.makeText(HomeActivity.this, "Weather failed!" + t, Toast.LENGTH_LONG).show();
+              Toast.makeText(HomeActivity.this, getResources().getString(R.string.weather_fail) + " " + t, Toast.LENGTH_LONG).show();
             }
           });
     }
@@ -310,7 +310,7 @@ public class HomeActivity extends AppCompatActivity {
 
               @Override
               public void onError(String errorCode, String errorMsg) {
-                Toast.makeText(HomeActivity.this, "Not found devices", Toast.LENGTH_LONG).show();
+                Toast.makeText(HomeActivity.this, getResources().getString(R.string.no_dev_found), Toast.LENGTH_LONG).show();
               }
             });
     AppDatabase db = AppDatabase.build(getApplicationContext());
@@ -339,7 +339,6 @@ public class HomeActivity extends AppCompatActivity {
 
           @Override
           public void onItemLongClick(int position, View v) {
-            Log.d(TAG, "onItemLongClick pos = " + position);
           }
         });
   }
@@ -381,7 +380,6 @@ public class HomeActivity extends AppCompatActivity {
 
     GridLayoutManager llm = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
     rv_tasks.setLayoutManager(llm);
-    //    rv_tasks.setHasFixedSize(true);
 
     initializeDataTask();
     initializeAdapterTask();
@@ -418,7 +416,7 @@ public class HomeActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(HomeBean homeBean) {
                   currentHomeBean = homeBean;
-                  Toast.makeText(HomeActivity.this, "Home creation successful!", Toast.LENGTH_LONG)
+                  Toast.makeText(HomeActivity.this, getResources().getString(R.string.home_creat_suc), Toast.LENGTH_LONG)
                       .show();
                   addHome();
                   getRegistrationToken();
@@ -426,8 +424,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 @Override
                 public void onError(String s, String s1) {
-                  Log.d(TAG, "Home creation failed with error: " + s1);
-                  Toast.makeText(HomeActivity.this, "Home creation failed!", Toast.LENGTH_LONG)
+                  Toast.makeText(HomeActivity.this, getResources().getString(R.string.home_creat_fail) + s1, Toast.LENGTH_LONG)
                       .show();
                 }
               });
@@ -437,7 +434,7 @@ public class HomeActivity extends AppCompatActivity {
               new ITuyaGetHomeListCallback() {
                 @Override
                 public void onSuccess(List<HomeBean> homeBeans) {
-                  Toast.makeText(HomeActivity.this, "Home found successful!", Toast.LENGTH_LONG)
+                  Toast.makeText(HomeActivity.this, getResources().getString(R.string.home_found_suc), Toast.LENGTH_LONG)
                       .show();
                   currentHomeBean = homeBeans.get(homeBeans.size() - 1);
                   getRegistrationToken();
@@ -447,8 +444,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 @Override
                 public void onError(String errorCode, String error) {
-                  Log.d(TAG, "Home finding failed with error: " + error);
-                  Toast.makeText(HomeActivity.this, "Home finding failed!", Toast.LENGTH_LONG)
+                  Toast.makeText(HomeActivity.this, getResources().getString(R.string.home_found_fail) + " " + error, Toast.LENGTH_LONG)
                       .show();
                 }
               });
@@ -473,7 +469,7 @@ public class HomeActivity extends AppCompatActivity {
                           public void onError(String s, String s1) {
                             Toast.makeText(
                                     HomeActivity.this,
-                                    "Devices detection failed!",
+                                    getResources().getString(R.string.dev_det_fail) + " " + s1,
                                     Toast.LENGTH_LONG)
                                 .show();
                             startActivity(new Intent(HomeActivity.this, WifiLoginActivity.class));
@@ -483,12 +479,12 @@ public class HomeActivity extends AppCompatActivity {
                           public void onActiveSuccess(DeviceBean deviceBean) {
                             Toast.makeText(
                                     HomeActivity.this,
-                                    "Devices detection successful!",
+                                    getResources().getString(R.string.dev_det_suc),
                                     Toast.LENGTH_LONG)
                                 .show();
                             currentDeviceBean = deviceBean;
                             tuyaActivator.stop();
-                            btnSearch.setText("Search Devices");
+                            btnSearch.setText(getResources().getString(R.string.search_dev));
                             addDevice(currentDeviceBean);
                             showDevices();
                             addRec(currentDeviceBean);
@@ -500,13 +496,13 @@ public class HomeActivity extends AppCompatActivity {
                               case ActivatorEZStepCode.DEVICE_BIND_SUCCESS:
                                 Toast.makeText(
                                         HomeActivity.this,
-                                        "Devices bind successful!",
+                                        getResources().getString(R.string.dev_bind_suc),
                                         Toast.LENGTH_LONG)
                                     .show();
                                 break;
                               case ActivatorEZStepCode.DEVICE_FIND:
                                 Toast.makeText(
-                                        HomeActivity.this, "New device found!", Toast.LENGTH_LONG)
+                                        HomeActivity.this, getResources().getString(R.string.dev_new_suc), Toast.LENGTH_LONG)
                                     .show();
                                 break;
                             }
@@ -571,7 +567,7 @@ public class HomeActivity extends AppCompatActivity {
     locationDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
     locationDialog
         .getWindow()
-        .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        .setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     locationDialog.setCancelable(false);
 
     Button ok = locationDialog.findViewById(R.id.btn_okay);

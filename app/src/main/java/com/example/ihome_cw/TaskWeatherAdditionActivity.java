@@ -82,7 +82,7 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
       prodId = bundle.getString("ProductId");
       category = bundle.getString("Category");
       if (devName != null) {
-        btnDevice.setText("Device: " + devName);
+        btnDevice.setText(getResources().getString(R.string.device) + ": " + devName);
         btnDevice.setEnabled(false);
       }
     }
@@ -193,7 +193,7 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
             SceneTask task = TuyaHomeSdk.getSceneManagerInstance().createDpTask(devId, taskMap);
             tasks.add(task);
             conditions.add(sceneCondition);
-            time = String.format("When temp %s %s°C", condition, temp);
+            time = String.format("%s %s %s°C", getResources().getString(R.string.cond_desc), condition, temp);
             addTask(name);
           }
         });
@@ -208,15 +208,14 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
             "", // Indicates whether the scene is displayed on the homepage.
             conditions, // The conditions.
             tasks, // The tasks.
-            //            preConditions, // The effective period. This parameter is optional.
             SceneBean.MATCH_TYPE_OR, // The type of trigger conditions to match.
             new ITuyaResultCallback<SceneBean>() {
               @Override
               public void onSuccess(SceneBean sceneBean) {
                 sceneBean.setEnabled(true);
-                Toast.makeText(TaskWeatherAdditionActivity.this, "successful!", Toast.LENGTH_LONG)
+                Toast.makeText(TaskWeatherAdditionActivity.this, getResources().getString(R.string.task_add_suc), Toast.LENGTH_LONG)
                     .show();
-                String info = ((state) ? "ON" : "OFF");
+                String info = ((state) ? getResources().getString(R.string.on) : getResources().getString(R.string.off));
                 addScene(sceneBean.getId(), Name, time, repeatList, info);
                 Intent intent =
                     new Intent(TaskWeatherAdditionActivity.this, TaskAdditionActivity.class);
@@ -225,7 +224,7 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
 
               @Override
               public void onError(String errorCode, String errorMessage) {
-                Toast.makeText(TaskWeatherAdditionActivity.this, "fail!", Toast.LENGTH_LONG).show();
+                Toast.makeText(TaskWeatherAdditionActivity.this, getResources().getString(R.string.task_add_fail), Toast.LENGTH_LONG).show();
               }
             });
   }
@@ -246,7 +245,7 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
           @Override
           public void onClick(View view) {
             addDialog.dismiss();
-            Intent intent = new Intent(TaskWeatherAdditionActivity.this, HomeActivity.class); // ?
+            Intent intent = new Intent(TaskWeatherAdditionActivity.this, HomeActivity.class);
             startActivity(intent);
           }
         });
@@ -256,7 +255,7 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
           @Override
           public void onClick(View view) {
             addDialog.dismiss();
-            Intent intent = new Intent(TaskWeatherAdditionActivity.this, TaskActivity.class); // ?
+            Intent intent = new Intent(TaskWeatherAdditionActivity.this, TaskActivity.class);
             startActivity(intent);
           }
         });
@@ -285,8 +284,8 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
         .getWindow()
         .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     devDialog.getWindow().setGravity(Gravity.CENTER);
-    devDialog.setCancelable(false);
-    devDialog.setTitle("Select device");
+//    devDialog.setCancelable(false);
+    devDialog.setTitle(getResources().getString(R.string.device));
     showDevices();
   }
 
@@ -303,7 +302,7 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
           @Override
           public void onItemClick(int position, View v) {
             devDialog.dismiss();
-            btnDevice.setText("Device: " + devices.get(position).getDeviceName());
+            btnDevice.setText(getResources().getString(R.string.device) + ": " + devices.get(position).getDeviceName());
             devId = devices.get(position).getDeviceId();
             devName = devices.get(position).getDeviceName();
             prodId = devices.get(position).getProductId();

@@ -19,7 +19,7 @@
         android:layout_marginBottom="16dp"
         android:ems="10"
         android:maxLength="20"
-        android:hint="Enter name"
+        android:hint="@string/ent_name"
         android:inputType="textPersonName"
         android:minHeight="48dp"
         app:layout_constraintBottom_toTopOf="@+id/btnSetTime"
@@ -33,10 +33,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="148dp"
-        android:text="Add task"
+        android:text="@string/add_task"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigatin_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.528"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
 
@@ -57,7 +57,7 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="Time"
+        android:text="@string/time"
         android:onClick="popTimePicker"
         app:layout_constraintBottom_toTopOf="@+id/btnSetRepeat"
         app:layout_constraintEnd_toEndOf="parent"
@@ -69,7 +69,7 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:text="Repeat"
+        android:text="@string/repeat"
         app:layout_constraintBottom_toTopOf="@+id/btnAddTask"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -90,7 +90,7 @@
             android:id="@+id/btnChooseDevice"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="Device" />
+            android:text="@string/device" />
 
         <Switch
             android:id="@+id/switchOn"

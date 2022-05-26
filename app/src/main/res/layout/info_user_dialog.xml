@@ -27,7 +27,7 @@
             android:paddingStart="16dp"
             android:textColor="@color/base_900"
             android:textAlignment="center"
-            android:text="Email"
+            android:text="@string/user_email"
             tools:ignore="MissingConstraints" />
     </LinearLayout>
 
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:paddingStart="16dp"
             android:textColor="@color/base_900"
-            android:text="City"
+            android:text="@string/user_city"
             tools:ignore="MissingConstraints" />
     </LinearLayout>
 
@@ -82,7 +82,7 @@
             android:paddingStart="16dp"
             android:textColor="@color/base_900"
             android:textAlignment="center"
-            android:text="Time Zone"
+            android:text="@string/time_zone"
             tools:ignore="MissingConstraints" />
     </LinearLayout>
 
@@ -94,7 +94,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/button_border"
-        android:text="Ok"
+        android:text="@string/ok"
         android:textColor="@color/base_900"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -18,12 +18,14 @@
             android:layout_width="160dp"
             android:layout_height="70dp"
             android:gravity="center"
-            android:padding="10dp">
+            android:padding="10dp"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
                 android:id="@+id/devicePhoto"
                 android:layout_width="24dp"
-                android:layout_height="24dp"/>
+                android:layout_height="24dp"
+                android:contentDescription="@string/device_name" />
 
             <TextView
                 android:id="@+id/deviceName"
@@ -31,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="16dp"
                 android:textColor="@color/base_900"
-                android:text="Device Name"
+                android:text="@string/device_name"
                 android:textSize="16sp"/>
         </LinearLayout>
 

@@ -34,7 +34,6 @@ public class TaskAdditionActivity extends AppCompatActivity {
 
   String devId, devName, prodId, category;
 
-  private Button btnAddTask;
   private static List<Scene> scenes = new ArrayList<>();
   private static List<Device> devices = new ArrayList<>();
   private static List<Scene> rec = new ArrayList<>();
@@ -136,7 +135,6 @@ public class TaskAdditionActivity extends AppCompatActivity {
 
     GridLayoutManager llm = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
     rv_tasks.setLayoutManager(llm);
-    //    rv_tasks.setHasFixedSize(true);
 
     initializeData();
     initializeAdapter();
@@ -261,7 +259,7 @@ public class TaskAdditionActivity extends AppCompatActivity {
                       public void onSuccess() {
                         Toast.makeText(
                                 TaskAdditionActivity.this,
-                                "Delete Scene Success",
+                                getResources().getString(R.string.delete_scene),
                                 Toast.LENGTH_LONG)
                             .show();
                       }

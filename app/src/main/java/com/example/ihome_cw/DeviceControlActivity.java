@@ -196,14 +196,14 @@ public class DeviceControlActivity extends AppCompatActivity {
                 state = true;
                 sbBrightness.setInnerCircleColor(
                     getApplicationContext().getColor(R.color.primary_600));
-                sbBrightness.setProgressText("ON");
+                sbBrightness.setProgressText(getResources().getString(R.string.on));
                 sbBrightness.setProgressTextColor(
                     getApplicationContext().getColor(R.color.base_50));
               } else {
                 state = false;
                 sbBrightness.setInnerCircleColor(
                     getApplicationContext().getColor(R.color.base_300));
-                sbBrightness.setProgressText("OFF");
+                sbBrightness.setProgressText(getResources().getString(R.string.off));
                 sbBrightness.setProgressTextColor(
                     getApplicationContext().getColor(R.color.base_900));
               }
@@ -220,7 +220,7 @@ public class DeviceControlActivity extends AppCompatActivity {
                     public void onSuccess() {
                       Toast.makeText(
                               DeviceControlActivity.this,
-                              "Light change successful!",
+                              getResources().getString(R.string.light_success),
                               Toast.LENGTH_LONG)
                           .show();
                     }
@@ -245,7 +245,7 @@ public class DeviceControlActivity extends AppCompatActivity {
                     public void onSuccess() {
                       Toast.makeText(
                               DeviceControlActivity.this,
-                              "Light brightness change successful!",
+                              getResources().getString(R.string.bright_success),
                               Toast.LENGTH_LONG)
                           .show();
                     }
@@ -292,7 +292,7 @@ public class DeviceControlActivity extends AppCompatActivity {
                     public void onSuccess() {
                       Toast.makeText(
                               DeviceControlActivity.this,
-                              "Work mode change successful!",
+                              getResources().getString(R.string.work_mode_success),
                               Toast.LENGTH_LONG)
                           .show();
                     }
@@ -339,7 +339,7 @@ public class DeviceControlActivity extends AppCompatActivity {
                     public void onSuccess() {
                       Toast.makeText(
                               DeviceControlActivity.this,
-                              "Scene change successful!",
+                              getResources().getString(R.string.scene_success),
                               Toast.LENGTH_LONG)
                           .show();
                     }
@@ -369,13 +369,13 @@ public class DeviceControlActivity extends AppCompatActivity {
               if (online) {
                 sbBrightness.setInnerCircleColor(
                     getApplicationContext().getColor(R.color.primary_600));
-                sbBrightness.setProgressText("ON");
+                sbBrightness.setProgressText(getResources().getString(R.string.on));
                 sbBrightness.setProgressTextColor(
                     getApplicationContext().getColor(R.color.base_50));
               } else {
                 sbBrightness.setInnerCircleColor(
                     getApplicationContext().getColor(R.color.base_300));
-                sbBrightness.setProgressText("OFF");
+                sbBrightness.setProgressText(getResources().getString(R.string.off));
                 sbBrightness.setProgressTextColor(
                     getApplicationContext().getColor(R.color.base_900));
               }
@@ -399,14 +399,14 @@ public class DeviceControlActivity extends AppCompatActivity {
                 state = true;
                 sbBrightness.setInnerCircleColor(
                     getApplicationContext().getColor(R.color.primary_600));
-                sbBrightness.setProgressText("ON");
+                sbBrightness.setProgressText(getResources().getString(R.string.on));
                 sbBrightness.setProgressTextColor(
                     getApplicationContext().getColor(R.color.base_50));
               } else {
                 state = false;
                 sbBrightness.setInnerCircleColor(
                     getApplicationContext().getColor(R.color.base_300));
-                sbBrightness.setProgressText("OFF");
+                sbBrightness.setProgressText(getResources().getString(R.string.off));
                 sbBrightness.setProgressTextColor(
                     getApplicationContext().getColor(R.color.base_900));
               }
@@ -425,7 +425,7 @@ public class DeviceControlActivity extends AppCompatActivity {
                     public void onSuccess() {
                       Toast.makeText(
                               DeviceControlActivity.this,
-                              "Socket status change successful!",
+                              getResources().getString(R.string.status_suc),
                               Toast.LENGTH_LONG)
                           .show();
                     }
@@ -489,7 +489,7 @@ public class DeviceControlActivity extends AppCompatActivity {
     statusDialog.setCancelable(false);
 
     TextView info = statusDialog.findViewById(R.id.info);
-    info.setText(String.format("Please check %s device connection and try again!", name));
+    info.setText(String.format("%s %s %s",getResources().getString(R.string.status_desc_p1), name, getResources().getString(R.string.status_desc_p2)));
     Button ok = statusDialog.findViewById(R.id.btn_retry);
     ok.setOnClickListener(
         new View.OnClickListener() {

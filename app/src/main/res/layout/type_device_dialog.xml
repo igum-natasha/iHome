@@ -26,19 +26,22 @@
             android:clickable="true"
             android:gravity="center"
             android:minHeight="48dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:focusable="true"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/lightbulb"
+                android:contentDescription="@string/light_bulb"
                 tools:layout_editor_absoluteX="29dp"
                 tools:layout_editor_absoluteY="20dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Light bulb"
+                android:text="@string/light_bulb"
                 android:textSize="12sp" />
         </LinearLayout>
     </com.loopeer.shadow.ShadowView>
@@ -65,20 +68,22 @@
             android:clickable="true"
             android:gravity="center"
             android:minHeight="48dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:focusable="true"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/socket"
+                android:contentDescription="@string/socket"
                 tools:layout_editor_absoluteX="29dp"
                 tools:layout_editor_absoluteY="20dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Socket"
+                android:text="@string/socket"
                 android:textSize="12sp" />
         </LinearLayout>
     </com.loopeer.shadow.ShadowView>
@@ -104,20 +109,22 @@
             android:clickable="true"
             android:gravity="center"
             android:minHeight="48dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:focusable="true"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/camera"
+                android:contentDescription="@string/camera"
                 tools:layout_editor_absoluteX="29dp"
                 tools:layout_editor_absoluteY="20dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Camera"
+                android:text="@string/camera"
                 android:textSize="12sp" />
         </LinearLayout>
     </com.loopeer.shadow.ShadowView>
@@ -145,20 +152,22 @@
             android:clickable="true"
             android:gravity="center"
             android:minHeight="48dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:focusable="true"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/snowflake"
+                android:contentDescription="@string/conditioner"
                 tools:layout_editor_absoluteX="29dp"
                 tools:layout_editor_absoluteY="20dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Conditioner"
+                android:text="@string/conditioner"
                 android:textSize="12sp" />
         </LinearLayout>
     </com.loopeer.shadow.ShadowView>
@@ -185,20 +194,22 @@
             android:clickable="true"
             android:gravity="center"
             android:minHeight="48dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:focusable="true"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/thermometer"
+                android:contentDescription="@string/heater"
                 tools:layout_editor_absoluteX="29dp"
                 tools:layout_editor_absoluteY="20dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Heater"
+                android:text="@string/heater"
                 android:textSize="12sp" />
         </LinearLayout>
     </com.loopeer.shadow.ShadowView>
@@ -226,20 +237,22 @@
             android:clickable="true"
             android:gravity="center"
             android:minHeight="48dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:focusable="true"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/help"
+                android:contentDescription="@string/other"
                 tools:layout_editor_absoluteX="29dp"
                 tools:layout_editor_absoluteY="20dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Other"
+                android:text="@string/other"
                 android:textSize="12sp" />
         </LinearLayout>
     </com.loopeer.shadow.ShadowView>
@@ -250,7 +263,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Device type"
+        android:text="@string/dev_type"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -88,17 +87,11 @@ public class PrepareDeviceActivity extends AppCompatActivity {
               @Override
               public void onSuccess(SceneBean sceneBean) {
                 sceneBean.setEnabled(false);
-                Toast.makeText(PrepareDeviceActivity.this, "successful!", Toast.LENGTH_LONG).show();
                 addScene(sceneBean.getId(), Name, time, repeatList, String.valueOf(true));
               }
 
               @Override
               public void onError(String errorCode, String errorMessage) {
-                Toast.makeText(
-                        PrepareDeviceActivity.this,
-                        "fail with error: " + errorMessage,
-                        Toast.LENGTH_LONG)
-                    .show();
               }
             });
   }

@@ -56,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="40"
-                android:text="User"
+                android:text="@string/user"
                 android:textColor="@color/base_900"
                 android:textSize="20sp" />
 
@@ -67,7 +67,7 @@
                 android:layout_weight="40"
                 android:background="#00FFFFFF"
                 android:backgroundTint="#00FFFFFF"
-                android:text="User Email"
+                android:text="@string/user_email"
                 android:textColor="#7B7B7B"
                 app:drawableTint="#00FFFFFF" />
         </LinearLayout>
@@ -102,14 +102,15 @@
                 android:layout_height="48dp"
                 android:clickable="true"
                 android:descendantFocusability="blocksDescendants"
-                android:gravity="center">
+                android:gravity="center"
+                android:focusable="true">
 
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_weight="1"
                     android:background="#00FFFFFF"
-                    android:contentDescription="Info"
+                    android:contentDescription="@string/about_user"
                     android:src="@drawable/time"
                     app:tint="@color/base_900" />
 
@@ -118,7 +119,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_weight="40"
-                    android:text="About user"
+                    android:text="@string/about_user"
                     android:textColor="@color/base_900"
                     android:textSize="16sp" />
 
@@ -126,7 +127,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_weight="1"
-                    android:contentDescription="About user"
+                    android:contentDescription="@string/about_user"
                     android:src="@drawable/right"
                     app:tint="#7B7B7B" />
             </LinearLayout>
@@ -138,13 +139,14 @@
                 android:clickable="true"
                 android:descendantFocusability="blocksDescendants"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:focusable="true">
 
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_weight="1"
-                    android:contentDescription="MessageCenter"
+                    android:contentDescription="@string/message"
                     android:gravity="start"
                     android:src="@drawable/message"
                     app:tint="@color/base_900" />
@@ -154,7 +156,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_weight="40"
-                    android:text="Message Center"
+                    android:text="@string/message"
                     android:textColor="@color/base_900"
                     android:textSize="16sp" />
 
@@ -163,7 +165,7 @@
                     android:layout_height="24dp"
                     android:layout_weight="1"
                     android:background="#00FFFFFF"
-                    android:contentDescription="MessageCenter"
+                    android:contentDescription="@string/message"
                     android:gravity="end"
                     android:src="@drawable/right"
                     app:tint="#7B7B7B" />
@@ -173,18 +175,18 @@
                 android:id="@+id/questions"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_alignParentBottom="true"
                 android:layout_marginBottom="80dp"
                 android:clickable="true"
                 android:descendantFocusability="blocksDescendants"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:focusable="true">
 
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_weight="1"
-                    android:contentDescription="Questions"
+                    android:contentDescription="@string/questions"
                     android:gravity="start"
                     android:src="@drawable/help"
                     app:tint="@color/base_900" />
@@ -194,7 +196,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_weight="40"
-                    android:text="FAQ &amp; Questions"
+                    android:text="@string/questions"
                     android:textColor="@color/base_900"
                     android:textSize="16sp" />
 
@@ -202,7 +204,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_weight="1"
-                    android:contentDescription="Questions"
+                    android:contentDescription="@string/questions"
                     android:gravity="end"
                     android:src="@drawable/right"
                     app:tint="#7B7B7B" />

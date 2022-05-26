@@ -2,14 +2,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="300dp"
     android:layout_height="wrap_content">
 
     <CheckBox
         android:id="@+id/cbMon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Monday"
+        android:text="@string/mon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,7 +19,7 @@
         android:id="@+id/cbTue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tuesday"
+        android:text="@string/tue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cbMon" />
@@ -28,7 +28,7 @@
         android:id="@+id/cbThur"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Thursday"
+        android:text="@string/thu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cbWed" />
@@ -37,7 +37,7 @@
         android:id="@+id/cbSat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Saturday"
+        android:text="@string/sat"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cbFr" />
@@ -46,7 +46,7 @@
         android:id="@+id/cbSun"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sunday"
+        android:text="@string/sun"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +56,7 @@
         android:id="@+id/cbWed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Wednesday"
+        android:text="@string/wed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cbTue" />
@@ -65,7 +65,7 @@
         android:id="@+id/cbFr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Friday"
+        android:text="@string/fri"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cbThur" />
@@ -80,23 +80,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Cancel"
+            android:text="@string/cancel"
             android:background="@drawable/button_border"
             android:textColor="@color/base_900"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.07"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="ButtonStyle" />
         <Button
             android:id="@+id/btnSubmit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Submit"
+            android:text="@string/submit"
             android:background="@drawable/button_border"
             android:textColor="@color/base_900"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnCancel"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="ButtonStyle" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

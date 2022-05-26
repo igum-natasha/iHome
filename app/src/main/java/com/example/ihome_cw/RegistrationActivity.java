@@ -2,7 +2,6 @@ package com.example.ihome_cw;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -66,15 +65,14 @@ public class RegistrationActivity extends AppCompatActivity {
       new IRegisterCallback() {
         @Override
         public void onSuccess(User user) {
-          Toast.makeText(RegistrationActivity.this, "Registration Successful", Toast.LENGTH_LONG)
+          Toast.makeText(RegistrationActivity.this, getResources().getString(R.string.regist_suc), Toast.LENGTH_LONG)
               .show();
           startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
         }
 
         @Override
         public void onError(String s, String s1) {
-          Log.d(TAG, "Registration failed with error" + s1);
-          Toast.makeText(RegistrationActivity.this, "Registration Failed", Toast.LENGTH_LONG)
+          Toast.makeText(RegistrationActivity.this, getResources().getString(R.string.regist_fail) + " " + s1, Toast.LENGTH_LONG)
               .show();
           startActivity(new Intent(RegistrationActivity.this, PreMainActivity.class));
         }
@@ -84,9 +82,8 @@ public class RegistrationActivity extends AppCompatActivity {
       new IResultCallback() {
         @Override
         public void onError(String s, String s1) {
-          Log.d(TAG, "Verification code failed with error" + s1);
           Toast.makeText(
-                  RegistrationActivity.this, "Failed to sent verification code!", Toast.LENGTH_LONG)
+                  RegistrationActivity.this, getResources().getString(R.string.ver_code_fail) + " " + s1, Toast.LENGTH_LONG)
               .show();
           startActivity(new Intent(RegistrationActivity.this, PreMainActivity.class));
         }
@@ -95,7 +92,7 @@ public class RegistrationActivity extends AppCompatActivity {
         public void onSuccess() {
           Toast.makeText(
                   RegistrationActivity.this,
-                  "Successfully sent verification code!",
+                  getResources().getString(R.string.ver_code_suc),
                   Toast.LENGTH_LONG)
               .show();
           etRegVarificationCode.setVisibility(View.VISIBLE);

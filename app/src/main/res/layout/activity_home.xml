@@ -47,11 +47,11 @@
                     android:layout_marginEnd="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginBottom="5dp"
-                    android:text="Weather"
+                    android:text="@string/weather"
                     android:textColor="@color/base_900"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    tools:text="Weather" />
+                    tools:text="@string/weather" />
 
                 <LinearLayout
                     android:id="@+id/WeatherTemp"
@@ -70,10 +70,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="24dp"
                         android:gravity="center"
-                        android:text="Temp"
+                        android:text="@string/temp"
                         android:textColor="@color/primary_900"
                         android:textSize="14sp"
-                        tools:text="Weather Temp" />
+                        tools:text="@string/temp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -94,10 +94,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="24dp"
                         android:gravity="center"
-                        android:text="Humidity"
+                        android:text="@string/humidity"
                         android:textColor="@color/primary_900"
                         android:textSize="14sp"
-                        tools:text="Weather Humidity" />
+                        tools:text="@string/humidity" />
                 </LinearLayout>
 
                 <ImageView
@@ -123,8 +123,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="16dp"
-        android:text="Devices"
-        android:textSize="12dp"
+        android:text="@string/devices"
+        android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/rv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -137,7 +137,7 @@
         android:id="@+id/btnSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Search Devices"
+        android:text="@string/search_dev"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigatin_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -169,8 +169,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:paddingStart="16dp"
-        android:text="Favourite events"
-        android:textSize="12dp"
+        android:text="@string/fav_events"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -190,7 +190,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="No devices found"
+        android:text="@string/no_dev_found"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/shadowView" />
@@ -200,7 +200,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="No favourite events found"
+        android:text="@string/no_fav_ev_found"
         app:layout_constraintEnd_toEndOf="@+id/rv_tasks"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/rv_tasks" />

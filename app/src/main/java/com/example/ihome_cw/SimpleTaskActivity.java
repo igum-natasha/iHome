@@ -199,15 +199,17 @@ public class SimpleTaskActivity extends AppCompatActivity {
               @Override
               public void onSuccess(SceneBean sceneBean) {
                 sceneBean.setEnabled(true);
-                Toast.makeText(SimpleTaskActivity.this, "successful!", Toast.LENGTH_LONG).show();
-                String info = ((state) ? "ON" : "OFF");
+                Toast.makeText(SimpleTaskActivity.this, getResources().getString(R.string.task_add_suc), Toast.LENGTH_LONG).show();
+                String info = ((state) ? getResources().getString(R.string.on) : getResources().getString(R.string.off));
                 addScene(sceneBean.getId(), Name, time, repeatList, info);
                 Intent intent = new Intent(SimpleTaskActivity.this, TaskAdditionActivity.class);
                 startActivity(intent);
               }
 
               @Override
-              public void onError(String errorCode, String errorMessage) {}
+              public void onError(String errorCode, String errorMessage) {
+                  Toast.makeText(SimpleTaskActivity.this, getResources().getString(R.string.task_add_fail), Toast.LENGTH_LONG).show();
+              }
             });
   }
 
@@ -219,7 +221,7 @@ public class SimpleTaskActivity extends AppCompatActivity {
         .getWindow()
         .setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     addDialog.getWindow().setGravity(Gravity.CENTER);
-    addDialog.setCancelable(false);
+//    addDialog.setCancelable(false);
 
     LinearLayout addDevice = addDialog.findViewById(R.id.btnAddNewDevice);
     addDevice.setOnClickListener(
@@ -265,13 +267,13 @@ public class SimpleTaskActivity extends AppCompatActivity {
             hour = selectedHour;
             minute = selectedMinute;
             time = String.format("%02d:%02d", hour, minute);
-            btnSetTime.setText("Time: " + time);
+            btnSetTime.setText(getResources().getString(R.string.time) + ": " + time);
             btnSetTime.setEnabled(false);
           }
         };
     TimePickerDialog timePickerDialog =
         new TimePickerDialog(this, onTimeSetListener, hour, minute, true);
-    timePickerDialog.setTitle("Select Time");
+    timePickerDialog.setTitle(getResources().getString(R.string.time));
     timePickerDialog.show();
   }
 
@@ -281,10 +283,10 @@ public class SimpleTaskActivity extends AppCompatActivity {
     repeatDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_dialog));
     repeatDialog
         .getWindow()
-        .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        .setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     repeatDialog.getWindow().setGravity(Gravity.CENTER);
     repeatDialog.setCancelable(false);
-    repeatDialog.setTitle("Select time for repeat");
+    repeatDialog.setTitle(getResources().getString(R.string.repeat_title));
 
     CheckBox mon, tue, wed, thu, fri, sat, sun;
     Button submit, cancel;
@@ -318,7 +320,7 @@ public class SimpleTaskActivity extends AppCompatActivity {
               }
             }
             repeatDialog.dismiss();
-            btnSetRepeat.setText("Repeat: " + Arrays.toString(repeates.toArray()));
+            btnSetRepeat.setText(getResources().getString(R.string.repeat) + ": " + Arrays.toString(repeates.toArray()));
             btnSetRepeat.setEnabled(false);
           }
         });
@@ -338,7 +340,7 @@ public class SimpleTaskActivity extends AppCompatActivity {
         .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     deviceDialog.getWindow().setGravity(Gravity.CENTER);
     deviceDialog.setCancelable(false);
-    deviceDialog.setTitle("Select device");
+    deviceDialog.setTitle(getResources().getString(R.string.devices));
     showDevices();
   }
 
@@ -356,7 +358,7 @@ public class SimpleTaskActivity extends AppCompatActivity {
           public void onItemClick(int position, View v) {
             pos = position;
             deviceDialog.dismiss();
-            btnDevice.setText("Device: " + devices.get(position).getDeviceName());
+            btnDevice.setText(getResources().getString(R.string.device) +": " + devices.get(position).getDeviceName());
             devId = devices.get(position).getDeviceId();
             devName = devices.get(position).getDeviceName();
             prodId = devices.get(position).getProductId();

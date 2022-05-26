@@ -2,7 +2,6 @@ package com.example.ihome_cw;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -60,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
       new ILoginCallback() {
         @Override
         public void onSuccess(com.tuya.smart.android.user.bean.User user) {
-          Toast.makeText(LoginActivity.this, "login successful", Toast.LENGTH_LONG).show();
+          Toast.makeText(LoginActivity.this, getResources().getString(R.string.login_suc), Toast.LENGTH_LONG).show();
           AppDatabase db = AppDatabase.build(getApplicationContext());
           com.example.ihome_cw.User user1 = new com.example.ihome_cw.User();
           user1.setEmail(email);
@@ -76,8 +75,7 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         public void onError(String s, String s1) {
-          Log.d(TAG, "login failed with error: " + s1);
-          Toast.makeText(LoginActivity.this, "login failed with error: " + s1, Toast.LENGTH_LONG)
+          Toast.makeText(LoginActivity.this, getResources().getString(R.string.login_fail) + s1, Toast.LENGTH_LONG)
               .show();
         }
       };
