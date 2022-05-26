@@ -489,7 +489,12 @@ public class DeviceControlActivity extends AppCompatActivity {
     statusDialog.setCancelable(false);
 
     TextView info = statusDialog.findViewById(R.id.info);
-    info.setText(String.format("%s %s %s",getResources().getString(R.string.status_desc_p1), name, getResources().getString(R.string.status_desc_p2)));
+    info.setText(
+        String.format(
+            "%s %s %s",
+            getResources().getString(R.string.status_desc_p1),
+            name,
+            getResources().getString(R.string.status_desc_p2)));
     Button ok = statusDialog.findViewById(R.id.btn_retry);
     ok.setOnClickListener(
         new View.OnClickListener() {

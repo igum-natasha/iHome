@@ -9,11 +9,15 @@ import androidx.room.TypeConverters;
 
 import java.util.List;
 
-@Entity(tableName = "home",
-        foreignKeys = {@ForeignKey(entity = User.class,
-        parentColumns = "email",
-        childColumns = "userEmail",
-        onDelete = ForeignKey.CASCADE)})
+@Entity(
+    tableName = "home",
+    foreignKeys = {
+      @ForeignKey(
+          entity = User.class,
+          parentColumns = "email",
+          childColumns = "userEmail",
+          onDelete = ForeignKey.CASCADE)
+    })
 public class Home {
   @PrimaryKey @NonNull public String userEmail;
 

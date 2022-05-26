@@ -91,8 +91,7 @@ public class PrepareDeviceActivity extends AppCompatActivity {
               }
 
               @Override
-              public void onError(String errorCode, String errorMessage) {
-              }
+              public void onError(String errorCode, String errorMessage) {}
             });
   }
 

@@ -199,8 +199,15 @@ public class SimpleTaskActivity extends AppCompatActivity {
               @Override
               public void onSuccess(SceneBean sceneBean) {
                 sceneBean.setEnabled(true);
-                Toast.makeText(SimpleTaskActivity.this, getResources().getString(R.string.task_add_suc), Toast.LENGTH_LONG).show();
-                String info = ((state) ? getResources().getString(R.string.on) : getResources().getString(R.string.off));
+                Toast.makeText(
+                        SimpleTaskActivity.this,
+                        getResources().getString(R.string.task_add_suc),
+                        Toast.LENGTH_LONG)
+                    .show();
+                String info =
+                    ((state)
+                        ? getResources().getString(R.string.on)
+                        : getResources().getString(R.string.off));
                 addScene(sceneBean.getId(), Name, time, repeatList, info);
                 Intent intent = new Intent(SimpleTaskActivity.this, TaskAdditionActivity.class);
                 startActivity(intent);
@@ -208,7 +215,11 @@ public class SimpleTaskActivity extends AppCompatActivity {
 
               @Override
               public void onError(String errorCode, String errorMessage) {
-                  Toast.makeText(SimpleTaskActivity.this, getResources().getString(R.string.task_add_fail), Toast.LENGTH_LONG).show();
+                Toast.makeText(
+                        SimpleTaskActivity.this,
+                        getResources().getString(R.string.task_add_fail),
+                        Toast.LENGTH_LONG)
+                    .show();
               }
             });
   }
@@ -221,7 +232,7 @@ public class SimpleTaskActivity extends AppCompatActivity {
         .getWindow()
         .setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     addDialog.getWindow().setGravity(Gravity.CENTER);
-//    addDialog.setCancelable(false);
+    //    addDialog.setCancelable(false);
 
     LinearLayout addDevice = addDialog.findViewById(R.id.btnAddNewDevice);
     addDevice.setOnClickListener(
@@ -320,7 +331,10 @@ public class SimpleTaskActivity extends AppCompatActivity {
               }
             }
             repeatDialog.dismiss();
-            btnSetRepeat.setText(getResources().getString(R.string.repeat) + ": " + Arrays.toString(repeates.toArray()));
+            btnSetRepeat.setText(
+                getResources().getString(R.string.repeat)
+                    + ": "
+                    + Arrays.toString(repeates.toArray()));
             btnSetRepeat.setEnabled(false);
           }
         });
@@ -358,7 +372,10 @@ public class SimpleTaskActivity extends AppCompatActivity {
           public void onItemClick(int position, View v) {
             pos = position;
             deviceDialog.dismiss();
-            btnDevice.setText(getResources().getString(R.string.device) +": " + devices.get(position).getDeviceName());
+            btnDevice.setText(
+                getResources().getString(R.string.device)
+                    + ": "
+                    + devices.get(position).getDeviceName());
             devId = devices.get(position).getDeviceId();
             devName = devices.get(position).getDeviceName();
             prodId = devices.get(position).getProductId();

@@ -40,7 +40,11 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onSuccess(com.tuya.smart.android.user.bean.User user) {
-          Toast.makeText(MainActivity.this, getResources().getString(R.string.login_suc), Toast.LENGTH_LONG).show();
+          Toast.makeText(
+                  MainActivity.this,
+                  getResources().getString(R.string.login_suc),
+                  Toast.LENGTH_LONG)
+              .show();
           Bundle bundle = new Bundle();
           bundle.putString("Email", email);
           Intent intent = new Intent(MainActivity.this, WifiLoginActivity.class);
@@ -50,7 +54,10 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onError(String s, String s1) {
-          Toast.makeText(MainActivity.this, getResources().getString(R.string.login_fail) + s1, Toast.LENGTH_LONG)
+          Toast.makeText(
+                  MainActivity.this,
+                  getResources().getString(R.string.login_fail) + s1,
+                  Toast.LENGTH_LONG)
               .show();
         }
       };

@@ -193,7 +193,9 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
             SceneTask task = TuyaHomeSdk.getSceneManagerInstance().createDpTask(devId, taskMap);
             tasks.add(task);
             conditions.add(sceneCondition);
-            time = String.format("%s %s %s°C", getResources().getString(R.string.cond_desc), condition, temp);
+            time =
+                String.format(
+                    "%s %s %s°C", getResources().getString(R.string.cond_desc), condition, temp);
             addTask(name);
           }
         });
@@ -213,9 +215,15 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
               @Override
               public void onSuccess(SceneBean sceneBean) {
                 sceneBean.setEnabled(true);
-                Toast.makeText(TaskWeatherAdditionActivity.this, getResources().getString(R.string.task_add_suc), Toast.LENGTH_LONG)
+                Toast.makeText(
+                        TaskWeatherAdditionActivity.this,
+                        getResources().getString(R.string.task_add_suc),
+                        Toast.LENGTH_LONG)
                     .show();
-                String info = ((state) ? getResources().getString(R.string.on) : getResources().getString(R.string.off));
+                String info =
+                    ((state)
+                        ? getResources().getString(R.string.on)
+                        : getResources().getString(R.string.off));
                 addScene(sceneBean.getId(), Name, time, repeatList, info);
                 Intent intent =
                     new Intent(TaskWeatherAdditionActivity.this, TaskAdditionActivity.class);
@@ -224,7 +232,11 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
 
               @Override
               public void onError(String errorCode, String errorMessage) {
-                Toast.makeText(TaskWeatherAdditionActivity.this, getResources().getString(R.string.task_add_fail), Toast.LENGTH_LONG).show();
+                Toast.makeText(
+                        TaskWeatherAdditionActivity.this,
+                        getResources().getString(R.string.task_add_fail),
+                        Toast.LENGTH_LONG)
+                    .show();
               }
             });
   }
@@ -284,7 +296,7 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
         .getWindow()
         .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     devDialog.getWindow().setGravity(Gravity.CENTER);
-//    devDialog.setCancelable(false);
+    //    devDialog.setCancelable(false);
     devDialog.setTitle(getResources().getString(R.string.device));
     showDevices();
   }
@@ -302,7 +314,10 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
           @Override
           public void onItemClick(int position, View v) {
             devDialog.dismiss();
-            btnDevice.setText(getResources().getString(R.string.device) + ": " + devices.get(position).getDeviceName());
+            btnDevice.setText(
+                getResources().getString(R.string.device)
+                    + ": "
+                    + devices.get(position).getDeviceName());
             devId = devices.get(position).getDeviceId();
             devName = devices.get(position).getDeviceName();
             prodId = devices.get(position).getProductId();

@@ -114,7 +114,8 @@ public class HomeActivity extends AppCompatActivity {
     Matcher matcher = pattern.matcher(email);
     if (matcher.find()) {
       String oldUser = tvUser.getText().toString();
-      tvUser.setText(String.format("%s %s", oldUser.substring(0, oldUser.indexOf(" ")), matcher.group(1)));
+      tvUser.setText(
+          String.format("%s %s", oldUser.substring(0, oldUser.indexOf(" ")), matcher.group(1)));
     }
     btnAdd.setOnClickListener(
         new View.OnClickListener() {
@@ -166,7 +167,10 @@ public class HomeActivity extends AppCompatActivity {
             String currentText = btnSearch.getText().toString();
 
             if (tuyaActivator == null) {
-              Toast.makeText(HomeActivity.this, getResources().getString(R.string.wifi_config), Toast.LENGTH_LONG)
+              Toast.makeText(
+                      HomeActivity.this,
+                      getResources().getString(R.string.wifi_config),
+                      Toast.LENGTH_LONG)
                   .show();
             } else {
               if (currentText.equalsIgnoreCase(getResources().getString(R.string.search_dev))) {
@@ -282,7 +286,11 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<WeatherDay> call, Throwable t) {
-              Toast.makeText(HomeActivity.this, getResources().getString(R.string.weather_fail) + " " + t, Toast.LENGTH_LONG).show();
+              Toast.makeText(
+                      HomeActivity.this,
+                      getResources().getString(R.string.weather_fail) + " " + t,
+                      Toast.LENGTH_LONG)
+                  .show();
             }
           });
     }
@@ -310,7 +318,11 @@ public class HomeActivity extends AppCompatActivity {
 
               @Override
               public void onError(String errorCode, String errorMsg) {
-                Toast.makeText(HomeActivity.this, getResources().getString(R.string.no_dev_found), Toast.LENGTH_LONG).show();
+                Toast.makeText(
+                        HomeActivity.this,
+                        getResources().getString(R.string.no_dev_found),
+                        Toast.LENGTH_LONG)
+                    .show();
               }
             });
     AppDatabase db = AppDatabase.build(getApplicationContext());
@@ -338,8 +350,7 @@ public class HomeActivity extends AppCompatActivity {
           }
 
           @Override
-          public void onItemLongClick(int position, View v) {
-          }
+          public void onItemLongClick(int position, View v) {}
         });
   }
 
@@ -416,7 +427,10 @@ public class HomeActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(HomeBean homeBean) {
                   currentHomeBean = homeBean;
-                  Toast.makeText(HomeActivity.this, getResources().getString(R.string.home_creat_suc), Toast.LENGTH_LONG)
+                  Toast.makeText(
+                          HomeActivity.this,
+                          getResources().getString(R.string.home_creat_suc),
+                          Toast.LENGTH_LONG)
                       .show();
                   addHome();
                   getRegistrationToken();
@@ -424,7 +438,10 @@ public class HomeActivity extends AppCompatActivity {
 
                 @Override
                 public void onError(String s, String s1) {
-                  Toast.makeText(HomeActivity.this, getResources().getString(R.string.home_creat_fail) + s1, Toast.LENGTH_LONG)
+                  Toast.makeText(
+                          HomeActivity.this,
+                          getResources().getString(R.string.home_creat_fail) + s1,
+                          Toast.LENGTH_LONG)
                       .show();
                 }
               });
@@ -434,7 +451,10 @@ public class HomeActivity extends AppCompatActivity {
               new ITuyaGetHomeListCallback() {
                 @Override
                 public void onSuccess(List<HomeBean> homeBeans) {
-                  Toast.makeText(HomeActivity.this, getResources().getString(R.string.home_found_suc), Toast.LENGTH_LONG)
+                  Toast.makeText(
+                          HomeActivity.this,
+                          getResources().getString(R.string.home_found_suc),
+                          Toast.LENGTH_LONG)
                       .show();
                   currentHomeBean = homeBeans.get(homeBeans.size() - 1);
                   getRegistrationToken();
@@ -444,7 +464,10 @@ public class HomeActivity extends AppCompatActivity {
 
                 @Override
                 public void onError(String errorCode, String error) {
-                  Toast.makeText(HomeActivity.this, getResources().getString(R.string.home_found_fail) + " " + error, Toast.LENGTH_LONG)
+                  Toast.makeText(
+                          HomeActivity.this,
+                          getResources().getString(R.string.home_found_fail) + " " + error,
+                          Toast.LENGTH_LONG)
                       .show();
                 }
               });
@@ -502,7 +525,9 @@ public class HomeActivity extends AppCompatActivity {
                                 break;
                               case ActivatorEZStepCode.DEVICE_FIND:
                                 Toast.makeText(
-                                        HomeActivity.this, getResources().getString(R.string.dev_new_suc), Toast.LENGTH_LONG)
+                                        HomeActivity.this,
+                                        getResources().getString(R.string.dev_new_suc),
+                                        Toast.LENGTH_LONG)
                                     .show();
                                 break;
                             }

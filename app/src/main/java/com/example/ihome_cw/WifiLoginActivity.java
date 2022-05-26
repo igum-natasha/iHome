@@ -41,16 +41,16 @@ public class WifiLoginActivity extends AppCompatActivity {
             String WifiLogin = etWifiLogin.getText().toString();
             String WifiPassword = etWifiPassword.getText().toString();
             if (!checkWifiConnection(WifiLogin, WifiPassword)) {
-                wifiDialog.show();
-              } else {
-                  Bundle bundle = new Bundle();
-                  bundle.putString("Email", email);
-                  bundle.putString("WifiLogin", WifiLogin);
-                  bundle.putString("WifiPassword", WifiPassword);
-                  Intent intent = new Intent(WifiLoginActivity.this, HomeActivity.class);
-                  intent.putExtras(bundle);
-                  startActivity(intent);
-              }
+              wifiDialog.show();
+            } else {
+              Bundle bundle = new Bundle();
+              bundle.putString("Email", email);
+              bundle.putString("WifiLogin", WifiLogin);
+              bundle.putString("WifiPassword", WifiPassword);
+              Intent intent = new Intent(WifiLoginActivity.this, HomeActivity.class);
+              intent.putExtras(bundle);
+              startActivity(intent);
+            }
           }
         });
   }
@@ -58,7 +58,7 @@ public class WifiLoginActivity extends AppCompatActivity {
   @SuppressLint("NewApi")
   private boolean checkWifiConnection(String ssid, String password) {
     boolean state;
-      btnWifiVerify.setText(getResources().getString(R.string.check));
+    btnWifiVerify.setText(getResources().getString(R.string.check));
     WifiConfiguration wifiConfig = new WifiConfiguration();
     wifiConfig.SSID = String.format("\"%s\"", ssid);
     wifiConfig.preSharedKey = String.format("\"%s\"", password);
@@ -74,24 +74,25 @@ public class WifiLoginActivity extends AppCompatActivity {
     return recon && state;
   }
 
-    private static boolean checkWifiNegotiation(WifiManager wifiManager, int netId) {
-        boolean successful = false;
-        for (int i = 0; i < 30; i++) {
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+  private static boolean checkWifiNegotiation(WifiManager wifiManager, int netId) {
+    boolean successful = false;
+    for (int i = 0; i < 30; i++) {
+      try {
+        Thread.sleep(50);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
 
-            successful = wifiManager.enableNetwork(netId, true);
-        }
-        // no matter what happened above, if COMPLETED then we have the correct pw
-        if (!successful && wifiManager.getConnectionInfo().getSupplicantState().equals(SupplicantState.COMPLETED)) {
-            successful = true;
-        }
-
-        return successful;
+      successful = wifiManager.enableNetwork(netId, true);
     }
+    // no matter what happened above, if COMPLETED then we have the correct pw
+    if (!successful
+        && wifiManager.getConnectionInfo().getSupplicantState().equals(SupplicantState.COMPLETED)) {
+      successful = true;
+    }
+
+    return successful;
+  }
 
   private void defineWifiDialog() {
     wifiDialog = new Dialog(WifiLoginActivity.this);

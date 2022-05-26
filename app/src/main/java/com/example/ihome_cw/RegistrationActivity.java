@@ -65,14 +65,20 @@ public class RegistrationActivity extends AppCompatActivity {
       new IRegisterCallback() {
         @Override
         public void onSuccess(User user) {
-          Toast.makeText(RegistrationActivity.this, getResources().getString(R.string.regist_suc), Toast.LENGTH_LONG)
+          Toast.makeText(
+                  RegistrationActivity.this,
+                  getResources().getString(R.string.regist_suc),
+                  Toast.LENGTH_LONG)
               .show();
           startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
         }
 
         @Override
         public void onError(String s, String s1) {
-          Toast.makeText(RegistrationActivity.this, getResources().getString(R.string.regist_fail) + " " + s1, Toast.LENGTH_LONG)
+          Toast.makeText(
+                  RegistrationActivity.this,
+                  getResources().getString(R.string.regist_fail) + " " + s1,
+                  Toast.LENGTH_LONG)
               .show();
           startActivity(new Intent(RegistrationActivity.this, PreMainActivity.class));
         }
@@ -83,7 +89,9 @@ public class RegistrationActivity extends AppCompatActivity {
         @Override
         public void onError(String s, String s1) {
           Toast.makeText(
-                  RegistrationActivity.this, getResources().getString(R.string.ver_code_fail) + " " + s1, Toast.LENGTH_LONG)
+                  RegistrationActivity.this,
+                  getResources().getString(R.string.ver_code_fail) + " " + s1,
+                  Toast.LENGTH_LONG)
               .show();
           startActivity(new Intent(RegistrationActivity.this, PreMainActivity.class));
         }

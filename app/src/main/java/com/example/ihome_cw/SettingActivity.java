@@ -23,9 +23,9 @@ import java.util.Locale;
 
 public class SettingActivity extends AppCompatActivity {
 
-
   LinearLayout translate, deleteAccount, logOut;
   ImageButton btnBack;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -33,80 +33,98 @@ public class SettingActivity extends AppCompatActivity {
 
     initViews();
     btnBack.setOnClickListener(
-            new View.OnClickListener() {
-              @Override
-              public void onClick(View view) {
-                finish();
-              }
-            });
-
-    translate.setOnClickListener(new View.OnClickListener() {
-      @SuppressLint("NewApi")
-      @Override
-      public void onClick(View view) {
-        String lng = Locale.getDefault().getLanguage();
-        String new_lng;
-        if ("en".equals(lng) && getResources().getString(R.string.profile).equals("Profile")) {
-          new_lng = "ru";
-        } else {
-          new_lng = "en";
-        }
-        Locale locale = new Locale(new_lng);
-        Resources resources = getResources();
-        Configuration configuration = resources.getConfiguration();
-        configuration.setLocale(locale);
-        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
-        startActivity(new Intent(SettingActivity.this, HomeActivity.class));
-        Toast.makeText(
-                SettingActivity.this, getResources().getString(R.string.lng_change), Toast.LENGTH_LONG)
-                .show();
-      }
-    });
-
-    deleteAccount.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        TuyaHomeSdk.getUserInstance().cancelAccount (new IResultCallback() {
+        new View.OnClickListener() {
           @Override
-          public void onError (String code, String error) {
-            Toast.makeText(
-                    SettingActivity.this, getResources().getString(R.string.delete_ac_fail) + " " + error, Toast.LENGTH_LONG)
-                    .show();
-          }
-          @Override
-          public void onSuccess () {
-            Toast.makeText(
-                    SettingActivity.this, getResources().getString(R.string.delete_ac_suc), Toast.LENGTH_LONG)
-                    .show();
-            AppDatabase db = AppDatabase.build(getApplicationContext());
-            db.userDao().deleteByEmail(HomeActivity.getEmail());
+          public void onClick(View view) {
+            finish();
           }
         });
-        startActivity(new Intent(SettingActivity.this, PreMainActivity.class));
-      }
-    });
 
-    logOut.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        TuyaHomeSdk.getUserInstance().logout (new ILogoutCallback() {
+    translate.setOnClickListener(
+        new View.OnClickListener() {
+          @SuppressLint("NewApi")
           @Override
-          public void onSuccess () {
+          public void onClick(View view) {
+            String lng = Locale.getDefault().getLanguage();
+            String new_lng;
+            if ("en".equals(lng) && getResources().getString(R.string.profile).equals("Profile")) {
+              new_lng = "ru";
+            } else {
+              new_lng = "en";
+            }
+            Locale locale = new Locale(new_lng);
+            Resources resources = getResources();
+            Configuration configuration = resources.getConfiguration();
+            configuration.setLocale(locale);
+            resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+            startActivity(new Intent(SettingActivity.this, HomeActivity.class));
             Toast.makeText(
-                    SettingActivity.this, getResources().getString(R.string.logout_suc), Toast.LENGTH_LONG)
-                    .show();
+                    SettingActivity.this,
+                    getResources().getString(R.string.lng_change),
+                    Toast.LENGTH_LONG)
+                .show();
+          }
+        });
+
+    deleteAccount.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            TuyaHomeSdk.getUserInstance()
+                .cancelAccount(
+                    new IResultCallback() {
+                      @Override
+                      public void onError(String code, String error) {
+                        Toast.makeText(
+                                SettingActivity.this,
+                                getResources().getString(R.string.delete_ac_fail) + " " + error,
+                                Toast.LENGTH_LONG)
+                            .show();
+                      }
+
+                      @Override
+                      public void onSuccess() {
+                        Toast.makeText(
+                                SettingActivity.this,
+                                getResources().getString(R.string.delete_ac_suc),
+                                Toast.LENGTH_LONG)
+                            .show();
+                        AppDatabase db = AppDatabase.build(getApplicationContext());
+                        db.userDao().deleteByEmail(HomeActivity.getEmail());
+                      }
+                    });
             startActivity(new Intent(SettingActivity.this, PreMainActivity.class));
           }
+        });
 
+    logOut.setOnClickListener(
+        new View.OnClickListener() {
           @Override
-          public void onError (String errorCode, String errorMsg) {
-            Toast.makeText(
-                    SettingActivity.this, getResources().getString(R.string.logout_fail) + " " + errorMsg, Toast.LENGTH_LONG)
-                    .show();
+          public void onClick(View view) {
+            TuyaHomeSdk.getUserInstance()
+                .logout(
+                    new ILogoutCallback() {
+                      @Override
+                      public void onSuccess() {
+                        Toast.makeText(
+                                SettingActivity.this,
+                                getResources().getString(R.string.logout_suc),
+                                Toast.LENGTH_LONG)
+                            .show();
+                        startActivity(new Intent(SettingActivity.this, PreMainActivity.class));
+                      }
+
+                      @Override
+                      public void onError(String errorCode, String errorMsg) {
+                        Toast.makeText(
+                                SettingActivity.this,
+                                getResources().getString(R.string.logout_fail) + " " + errorMsg,
+                                Toast.LENGTH_LONG)
+                            .show();
+                      }
+                    });
           }
         });
-      }
-    });
     BottomNavigationView nav_view = findViewById(R.id.bottom_navigatin_view);
 
     nav_view.setSelectedItemId(R.id.account);
@@ -131,9 +149,6 @@ public class SettingActivity extends AppCompatActivity {
             return false;
           }
         });
-
-
-
   }
 
   private void initViews() {
