@@ -13,10 +13,18 @@
         <item name="android:actionMenuTextColor">@color/base_900</item>
     </style>
 
-    <style name="AlertDialogCustom" parent="@android:style/Theme.Dialog">
-        <item name="android:textColor">@color/primary_900</item>
-        <item name="android:typeface">monospace</item>
-        <item name="android:textSize">10sp</item>
+    <style name="TimePickerTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:colorAccent">@color/primary_600</item>
+        <item name="android:colorPrimary">@color/primary_600</item>
+        <item name="android:colorPrimaryDark">@color/primary_900</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/DatePickerTheme.ButtonBarButtonStyle</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/DatePickerTheme.ButtonBarButtonStyle</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="DatePickerTheme.ButtonBarButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/primary_600</item>
     </style>
 
     <style name="SCBSwitch" parent="AppTheme">

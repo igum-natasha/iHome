@@ -88,7 +88,7 @@ public class WifiLoginActivity extends AppCompatActivity {
     boolean successful = false;
     for (int i = 0; i < 30; i++) {
       try {
-        Thread.sleep(50);
+        Thread.sleep(70);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }

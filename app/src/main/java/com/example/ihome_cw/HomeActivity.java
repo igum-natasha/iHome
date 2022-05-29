@@ -71,7 +71,7 @@ public class HomeActivity extends AppCompatActivity {
   LocationManager locationManager;
 
   ArrayList<String> roomList;
-  String[] rooms = {"kitchen", "bedroom", "study"};
+  String[] rooms = {};
   String homeName = "MyHome";
 
   public static String ssid, email;

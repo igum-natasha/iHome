@@ -58,6 +58,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="@string/time"
+        android:background="@drawable/button_border"
+        android:textColor="@color/primary_600"
         android:onClick="popTimePicker"
         app:layout_constraintBottom_toTopOf="@+id/btnSetRepeat"
         app:layout_constraintEnd_toEndOf="parent"
@@ -68,8 +70,10 @@
         android:id="@+id/btnSetRepeat"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/button_border"
         android:text="@string/repeat"
+        android:textColor="@color/primary_600"
         app:layout_constraintBottom_toTopOf="@+id/btnAddTask"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -79,8 +83,8 @@
     <LinearLayout
         android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:gravity="center_vertical"
-        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toTopOf="@+id/btnSetTime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -90,7 +94,9 @@
             android:id="@+id/btnChooseDevice"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="@string/device" />
+            android:background="@drawable/button_border"
+            android:text="@string/device"
+            android:textColor="@color/primary_600" />
 
         <Switch
             android:id="@+id/switchOn"

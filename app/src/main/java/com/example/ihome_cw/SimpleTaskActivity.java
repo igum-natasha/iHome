@@ -27,7 +27,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
-import com.tuya.smart.home.sdk.bean.scene.PlaceFacadeBean;
 import com.tuya.smart.home.sdk.bean.scene.SceneBean;
 import com.tuya.smart.home.sdk.bean.scene.SceneCondition;
 import com.tuya.smart.home.sdk.bean.scene.SceneTask;
@@ -62,8 +61,6 @@ public class SimpleTaskActivity extends AppCompatActivity {
   Dialog addDialog, repeatDialog, deviceDialog;
   int hour, minute, pos;
   String repeatList = "";
-  PlaceFacadeBean place;
-  //    List<String> resultRepeat = new ArrayList<>();
   Map<String, Integer> resultRepeat = new HashMap<String, Integer>();
 
   @Override
@@ -232,7 +229,6 @@ public class SimpleTaskActivity extends AppCompatActivity {
         .getWindow()
         .setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     addDialog.getWindow().setGravity(Gravity.CENTER);
-    //    addDialog.setCancelable(false);
 
     LinearLayout addDevice = addDialog.findViewById(R.id.btnAddNewDevice);
     addDevice.setOnClickListener(
@@ -283,7 +279,7 @@ public class SimpleTaskActivity extends AppCompatActivity {
           }
         };
     TimePickerDialog timePickerDialog =
-        new TimePickerDialog(this, onTimeSetListener, hour, minute, true);
+        new TimePickerDialog(this, R.style.TimePickerTheme, onTimeSetListener, hour, minute, true);
     timePickerDialog.setTitle(getResources().getString(R.string.time));
     timePickerDialog.show();
   }
