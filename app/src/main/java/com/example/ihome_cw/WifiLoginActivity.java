@@ -32,13 +32,13 @@ public class WifiLoginActivity extends AppCompatActivity {
     initViews();
     defineWifiDialog();
     btnBack.setOnClickListener(
-            new View.OnClickListener() {
-              @Override
-              public void onClick(View view) {
-                Intent intent = new Intent(WifiLoginActivity.this, PreMainActivity.class);
-                startActivity(intent);
-              }
-            });
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            Intent intent = new Intent(WifiLoginActivity.this, PreMainActivity.class);
+            startActivity(intent);
+          }
+        });
     if (bundle != null) {
       email = bundle.getString("Email");
     }

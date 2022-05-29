@@ -31,12 +31,12 @@ public class LoginActivity extends AppCompatActivity {
     etEmail.setVisibility(View.INVISIBLE);
     etPassword.setVisibility(View.INVISIBLE);
     btnBack.setOnClickListener(
-            new View.OnClickListener() {
-              @Override
-              public void onClick(View view) {
-                finish();
-              }
-            });
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            finish();
+          }
+        });
     Bundle bundle = getIntent().getExtras();
 
     if (bundle != null) {

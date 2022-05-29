@@ -27,13 +27,13 @@ public class RegistrationActivity extends AppCompatActivity {
     setContentView(R.layout.activity_registration);
 
     initViews();
-      btnBack.setOnClickListener(
-              new View.OnClickListener() {
-                  @Override
-                  public void onClick(View view) {
-                      finish();
-                  }
-              });
+    btnBack.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            finish();
+          }
+        });
     etRegVarificationCode.setVisibility(View.INVISIBLE);
     btnRegister.setVisibility(View.INVISIBLE);
 
@@ -120,7 +120,7 @@ public class RegistrationActivity extends AppCompatActivity {
   }
 
   private void initViews() {
-      btnBack = findViewById(R.id.back_icon);
+    btnBack = findViewById(R.id.back_icon);
     etRegCountryCode = findViewById(R.id.etRegCountryCode);
     etRegVarificationCode = findViewById(R.id.etVarificationCode);
     etRegEmail = findViewById(R.id.etRegEmail);
