@@ -6,58 +6,71 @@
     android:layout_height="match_parent"
     tools:context=".WifiLoginActivity">
 
+    <include
+        android:id="@+id/include"
+        layout="@layout/wifi_toolbar" />
+
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="789dp"
-        android:layout_height="560dp"
-        android:layout_marginBottom="96dp"
-        android:alpha="0.4"
+        android:layout_width="1020dp"
+        android:layout_height="678dp"
+        android:layout_marginBottom="24dp"
+        android:alpha="0.3"
+        android:background="@drawable/login"
         android:contentDescription="@string/other"
-        android:background="@drawable/girl"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/etWifiLogin"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="212dp"
+        android:layout_marginEnd="16dp"
         android:ems="10"
         android:hint="@string/ent_wifi_login"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
         android:minHeight="48dp"
+        android:textColorHint="@color/base_600"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.527"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.221"
-        android:importantForAutofill="no" />
+        app:layout_constraintVertical_bias="0.221" />
 
     <EditText
         android:id="@+id/etWifiPassword"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:ems="10"
         android:hint="@string/ent_wifi_pass"
+        android:importantForAutofill="no"
         android:inputType="textPassword"
         android:minHeight="48dp"
+        android:textColorHint="@color/base_600"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.527"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etWifiLogin"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toBottomOf="@+id/etWifiLogin" />
 
     <Button
         android:id="@+id/btnWifiVerify"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="96dp"
         android:text="@string/connect"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etWifiPassword" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

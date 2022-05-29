@@ -19,6 +19,7 @@
     <string name="no_dev_found">No devices found</string>
     <string name="no_fav_ev_found">No favourite events found</string>
     <string name="login">Login</string>
+    <string name="login_title">Log in</string>
     <string name="ent_ccode">Enter Country Code</string>
     <string name="ent_email">Enter E-mail</string>
     <string name="ent_pass">Enter Password</string>
@@ -121,4 +122,7 @@
     <string name="delete_ac_fail">Account deleting failed with error:</string>
     <string name="logout_suc">Log out successful!</string>
     <string name="logout_fail">Log out failed with error:</string>
+    <string name="welcome">Welcome to iHome</string>
+    <string name="wifi_login">Wifi log in</string>
+    <string name="regist_title">Registration</string>
 </resources>

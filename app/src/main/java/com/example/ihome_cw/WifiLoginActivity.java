@@ -11,14 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class WifiLoginActivity extends AppCompatActivity {
 
-  private EditText etWifiLogin, etWifiPassword;
-  private Button btnWifiVerify;
-  private String email;
+  EditText etWifiLogin, etWifiPassword;
+  Button btnWifiVerify;
+  String email;
+  ImageButton btnBack;
   Dialog wifiDialog;
 
   @Override
@@ -29,6 +31,14 @@ public class WifiLoginActivity extends AppCompatActivity {
     Bundle bundle = getIntent().getExtras();
     initViews();
     defineWifiDialog();
+    btnBack.setOnClickListener(
+            new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                Intent intent = new Intent(WifiLoginActivity.this, PreMainActivity.class);
+                startActivity(intent);
+              }
+            });
     if (bundle != null) {
       email = bundle.getString("Email");
     }
@@ -116,6 +126,7 @@ public class WifiLoginActivity extends AppCompatActivity {
   }
 
   private void initViews() {
+    btnBack = findViewById(R.id.back_icon);
     etWifiLogin = findViewById(R.id.etWifiLogin);
     etWifiPassword = findViewById(R.id.etWifiPassword);
     btnWifiVerify = findViewById(R.id.btnWifiVerify);

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/base_50">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/wifi_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/back_icon"
+            android:scaleType="fitCenter"
+            android:textColor="@color/base_900"
+            android:text="@string/wifi_login"
+            android:textSize="18sp" />
+
+        <ImageButton
+            android:id="@+id/back_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@color/base_50"
+            android:scaleType="fitCenter"
+            android:src="@drawable/left"
+            app:tint="@color/base_900" />
+
+    </RelativeLayout>
+</RelativeLayout>

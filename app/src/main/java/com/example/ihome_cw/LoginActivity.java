@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,8 +15,9 @@ import com.tuya.smart.home.sdk.TuyaHomeSdk;
 
 public class LoginActivity extends AppCompatActivity {
 
-  private EditText etEmail, etPassword, etCountryCode;
-  private Button btnLogin;
+  EditText etEmail, etPassword, etCountryCode;
+  Button btnLogin;
+  ImageButton btnBack;
   private String email, password, countryCode;
   private static final String TAG = "TuyaSmartHome";
 
@@ -28,7 +30,13 @@ public class LoginActivity extends AppCompatActivity {
     etCountryCode.setVisibility(View.INVISIBLE);
     etEmail.setVisibility(View.INVISIBLE);
     etPassword.setVisibility(View.INVISIBLE);
-
+    btnBack.setOnClickListener(
+            new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                finish();
+              }
+            });
     Bundle bundle = getIntent().getExtras();
 
     if (bundle != null) {
@@ -88,6 +96,7 @@ public class LoginActivity extends AppCompatActivity {
       };
 
   private void initViews() {
+    btnBack = findViewById(R.id.back_icon);
     etCountryCode = findViewById(R.id.etCountryCode);
     etEmail = findViewById(R.id.etEmail);
     etPassword = findViewById(R.id.etPassword);

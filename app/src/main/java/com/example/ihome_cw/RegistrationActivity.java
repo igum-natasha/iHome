@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,10 +17,9 @@ import com.tuya.smart.sdk.api.IResultCallback;
 
 public class RegistrationActivity extends AppCompatActivity {
 
-  private EditText etRegEmail, etRegPassword, etRegCountryCode, etRegVarificationCode;
-  private Button btnVarificationCode, btnRegister;
-
-  private static final String TAG = "TuyaSmartHome";
+  EditText etRegEmail, etRegPassword, etRegCountryCode, etRegVarificationCode;
+  Button btnVarificationCode, btnRegister;
+  ImageButton btnBack;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,13 @@ public class RegistrationActivity extends AppCompatActivity {
     setContentView(R.layout.activity_registration);
 
     initViews();
-
+      btnBack.setOnClickListener(
+              new View.OnClickListener() {
+                  @Override
+                  public void onClick(View view) {
+                      finish();
+                  }
+              });
     etRegVarificationCode.setVisibility(View.INVISIBLE);
     btnRegister.setVisibility(View.INVISIBLE);
 
@@ -114,6 +120,7 @@ public class RegistrationActivity extends AppCompatActivity {
   }
 
   private void initViews() {
+      btnBack = findViewById(R.id.back_icon);
     etRegCountryCode = findViewById(R.id.etRegCountryCode);
     etRegVarificationCode = findViewById(R.id.etVarificationCode);
     etRegEmail = findViewById(R.id.etRegEmail);

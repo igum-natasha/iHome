@@ -73,7 +73,6 @@ public class HomeActivity extends AppCompatActivity {
   ArrayList<String> roomList;
   String[] rooms = {"kitchen", "bedroom", "study"};
   String homeName = "MyHome";
-  private static final String TAG = "TuyaSmartHome";
 
   public static String ssid, email;
   public static String password;

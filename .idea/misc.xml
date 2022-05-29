@@ -21,9 +21,9 @@
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_device.xml" value="0.3278985507246377" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_device_control.xml" value="0.22" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_home.xml" value="0.33" />
-        <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_login.xml" value="0.21197916666666666" />
+        <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_main.xml" value="0.19984802431610943" />
-        <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_pre_main.xml" value="0.18" />
+        <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_pre_main.xml" value="0.33" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_prepare_device.xml" value="0.246875" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_registration.xml" value="0.22" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/activity_scene_info.xml" value="0.25" />
@@ -49,7 +49,9 @@
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/item_rec.xml" value="0.3203125" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/item_tasks.xml" value="0.33" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/location_dialog.xml" value="0.2708333333333333" />
+        <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/login_toolbar.xml" value="0.421195652173913" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/page_bar.xml" value="0.33" />
+        <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/registration_toolbar.xml" value="0.421195652173913" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/repeat_dialog.xml" value="0.25" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/scene_dialog.xml" value="0.3442028985507246" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/setting_toolbar.xml" value="0.3625" />
@@ -57,6 +59,7 @@
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/time_zone.xml" value="0.41440217391304346" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/type_device_dialog.xml" value="0.3278985507246377" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/wifi_dialog.xml" value="0.3120471014492754" />
+        <entry key="..\:/Android_app/iHome_CW/app/src/main/res/layout/wifi_toolbar.xml" value="0.421195652173913" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/menu/botton_menu.xml" value="0.25" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/menu/button_menu.xml" value="0.425" />
         <entry key="..\:/Android_app/iHome_CW/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.25" />

@@ -20,6 +20,7 @@
     <string name="no_dev_found">Устройства не найдены</string>
     <string name="no_fav_ev_found">Популярные события не найдены</string>
     <string name="login">Вход</string>
+    <string name="login_title">Вход</string>
     <string name="ent_ccode">Введите код страны</string>
     <string name="ent_email">Введите E-mail</string>
     <string name="ent_pass">Ввведите пароль</string>
@@ -122,4 +123,7 @@
     <string name="delete_ac_fail">Удаление аккаунта завершилось ошибкой:</string>
     <string name="logout_suc">Выход прошел успешно!</string>
     <string name="logout_fail">Выход завершился ошибкой:</string>
+    <string name="welcome">Добро пожаловать в iHome</string>
+    <string name="wifi_login">Wifi подключение</string>
+    <string name="regist_title">Регистрация</string>
 </resources>
