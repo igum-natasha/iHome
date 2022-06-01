@@ -115,15 +115,19 @@ public class DeviceControlActivity extends AppCompatActivity {
             return false;
           }
         });
-    String[] scenes = new String[] {
-            getResources().getString(R.string.goodnight),
-            getResources().getString(R.string.casual),
-            getResources().getString(R.string.read),
-            getResources().getString(R.string.work)};
-    String[] workModes = new String[] {
-            getResources().getString(R.string.scene_type),
-            getResources().getString(R.string.white),
-            getResources().getString(R.string.color)};
+    String[] scenes =
+        new String[] {
+          getResources().getString(R.string.goodnight),
+          getResources().getString(R.string.casual),
+          getResources().getString(R.string.read),
+          getResources().getString(R.string.work)
+        };
+    String[] workModes =
+        new String[] {
+          getResources().getString(R.string.scene_type),
+          getResources().getString(R.string.white),
+          getResources().getString(R.string.color)
+        };
 
     ArrayAdapter<String> sceneAdapter =
         new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, scenes);
@@ -275,11 +279,11 @@ public class DeviceControlActivity extends AppCompatActivity {
               String selectedWorkMode = workModeAdapter.getItem(i);
 
               if (selectedWorkMode.equals(getResources().getString(R.string.scene))) {
-                  selectedLightMode = LightMode.MODE_SCENE;
+                selectedLightMode = LightMode.MODE_SCENE;
               } else {
-                  if (selectedWorkMode.equals(getResources().getString(R.string.color))) {
-                      selectedLightMode = LightMode.MODE_COLOUR;
-                  }
+                if (selectedWorkMode.equals(getResources().getString(R.string.color))) {
+                  selectedLightMode = LightMode.MODE_COLOUR;
+                }
               }
 
               controlDevice.workMode(
@@ -315,16 +319,15 @@ public class DeviceControlActivity extends AppCompatActivity {
               String selectedScene = sceneAdapter.getItem(i);
 
               if (selectedScene.equals(getResources().getString(R.string.goodnight))) {
-                  selectedLightScene = LightScene.SCENE_GOODNIGHT;
+                selectedLightScene = LightScene.SCENE_GOODNIGHT;
               } else {
-                  if (selectedScene.equals(getResources().getString(R.string.read))) {
-                      selectedLightScene = LightScene.SCENE_READ;
+                if (selectedScene.equals(getResources().getString(R.string.read))) {
+                  selectedLightScene = LightScene.SCENE_READ;
+                } else {
+                  if (selectedScene.equals(getResources().getString(R.string.work))) {
+                    selectedLightScene = LightScene.SCENE_WORK;
                   }
-                  else {
-                      if (selectedScene.equals(getResources().getString(R.string.work))) {
-                          selectedLightScene = LightScene.SCENE_WORK;
-                      }
-                  }
+                }
               }
 
               controlDevice.scene(
