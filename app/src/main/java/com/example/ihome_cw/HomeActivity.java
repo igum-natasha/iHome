@@ -22,8 +22,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -58,14 +56,11 @@ import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity {
 
-  private CardView cvDevice;
-  private Toolbar mToolbar;
   private Button btnSearch;
   private ImageButton btnAdd;
   private CircleImageView btnAvatar;
   private TextView tvUser, tvWeather, tvWeatherTemp, tvWeatherHumidity, tvInfoDev, tvInfoFav;
 
-  String API = "a489972de36b54432056bbefac20242b";
   ImageView tvImage;
   WeatherAPI.ApiInterface api;
   LocationManager locationManager;
@@ -636,7 +631,7 @@ public class HomeActivity extends AppCompatActivity {
           @Override
           public void onClick(View view) {
             addDialog.dismiss();
-            Intent intent = new Intent(HomeActivity.this, TaskActivity.class); // ?
+            Intent intent = new Intent(HomeActivity.this, TaskActivity.class);
             startActivity(intent);
           }
         });

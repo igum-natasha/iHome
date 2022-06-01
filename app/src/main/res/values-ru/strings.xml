@@ -126,4 +126,11 @@
     <string name="welcome">Добро пожаловать в iHome</string>
     <string name="wifi_login">Wifi подключение</string>
     <string name="regist_title">Регистрация</string>
+    <string name="work">Работа</string>
+    <string name="read">Чтение</string>
+    <string name="casual">Обычный</string>
+    <string name="goodnight">Ночной</string>
+    <string name="scene_type">Обычный</string>
+    <string name="color">Цветной</string>
+    <string name="white">Белый</string>
 </resources>

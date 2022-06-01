@@ -17,8 +17,8 @@
             android:layout_marginStart="16dp"
             android:layout_toEndOf="@+id/left_icon"
             android:scaleType="fitCenter"
-            android:textColor="@color/base_900"
             android:text="@string/setting"
+            android:textColor="@color/base_900"
             android:textSize="18sp" />
 
         <ImageButton

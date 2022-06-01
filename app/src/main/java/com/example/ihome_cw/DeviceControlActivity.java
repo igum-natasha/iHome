@@ -115,8 +115,15 @@ public class DeviceControlActivity extends AppCompatActivity {
             return false;
           }
         });
-    String[] scenes = new String[] {"Goodnight", "Casual", "Read", "Work"};
-    String[] workModes = new String[] {"Scene", "White", "Color"};
+    String[] scenes = new String[] {
+            getResources().getString(R.string.goodnight),
+            getResources().getString(R.string.casual),
+            getResources().getString(R.string.read),
+            getResources().getString(R.string.work)};
+    String[] workModes = new String[] {
+            getResources().getString(R.string.scene_type),
+            getResources().getString(R.string.white),
+            getResources().getString(R.string.color)};
 
     ArrayAdapter<String> sceneAdapter =
         new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, scenes);
@@ -166,13 +173,13 @@ public class DeviceControlActivity extends AppCompatActivity {
               if (b) {
                 sbBrightness.setInnerCircleColor(
                     getApplicationContext().getColor(R.color.primary_600));
-                sbBrightness.setProgressText("ON");
+                sbBrightness.setProgressText(getResources().getString(R.string.on));
                 sbBrightness.setProgressTextColor(
                     getApplicationContext().getColor(R.color.base_50));
               } else {
                 sbBrightness.setInnerCircleColor(
                     getApplicationContext().getColor(R.color.base_300));
-                sbBrightness.setProgressText("OFF");
+                sbBrightness.setProgressText(getResources().getString(R.string.off));
                 sbBrightness.setProgressTextColor(
                     getApplicationContext().getColor(R.color.base_900));
               }
@@ -267,16 +274,12 @@ public class DeviceControlActivity extends AppCompatActivity {
               LightMode selectedLightMode = LightMode.MODE_WHITE;
               String selectedWorkMode = workModeAdapter.getItem(i);
 
-              switch (selectedWorkMode) {
-                case "Scene":
+              if (selectedWorkMode.equals(getResources().getString(R.string.scene))) {
                   selectedLightMode = LightMode.MODE_SCENE;
-                  break;
-                case "White":
-                  selectedLightMode = LightMode.MODE_WHITE;
-                  break;
-                case "Color":
-                  selectedLightMode = LightMode.MODE_COLOUR;
-                  break;
+              } else {
+                  if (selectedWorkMode.equals(getResources().getString(R.string.color))) {
+                      selectedLightMode = LightMode.MODE_COLOUR;
+                  }
               }
 
               controlDevice.workMode(
@@ -311,19 +314,17 @@ public class DeviceControlActivity extends AppCompatActivity {
               LightScene selectedLightScene = LightScene.SCENE_CASUAL;
               String selectedScene = sceneAdapter.getItem(i);
 
-              switch (selectedScene) {
-                case "Goodnight":
+              if (selectedScene.equals(getResources().getString(R.string.goodnight))) {
                   selectedLightScene = LightScene.SCENE_GOODNIGHT;
-                  break;
-                case "Casual":
-                  selectedLightScene = LightScene.SCENE_CASUAL;
-                  break;
-                case "Read":
-                  selectedLightScene = LightScene.SCENE_READ;
-                  break;
-                case "Work":
-                  selectedLightScene = LightScene.SCENE_WORK;
-                  break;
+              } else {
+                  if (selectedScene.equals(getResources().getString(R.string.read))) {
+                      selectedLightScene = LightScene.SCENE_READ;
+                  }
+                  else {
+                      if (selectedScene.equals(getResources().getString(R.string.work))) {
+                          selectedLightScene = LightScene.SCENE_WORK;
+                      }
+                  }
               }
 
               controlDevice.scene(

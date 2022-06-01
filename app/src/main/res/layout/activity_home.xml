@@ -39,7 +39,6 @@
                 <TextView
                     android:id="@+id/tvWeather"
                     android:layout_width="150dp"
-
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginLeft="5dp"
@@ -147,7 +146,7 @@
         android:id="@+id/rv"
         android:layout_width="match_parent"
         android:layout_height="86dp"
-        android:layout_marginBottom="300dp"
+        android:layout_marginBottom="290dp"
         android:paddingStart="6dp"
         app:layout_constraintBottom_toTopOf="@+id/btnSearch"
         tools:ignore="MissingConstraints"

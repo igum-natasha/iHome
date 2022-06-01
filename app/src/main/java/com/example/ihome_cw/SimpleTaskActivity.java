@@ -206,8 +206,6 @@ public class SimpleTaskActivity extends AppCompatActivity {
                         ? getResources().getString(R.string.on)
                         : getResources().getString(R.string.off));
                 addScene(sceneBean.getId(), Name, time, repeatList, info);
-                Intent intent = new Intent(SimpleTaskActivity.this, TaskAdditionActivity.class);
-                startActivity(intent);
               }
 
               @Override
@@ -219,6 +217,8 @@ public class SimpleTaskActivity extends AppCompatActivity {
                     .show();
               }
             });
+    Intent intent = new Intent(SimpleTaskActivity.this, TaskAdditionActivity.class);
+    startActivity(intent);
   }
 
   private void defineAddDialog() {

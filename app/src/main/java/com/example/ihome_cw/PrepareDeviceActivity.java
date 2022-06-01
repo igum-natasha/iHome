@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,12 +25,9 @@ import java.util.Random;
 public class PrepareDeviceActivity extends AppCompatActivity {
 
   HashMap<String, Object> taskMap = new HashMap<>();
-  List<SceneTask> tasks = new ArrayList<>();
-  List<SceneCondition> conditions = new ArrayList<>();
   String devId, devName, prodId, category;
   String repeatList = "";
   String time;
-  ImageView loading;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

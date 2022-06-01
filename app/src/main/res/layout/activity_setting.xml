@@ -13,6 +13,7 @@
         android:id="@+id/translate"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:layout_marginTop="8dp"
         android:clickable="true"
         android:descendantFocusability="blocksDescendants"
         android:focusable="true"
@@ -25,7 +26,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_weight="1"
-            android:background="#00FFFFFF"
+            android:background="@color/base_50"
             android:contentDescription="@string/translate"
             android:src="@drawable/translate"
             app:tint="@color/base_900" />
@@ -39,6 +40,16 @@
             android:textColor="@color/base_900"
             android:textSize="16sp" />
     </LinearLayout>
+
+    <View
+        android:id="@+id/strut"
+        android:layout_width="340dp"
+        android:layout_height="1dp"
+        android:layout_centerHorizontal="true"
+        android:background="@color/base_100"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/translate" />
 
     <LinearLayout
         android:id="@+id/deleteAccount"
@@ -56,7 +67,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_weight="1"
-            android:background="#00FFFFFF"
+            android:background="@color/base_50"
             android:contentDescription="@string/delete_ac"
             android:src="@drawable/delete"
             app:tint="@color/base_900" />
@@ -71,6 +82,16 @@
             android:textSize="16sp" />
     </LinearLayout>
 
+    <View
+        android:id="@+id/strut2"
+        android:layout_width="340dp"
+        android:layout_height="1dp"
+        android:layout_centerHorizontal="true"
+        android:background="@color/base_100"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deleteAccount" />
+
     <LinearLayout
         android:id="@+id/logout"
         android:layout_width="match_parent"
@@ -80,12 +101,12 @@
         android:focusable="true"
         android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/deleteAccount">
+        app:layout_constraintTop_toBottomOf="@+id/strut2">
 
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:background="#00FFFFFF"
+            android:background="@color/base_50"
             android:contentDescription="@string/logout"
             android:src="@drawable/logout"
             app:tint="@color/error_900" />

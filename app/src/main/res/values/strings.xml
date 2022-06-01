@@ -125,4 +125,11 @@
     <string name="welcome">Welcome to iHome</string>
     <string name="wifi_login">Wifi log in</string>
     <string name="regist_title">Registration</string>
+    <string name="work">Work</string>
+    <string name="read">Read</string>
+    <string name="casual">Casual</string>
+    <string name="goodnight">Goodnight</string>
+    <string name="scene_type">Scene</string>
+    <string name="color">Color</string>
+    <string name="white">White</string>
 </resources>

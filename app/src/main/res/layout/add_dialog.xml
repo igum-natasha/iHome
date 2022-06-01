@@ -12,8 +12,8 @@
         android:id="@+id/btnAddNewDevice"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="#00FFFFFF"
-        android:backgroundTint="#00FFFFFF"
+        android:background="@color/base_50"
+        android:backgroundTint="@color/base_50"
         android:clickable="true"
         android:descendantFocusability="blocksDescendants"
         android:gravity="center"
@@ -27,7 +27,7 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:background="#00FFFFFF"
+            android:background="@color/base_50"
             android:contentDescription="@string/add_dev"
             android:src="@drawable/lightbulb"
             app:tint="@color/base_900" />
@@ -35,20 +35,20 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#00FFFFFF"
+            android:background="@color/base_50"
             android:layout_marginStart="8dp"
-            android:backgroundTint="#00FFFFFF"
+            android:backgroundTint="@color/base_50"
             android:text="@string/add_dev"
             android:textColor="@color/base_900"
-            app:drawableTint="#00FFFFFF" />
+            app:drawableTint="@color/base_50" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/btnAddNewTask"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_weight="1"
-        android:background="#00FFFFFF"
-        android:backgroundTint="#00FFFFFF"
+        android:background="@color/base_50"
+        android:backgroundTint="@color/base_50"
         android:clickable="true"
         android:padding="16dp"
         android:descendantFocusability="blocksDescendants"
@@ -62,7 +62,7 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:background="#00FFFFFF"
+            android:background="@color/base_50"
             android:contentDescription="@string/create_task"
             android:src="@drawable/control"
             app:tint="@color/base_900" />
@@ -70,11 +70,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#00FFFFFF"
+            android:background="@color/base_50"
             android:layout_marginStart="8dp"
-            android:backgroundTint="#00FFFFFF"
+            android:backgroundTint="@color/base_50"
             android:text="@string/create_task"
             android:textColor="@color/base_900"
-            app:drawableTint="#00FFFFFF" />
+            app:drawableTint="@color/base_50" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

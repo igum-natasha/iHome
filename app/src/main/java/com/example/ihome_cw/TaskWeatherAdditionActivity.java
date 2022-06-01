@@ -225,9 +225,6 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
                         ? getResources().getString(R.string.on)
                         : getResources().getString(R.string.off));
                 addScene(sceneBean.getId(), Name, time, repeatList, info);
-                Intent intent =
-                    new Intent(TaskWeatherAdditionActivity.this, TaskAdditionActivity.class);
-                startActivity(intent);
               }
 
               @Override
@@ -239,6 +236,8 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
                     .show();
               }
             });
+    Intent intent = new Intent(TaskWeatherAdditionActivity.this, TaskAdditionActivity.class);
+    startActivity(intent);
   }
 
   private void defineAddDialog() {
