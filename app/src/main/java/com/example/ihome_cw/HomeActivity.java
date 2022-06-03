@@ -543,6 +543,7 @@ public class HomeActivity extends AppCompatActivity {
   private void addHome() {
     AppDatabase db = AppDatabase.build(getApplicationContext());
     Home home = new Home();
+    home.setHomeId(homeId);
     home.setUserEmail(email);
     home.setHomeName(homeName);
     home.setRoomList(roomList);

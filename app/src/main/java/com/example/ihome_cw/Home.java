@@ -19,7 +19,13 @@ import java.util.List;
           onDelete = ForeignKey.CASCADE)
     })
 public class Home {
-  @PrimaryKey @NonNull public String userEmail;
+
+  @NonNull public String userEmail;
+
+  @PrimaryKey
+  @NonNull
+  @ColumnInfo(name = "homeId")
+  public long homeId;
 
   @NonNull
   @ColumnInfo(name = "homeName")
@@ -33,6 +39,11 @@ public class Home {
   @NonNull
   public String getUserEmail() {
     return userEmail;
+  }
+
+  @NonNull
+  public long getHomeId() {
+    return homeId;
   }
 
   @NonNull
@@ -52,6 +63,10 @@ public class Home {
 
   public void setHomeName(@NonNull String homeName) {
     this.homeName = homeName;
+  }
+
+  public void setHomeId(@NonNull long homeId) {
+    this.homeId = homeId;
   }
 
   @TypeConverters({Converter.class})

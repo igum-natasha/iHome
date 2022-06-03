@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -18,7 +17,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,12 +24,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.tuya.smart.home.sdk.TuyaHomeSdk;
-import com.tuya.smart.home.sdk.bean.scene.SceneBean;
 import com.tuya.smart.home.sdk.bean.scene.SceneCondition;
 import com.tuya.smart.home.sdk.bean.scene.SceneTask;
-import com.tuya.smart.home.sdk.bean.scene.condition.rule.TimerRule;
-import com.tuya.smart.home.sdk.callback.ITuyaResultCallback;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,8 +34,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-import java.util.TimeZone;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -148,77 +140,30 @@ public class SimpleTaskActivity extends AppCompatActivity {
             state = b;
           }
         });
-    btnAddTask.setOnClickListener(
-        new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-            String Name = etName.getText().toString();
-            HashMap<String, Object> taskMap = new HashMap<>();
-            taskMap.put("1", state);
-            SceneTask task = TuyaHomeSdk.getSceneManagerInstance().createDpTask(devId, taskMap);
-            tasks.add(task);
-            Date date = new Date();
-            @SuppressLint("SimpleDateFormat")
-            SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyyMMdd");
-            List<String> week =
-                Arrays.asList(
-                    "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
+      btnAddTask.setOnClickListener(
+              new View.OnClickListener() {
+                  @Override
+                  public void onClick(View view) {
+                      String Name = etName.getText().toString();
+                      Date date = new Date();
+                      @SuppressLint("SimpleDateFormat")
+                      SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyyMMdd");
+                      List<String> week =
+                              Arrays.asList(
+                                      "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
 
-            for (String key : week) {
-              repeatList += resultRepeat.get(key);
-            }
-            TimerRule timerRule =
-                TimerRule.newInstance(
-                    TimeZone.getDefault().getID(), repeatList, time, formatForDateNow.format(date));
-            SceneCondition condition =
-                SceneCondition.createTimerCondition(
-                    "Saturday, Sunday, Monday, Tuesday, Wednesday, Thursday, Friday",
-                    Name,
-                    "timer",
-                    timerRule);
-            conditions.add(condition);
-            addTask(Name);
-          }
-        });
-  }
-
-  private void addTask(String Name) {
-    TuyaHomeSdk.getSceneManagerInstance()
-        .createScene(
-            HomeActivity.getHomeId(),
-            Name, // The name of the scene.
-            true,
-            "", // Indicates whether the scene is displayed on the homepage.
-            conditions, // The conditions.
-            tasks, // The tasks.
-            SceneBean.MATCH_TYPE_AND, // The type of trigger conditions to match.
-            new ITuyaResultCallback<SceneBean>() {
-              @Override
-              public void onSuccess(SceneBean sceneBean) {
-                sceneBean.setEnabled(true);
-                Toast.makeText(
-                        SimpleTaskActivity.this,
-                        getResources().getString(R.string.task_add_suc),
-                        Toast.LENGTH_LONG)
-                    .show();
-                String info =
-                    ((state)
-                        ? getResources().getString(R.string.on)
-                        : getResources().getString(R.string.off));
-                addScene(sceneBean.getId(), Name, time, repeatList, info);
-              }
-
-              @Override
-              public void onError(String errorCode, String errorMessage) {
-                Toast.makeText(
-                        SimpleTaskActivity.this,
-                        getResources().getString(R.string.task_add_fail),
-                        Toast.LENGTH_LONG)
-                    .show();
-              }
-            });
-    Intent intent = new Intent(SimpleTaskActivity.this, TaskAdditionActivity.class);
-    startActivity(intent);
+                      for (String key : week) {
+                          repeatList += resultRepeat.get(key);
+                      }
+                      AddTask ad = new AddTask(time, repeatList, devId);
+                      tasks.add(ad.createSimpleTask(state));
+                      String correctDate = formatForDateNow.format(date);
+                      conditions.add(ad.createTimeSceneCond(Name, correctDate));
+                      ad.addTask(Name, tasks, conditions, SimpleTaskActivity.this, state);
+                      Intent intent = new Intent(SimpleTaskActivity.this, TaskAdditionActivity.class);
+                      startActivity(intent);
+                  }
+              });
   }
 
   private void defineAddDialog() {
@@ -336,11 +281,6 @@ public class SimpleTaskActivity extends AppCompatActivity {
         });
   }
 
-  private int getResourceId(String image) {
-    Resources resources = getApplicationContext().getResources();
-    return resources.getIdentifier(image, "drawable", getApplicationContext().getPackageName());
-  }
-
   private void defineDeviceDialog() {
     deviceDialog = new Dialog(SimpleTaskActivity.this);
     deviceDialog.setContentView(R.layout.device_dialog);
@@ -382,39 +322,6 @@ public class SimpleTaskActivity extends AppCompatActivity {
           @Override
           public void onItemLongClick(int position, View v) {}
         });
-  }
-
-  private void addScene(String id, String name, String time, String repeat, String cond) {
-    List<String> images =
-        Arrays.asList(
-            "bomb",
-            "brain",
-            "bullseye",
-            "cake",
-            "controller",
-            "cookie",
-            "emoticon",
-            "flower",
-            "flower2",
-            "food",
-            "football",
-            "fruit",
-            "gift",
-            "party");
-    Random rand = new Random();
-    String randomElement = images.get(rand.nextInt(images.size()));
-    int resId = getResourceId(randomElement);
-    AppDatabase db = AppDatabase.build(getApplicationContext());
-    Scene scene = new Scene();
-    scene.setUserEmail(HomeActivity.getEmail());
-    scene.setDeviceId(devId);
-    scene.setSceneId(id);
-    scene.setSceneName(name);
-    scene.setTime(time);
-    scene.setRepeat(repeat);
-    scene.setCondition(cond);
-    scene.setImage(resId);
-    db.sceneDao().insertScene(scene);
   }
 
   private void showDevices() {

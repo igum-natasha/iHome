@@ -16,9 +16,6 @@ public interface UserDao {
   @Query("SELECT * FROM users")
   List<User> getAll();
 
-  @Query("SELECT * FROM users WHERE first_name LIKE :first")
-  List<User> findUserWithName(String first);
-
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   void insertUser(User user);
 }

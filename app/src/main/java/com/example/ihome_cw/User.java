@@ -17,12 +17,6 @@ public class User {
   @ColumnInfo(name = "country_code")
   public String countryCode;
 
-  @ColumnInfo(name = "first_name")
-  public String firstName;
-
-  @ColumnInfo(name = "last_name")
-  public String lastName;
-
   @NonNull
   public String getEmail() {
     return email;
@@ -38,14 +32,6 @@ public class User {
     return password;
   }
 
-  public String getFirstName() {
-    return firstName;
-  }
-
-  public String getLastName() {
-    return lastName;
-  }
-
   public void setEmail(@NonNull String email) {
     this.email = email;
   }
@@ -56,13 +42,5 @@ public class User {
 
   public void setCountryCode(@NonNull String country_code) {
     this.countryCode = country_code;
-  }
-
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
-
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
   }
 }

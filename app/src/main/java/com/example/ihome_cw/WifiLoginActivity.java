@@ -80,11 +80,11 @@ public class WifiLoginActivity extends AppCompatActivity {
     wifiManager.disconnect();
 
     boolean recon = wifiManager.reconnect();
-    state = checkWifiNegotiation(wifiManager, wifiConfig.networkId);
+    state = checkWifi(wifiManager, wifiConfig.networkId);
     return recon && state;
   }
 
-  private static boolean checkWifiNegotiation(WifiManager wifiManager, int netId) {
+  private static boolean checkWifi(WifiManager wifiManager, int netId) {
     boolean successful = false;
     for (int i = 0; i < 30; i++) {
       try {
@@ -92,7 +92,6 @@ public class WifiLoginActivity extends AppCompatActivity {
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
-
       successful = wifiManager.enableNetwork(netId, true);
     }
     // no matter what happened above, if COMPLETED then we have the correct pw

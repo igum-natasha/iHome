@@ -2,7 +2,6 @@ package com.example.ihome_cw;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -16,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,19 +23,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButtonToggleGroup;
-import com.tuya.smart.home.sdk.TuyaHomeSdk;
-import com.tuya.smart.home.sdk.bean.scene.PlaceFacadeBean;
-import com.tuya.smart.home.sdk.bean.scene.SceneBean;
 import com.tuya.smart.home.sdk.bean.scene.SceneCondition;
 import com.tuya.smart.home.sdk.bean.scene.SceneTask;
-import com.tuya.smart.home.sdk.bean.scene.condition.rule.ValueRule;
-import com.tuya.smart.home.sdk.callback.ITuyaResultCallback;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -56,15 +46,12 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
 
   private List<SceneTask> tasks = new ArrayList<>();
   private List<SceneCondition> conditions = new ArrayList<>();
-  public ValueRule tempRule;
-  public SceneCondition sceneCondition;
   public String temp;
   private List<Device> devices;
   private RecyclerView rv;
   private boolean state = false;
   String repeatList = "1111111";
   String time;
-  public PlaceFacadeBean placeFacadeBean = new PlaceFacadeBean();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -178,66 +165,25 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
             state = b;
           }
         });
-    btnAddWtask.setOnClickListener(
-        new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-            String name = String.valueOf(etName.getText());
-            temp = tvProgress.getText().toString();
-            temp = temp.substring(0, temp.indexOf(" "));
-            tempRule = ValueRule.newInstance("temp", condition, Integer.parseInt(temp));
-            sceneCondition =
-                SceneCondition.createWeatherCondition(HomeActivity.getCity(), "temp", tempRule);
-            HashMap<String, Object> taskMap = new HashMap<>();
-            taskMap.put("1", state);
-            SceneTask task = TuyaHomeSdk.getSceneManagerInstance().createDpTask(devId, taskMap);
-            tasks.add(task);
-            conditions.add(sceneCondition);
-            time =
-                String.format(
-                    "%s %s %s°C", getResources().getString(R.string.cond_desc), condition, temp);
-            addTask(name);
-          }
-        });
-  }
+      btnAddWtask.setOnClickListener(
+              new View.OnClickListener() {
+                  @Override
+                  public void onClick(View view) {
+                      String name = String.valueOf(etName.getText());
+                      temp = tvProgress.getText().toString();
+                      temp = temp.substring(0, temp.indexOf(" "));
+                      time =
+                              String.format(
+                                      "%s %s %s°C", getResources().getString(R.string.cond_desc), condition, temp);
+                      AddTask ad = new AddTask(time, repeatList, devId);
+                      tasks.add(ad.createSimpleTask(state));
+                      conditions.add(ad.createWeatherSceneCond(Integer.parseInt(temp),condition));
 
-  private void addTask(String Name) {
-    TuyaHomeSdk.getSceneManagerInstance()
-        .createScene(
-            HomeActivity.getHomeId(),
-            Name, // The name of the scene.
-            true,
-            "", // Indicates whether the scene is displayed on the homepage.
-            conditions, // The conditions.
-            tasks, // The tasks.
-            SceneBean.MATCH_TYPE_OR, // The type of trigger conditions to match.
-            new ITuyaResultCallback<SceneBean>() {
-              @Override
-              public void onSuccess(SceneBean sceneBean) {
-                sceneBean.setEnabled(true);
-                Toast.makeText(
-                        TaskWeatherAdditionActivity.this,
-                        getResources().getString(R.string.task_add_suc),
-                        Toast.LENGTH_LONG)
-                    .show();
-                String info =
-                    ((state)
-                        ? getResources().getString(R.string.on)
-                        : getResources().getString(R.string.off));
-                addScene(sceneBean.getId(), Name, time, repeatList, info);
-              }
-
-              @Override
-              public void onError(String errorCode, String errorMessage) {
-                Toast.makeText(
-                        TaskWeatherAdditionActivity.this,
-                        getResources().getString(R.string.task_add_fail),
-                        Toast.LENGTH_LONG)
-                    .show();
-              }
-            });
-    Intent intent = new Intent(TaskWeatherAdditionActivity.this, TaskAdditionActivity.class);
-    startActivity(intent);
+                      ad.addTask(name, tasks, conditions, TaskWeatherAdditionActivity.this, state);
+                      Intent intent = new Intent(TaskWeatherAdditionActivity.this, TaskAdditionActivity.class);
+                      startActivity(intent);
+                  }
+              });
   }
 
   private void defineAddDialog() {
@@ -338,43 +284,5 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
 
     initializeData();
     initializeAdapter();
-  }
-
-  private int getResourceId(String image) {
-    Resources resources = getApplicationContext().getResources();
-    return resources.getIdentifier(image, "drawable", getApplicationContext().getPackageName());
-  }
-
-  private void addScene(String id, String name, String time, String repeat, String cond) {
-    List<String> images =
-        Arrays.asList(
-            "bomb",
-            "brain",
-            "bullseye",
-            "cake",
-            "controller",
-            "cookie",
-            "emoticon",
-            "flower",
-            "flower2",
-            "food",
-            "football",
-            "fruit",
-            "gift",
-            "party");
-    Random rand = new Random();
-    String randomElement = images.get(rand.nextInt(images.size()));
-    int resId = getResourceId(randomElement);
-    AppDatabase db = AppDatabase.build(getApplicationContext());
-    Scene scene = new Scene();
-    scene.setUserEmail(HomeActivity.getEmail());
-    scene.setDeviceId(devId);
-    scene.setSceneId(id);
-    scene.setSceneName(name);
-    scene.setTime(time);
-    scene.setRepeat(repeat);
-    scene.setCondition(cond);
-    scene.setImage(resId);
-    db.sceneDao().insertScene(scene);
   }
 }

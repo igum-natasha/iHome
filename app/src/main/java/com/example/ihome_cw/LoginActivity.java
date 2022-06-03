@@ -19,7 +19,6 @@ public class LoginActivity extends AppCompatActivity {
   Button btnLogin;
   ImageButton btnBack;
   private String email, password, countryCode;
-  private static final String TAG = "TuyaSmartHome";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +26,6 @@ public class LoginActivity extends AppCompatActivity {
     setContentView(R.layout.activity_login);
 
     initViews();
-    etCountryCode.setVisibility(View.INVISIBLE);
-    etEmail.setVisibility(View.INVISIBLE);
-    etPassword.setVisibility(View.INVISIBLE);
     btnBack.setOnClickListener(
         new View.OnClickListener() {
           @Override
@@ -37,18 +33,6 @@ public class LoginActivity extends AppCompatActivity {
             finish();
           }
         });
-    Bundle bundle = getIntent().getExtras();
-
-    if (bundle != null) {
-      email = bundle.getString("Email");
-      password = bundle.getString("Password");
-      countryCode = bundle.getString("CountryCode");
-      TuyaHomeSdk.getUserInstance().loginWithEmail(countryCode, email, password, loginCallback);
-    } else {
-      etCountryCode.setVisibility(View.VISIBLE);
-      etEmail.setVisibility(View.VISIBLE);
-      etPassword.setVisibility(View.VISIBLE);
-    }
 
     btnLogin.setOnClickListener(
         new View.OnClickListener() {
@@ -92,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                   getResources().getString(R.string.login_fail) + s1,
                   Toast.LENGTH_LONG)
               .show();
+            finish();
         }
       };
 

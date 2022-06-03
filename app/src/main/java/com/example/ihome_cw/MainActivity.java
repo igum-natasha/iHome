@@ -2,8 +2,6 @@ package com.example.ihome_cw;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,10 +11,7 @@ import com.tuya.smart.home.sdk.TuyaHomeSdk;
 
 public class MainActivity extends AppCompatActivity {
 
-  private EditText etEmail, etPassword, etCountryCode;
-  private Button btnLogin;
   private String email, password, countryCode;
-  private static final String TAG = "TuyaSmartHome";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
                   getResources().getString(R.string.login_fail) + s1,
                   Toast.LENGTH_LONG)
               .show();
+            Intent intent = new Intent(MainActivity.this, PreMainActivity.class);
+            startActivity(intent);
         }
       };
 }
