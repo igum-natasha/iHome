@@ -140,30 +140,30 @@ public class SimpleTaskActivity extends AppCompatActivity {
             state = b;
           }
         });
-      btnAddTask.setOnClickListener(
-              new View.OnClickListener() {
-                  @Override
-                  public void onClick(View view) {
-                      String Name = etName.getText().toString();
-                      Date date = new Date();
-                      @SuppressLint("SimpleDateFormat")
-                      SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyyMMdd");
-                      List<String> week =
-                              Arrays.asList(
-                                      "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
+    btnAddTask.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            String Name = etName.getText().toString();
+            Date date = new Date();
+            @SuppressLint("SimpleDateFormat")
+            SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyyMMdd");
+            List<String> week =
+                Arrays.asList(
+                    "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
 
-                      for (String key : week) {
-                          repeatList += resultRepeat.get(key);
-                      }
-                      AddTask ad = new AddTask(time, repeatList, devId);
-                      tasks.add(ad.createSimpleTask(state));
-                      String correctDate = formatForDateNow.format(date);
-                      conditions.add(ad.createTimeSceneCond(Name, correctDate));
-                      ad.addTask(Name, tasks, conditions, SimpleTaskActivity.this, state);
-                      Intent intent = new Intent(SimpleTaskActivity.this, TaskAdditionActivity.class);
-                      startActivity(intent);
-                  }
-              });
+            for (String key : week) {
+              repeatList += resultRepeat.get(key);
+            }
+            AddTask ad = new AddTask(time, repeatList, devId);
+            tasks.add(ad.createSimpleTask(state));
+            String correctDate = formatForDateNow.format(date);
+            conditions.add(ad.createTimeSceneCond(Name, correctDate));
+            ad.addTask(Name, tasks, conditions, SimpleTaskActivity.this, state);
+            Intent intent = new Intent(SimpleTaskActivity.this, TaskAdditionActivity.class);
+            startActivity(intent);
+          }
+        });
   }
 
   private void defineAddDialog() {

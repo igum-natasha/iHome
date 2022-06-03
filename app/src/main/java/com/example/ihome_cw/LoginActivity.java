@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                   getResources().getString(R.string.login_fail) + s1,
                   Toast.LENGTH_LONG)
               .show();
-            finish();
+          finish();
         }
       };
 

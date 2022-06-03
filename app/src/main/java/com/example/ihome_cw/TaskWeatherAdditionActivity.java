@@ -165,25 +165,26 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
             state = b;
           }
         });
-      btnAddWtask.setOnClickListener(
-              new View.OnClickListener() {
-                  @Override
-                  public void onClick(View view) {
-                      String name = String.valueOf(etName.getText());
-                      temp = tvProgress.getText().toString();
-                      temp = temp.substring(0, temp.indexOf(" "));
-                      time =
-                              String.format(
-                                      "%s %s %s°C", getResources().getString(R.string.cond_desc), condition, temp);
-                      AddTask ad = new AddTask(time, repeatList, devId);
-                      tasks.add(ad.createSimpleTask(state));
-                      conditions.add(ad.createWeatherSceneCond(Integer.parseInt(temp),condition));
+    btnAddWtask.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            String name = String.valueOf(etName.getText());
+            temp = tvProgress.getText().toString();
+            temp = temp.substring(0, temp.indexOf(" "));
+            time =
+                String.format(
+                    "%s %s %s°C", getResources().getString(R.string.cond_desc), condition, temp);
+            AddTask ad = new AddTask(time, repeatList, devId);
+            tasks.add(ad.createSimpleTask(state));
+            conditions.add(ad.createWeatherSceneCond(Integer.parseInt(temp), condition));
 
-                      ad.addTask(name, tasks, conditions, TaskWeatherAdditionActivity.this, state);
-                      Intent intent = new Intent(TaskWeatherAdditionActivity.this, TaskAdditionActivity.class);
-                      startActivity(intent);
-                  }
-              });
+            ad.addTask(name, tasks, conditions, TaskWeatherAdditionActivity.this, state);
+            Intent intent =
+                new Intent(TaskWeatherAdditionActivity.this, TaskAdditionActivity.class);
+            startActivity(intent);
+          }
+        });
   }
 
   private void defineAddDialog() {

@@ -54,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
                   getResources().getString(R.string.login_fail) + s1,
                   Toast.LENGTH_LONG)
               .show();
-            Intent intent = new Intent(MainActivity.this, PreMainActivity.class);
-            startActivity(intent);
+          Intent intent = new Intent(MainActivity.this, PreMainActivity.class);
+          startActivity(intent);
         }
       };
 }
