@@ -299,14 +299,14 @@ public class SimpleTaskActivity extends AppCompatActivity {
     AppDatabase db = AppDatabase.build(getApplicationContext());
     devices = db.deviceDao().getAll();
     if (devices.isEmpty()) {
-        deviceDialog.dismiss();
-        Toast.makeText(
-                SimpleTaskActivity.this,
-                getResources().getString(R.string.no_dev_found),
-                Toast.LENGTH_LONG)
-                .show();
-        Intent intent = new Intent(SimpleTaskActivity.this, TaskActivity.class);
-        startActivity(intent);
+      deviceDialog.dismiss();
+      Toast.makeText(
+              SimpleTaskActivity.this,
+              getResources().getString(R.string.no_dev_found),
+              Toast.LENGTH_LONG)
+          .show();
+      Intent intent = new Intent(SimpleTaskActivity.this, TaskActivity.class);
+      startActivity(intent);
     }
   }
 

@@ -251,16 +251,16 @@ public class TaskWeatherAdditionActivity extends AppCompatActivity {
   private void initializeData() {
     AppDatabase db = AppDatabase.build(getApplicationContext());
     devices = db.deviceDao().getAll();
-      if (devices.isEmpty()) {
-          devDialog.dismiss();
-          Toast.makeText(
-                  TaskWeatherAdditionActivity.this,
-                  getResources().getString(R.string.no_dev_found),
-                  Toast.LENGTH_LONG)
-                  .show();
-          Intent intent = new Intent(TaskWeatherAdditionActivity.this, TaskActivity.class);
-          startActivity(intent);
-      }
+    if (devices.isEmpty()) {
+      devDialog.dismiss();
+      Toast.makeText(
+              TaskWeatherAdditionActivity.this,
+              getResources().getString(R.string.no_dev_found),
+              Toast.LENGTH_LONG)
+          .show();
+      Intent intent = new Intent(TaskWeatherAdditionActivity.this, TaskActivity.class);
+      startActivity(intent);
+    }
   }
 
   private void initializeAdapter() {
