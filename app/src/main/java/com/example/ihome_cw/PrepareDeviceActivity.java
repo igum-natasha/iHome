@@ -31,8 +31,8 @@ public class PrepareDeviceActivity extends AppCompatActivity {
       prodId = bundle.getString("ProductId");
       category = bundle.getString("Category");
     }
-    addSimpleRec(String.format("Rec: ON %s at 08:00", devName), true, devId, "08:00");
-    addSimpleRec(String.format("Rec: OFF %s at 21:00", devName), false, devId, "21:00");
+    addSimpleRec(String.format("Rec: ON %10s at 08:00", devName.substring(0, 6)), true, devId, "08:00");
+    addSimpleRec(String.format("Rec: OFF %10s at 21:00", devName.substring(0, 6)), false, devId, "21:00");
     Intent intent = new Intent(PrepareDeviceActivity.this, HomeActivity.class);
     startActivity(intent);
   }

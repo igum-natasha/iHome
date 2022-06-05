@@ -15,14 +15,14 @@
         android:id="@+id/etName"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginBottom="24dp"
         android:ems="10"
-        android:maxLength="20"
         android:hint="@string/ent_name"
         android:inputType="textPersonName"
+        android:maxLength="20"
         android:minHeight="48dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnSetTime"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,12 +32,12 @@
         android:id="@+id/btnAddTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="148dp"
+        android:layout_marginTop="24dp"
         android:text="@string/add_task"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigatin_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSetRepeat"
         tools:ignore="MissingConstraints" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -56,20 +56,23 @@
         android:id="@+id/btnSetTime"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        android:text="@string/time"
         android:background="@drawable/button_border"
-        android:textColor="@color/primary_600"
         android:onClick="popTimePicker"
+        android:text="@string/time"
+        android:textColor="@color/primary_600"
         app:layout_constraintBottom_toTopOf="@+id/btnSetRepeat"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout8" />
 
     <Button
         android:id="@+id/btnSetRepeat"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/button_border"
         android:text="@string/repeat"
@@ -78,17 +81,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSetTime"
         tools:ignore="MissingConstraints" />
 
     <LinearLayout
+        android:id="@+id/linearLayout8"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:layout_marginBottom="16dp"
         android:gravity="center_vertical"
         app:layout_constraintBottom_toTopOf="@+id/btnSetTime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etName">
 
         <Button
             android:id="@+id/btnChooseDevice"

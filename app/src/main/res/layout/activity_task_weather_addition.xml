@@ -8,16 +8,17 @@
     <include
         android:id="@+id/include"
         layout="@layout/control_toolbar" />
+
     <Button
         android:id="@+id/btnAddWtask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="284dp"
+        android:layout_marginTop="24dp"
         android:text="@string/add_task"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigatin_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout7"
         tools:ignore="MissingConstraints" />
 
     <SeekBar
@@ -26,13 +27,15 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
         android:max="40"
         android:min="-40"
         android:progress="0"
+        android:progressTint="@color/primary_600"
         android:scaleX="2"
         android:scaleY="2"
-        android:progressTint="@color/primary_600"
         android:thumbTint="@color/primary_800"
+        app:layout_constraintBottom_toTopOf="@+id/toggleGroup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,28 +55,30 @@
         app:menu="@menu/button_menu" >
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
+
     <EditText
         android:id="@+id/etName"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="16dp"
+        android:autofillHints="test"
         android:ems="10"
         android:hint="@string/ent_name"
         android:inputType="textPersonName"
         android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/tvProgress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include"
-        android:autofillHints="test" />
+        app:layout_constraintTop_toBottomOf="@+id/include" />
 
     <TextView
         android:id="@+id/tvProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/cel"
         app:layout_constraintBottom_toTopOf="@+id/seekBar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -85,6 +90,8 @@
         android:layout_width="249dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/include"
         app:layout_constraintTop_toBottomOf="@+id/seekBar"
@@ -116,10 +123,13 @@
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <LinearLayout
+        android:id="@+id/linearLayout7"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="24dp"
         android:gravity="center_vertical"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddWtask"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toggleGroup">

@@ -17,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -181,7 +182,7 @@ public class SimpleTaskActivity extends AppCompatActivity {
           @Override
           public void onClick(View view) {
             addDialog.dismiss();
-            Intent intent = new Intent(SimpleTaskActivity.this, HomeActivity.class); // ?
+            Intent intent = new Intent(SimpleTaskActivity.this, HomeActivity.class);
             startActivity(intent);
           }
         });
@@ -191,7 +192,7 @@ public class SimpleTaskActivity extends AppCompatActivity {
           @Override
           public void onClick(View view) {
             addDialog.dismiss();
-            Intent intent = new Intent(SimpleTaskActivity.this, TaskActivity.class); // ?
+            Intent intent = new Intent(SimpleTaskActivity.this, TaskActivity.class);
             startActivity(intent);
           }
         });
@@ -297,6 +298,16 @@ public class SimpleTaskActivity extends AppCompatActivity {
   private void initializeData() {
     AppDatabase db = AppDatabase.build(getApplicationContext());
     devices = db.deviceDao().getAll();
+    if (devices.isEmpty()) {
+        deviceDialog.dismiss();
+        Toast.makeText(
+                SimpleTaskActivity.this,
+                getResources().getString(R.string.no_dev_found),
+                Toast.LENGTH_LONG)
+                .show();
+        Intent intent = new Intent(SimpleTaskActivity.this, TaskActivity.class);
+        startActivity(intent);
+    }
   }
 
   private void initializeAdapter() {

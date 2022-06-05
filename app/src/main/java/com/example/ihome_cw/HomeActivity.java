@@ -248,6 +248,7 @@ public class HomeActivity extends AppCompatActivity {
                       tvImage.setImageResource(R.drawable.cloud_moon);
                       break;
                     case "Rain":
+                    case "Thunderstorm":
                       tvImage.setImageResource(R.drawable.rain_night);
                       break;
                     case "Snow":
@@ -263,6 +264,7 @@ public class HomeActivity extends AppCompatActivity {
                       tvImage.setImageResource(R.drawable.cloud_sun);
                       break;
                     case "Rain":
+                    case "Thunderstorm":
                       tvImage.setImageResource(R.drawable.rain_day);
                       break;
                     case "Snow":
@@ -291,34 +293,6 @@ public class HomeActivity extends AppCompatActivity {
   }
 
   private void initializeData() {
-    TuyaHomeSdk.newHomeInstance(homeId)
-        .getHomeDetail(
-            new ITuyaHomeResultCallback() {
-              @Override
-              public void onSuccess(HomeBean bean) {
-                if (bean.getDeviceList().size() > 0) {
-                  List<DeviceBean> devArr = bean.getDeviceList();
-                  for (int i = 0; i < devArr.size(); i++) {
-                    Device dev = new Device();
-                    dev.setDeviceId(devArr.get(i).getDevId());
-                    dev.setProductId(devArr.get(i).getProductId());
-                    dev.setDeviceName(devArr.get(i).getName());
-                    dev.setUserEmail(email);
-                    dev.setCategory(devArr.get(i).getDeviceCategory());
-                    devices.add(dev);
-                  }
-                }
-              }
-
-              @Override
-              public void onError(String errorCode, String errorMsg) {
-                Toast.makeText(
-                        HomeActivity.this,
-                        getResources().getString(R.string.no_dev_found),
-                        Toast.LENGTH_LONG)
-                    .show();
-              }
-            });
     AppDatabase db = AppDatabase.build(getApplicationContext());
     devices = db.deviceDao().getAll();
     if (devices.isEmpty()) {
